@@ -1,4 +1,4 @@
-{ lib, stdenv, callPackage, pythonPackagesExtensions, config, makeScopeWithSplicing', ... }:
+{ lib, stdenv, callPackage, pythonPackagesExtensions ? [], config, makeScopeWithSplicing', ... }:
 
 { implementation
 , libPrefix
@@ -15,7 +15,14 @@
 , pythonOnTargetForTarget
 , pythonAttr ? null
 , self # is pythonOnHostForTarget
-}: let
+}:
+
+# TODO: core-pkgs, add support for config.pythonOverlays
+assert lib.assertMsg (pythonPackagesExtensions == [ ])
+  "pythonPackagesExtensions is not supported";
+
+let
+  autoCalledOverlay = lib.mkAutoCalledPackageDir ./pkgs;
   pythonPackages = let
     ensurePythonModules = items: let
       exceptions = [
@@ -49,17 +56,15 @@
       hooks = import ./hooks/default.nix;
       keep = self: hooks self {};
       optionalExtensions = cond: as: lib.optionals cond as;
-      pythonExtension = import ../../../top-level/python-packages.nix;
-      python2Extension = import ../../../top-level/python2-packages.nix;
+      pythonExtension = import ./packages.nix;
       extensions = lib.composeManyExtensions ([
         hooks
         pythonExtension
-      ] ++ (optionalExtensions (!self.isPy3k) [
-        python2Extension
-      ]) ++ pythonPackagesExtensions ++ [
+        autoCalledOverlay
+      ] ++ pythonPackagesExtensions ++ [
         overrides
       ]);
-      aliases = self: super: lib.optionalAttrs config.allowAliases (import ../../../top-level/python-aliases.nix lib self super);
+      aliases = self: super: lib.optionalAttrs config.allowAliases (import ./aliases.nix lib self super);
     in makeScopeWithSplicing' {
       inherit otherSplices keep;
       f = lib.extends (lib.composeExtensions aliases extensions) pythonPackagesFun;
@@ -91,10 +96,6 @@ in rec {
     pythonAtLeast = lib.versionAtLeast pythonVersion;
     pythonOlder = lib.versionOlder pythonVersion;
     inherit hasDistutilsCxxPatch;
-    # Remove after 24.11 is released.
-    pythonForBuild =
-      lib.warnIf (lib.isInOldestRelease 2311) "`pythonForBuild` (from `python*`) has been renamed to `pythonOnBuildForHost`"
-        pythonOnBuildForHost_overridden;
     pythonOnBuildForHost = pythonOnBuildForHost_overridden;
 
     tests = callPackage ./tests.nix {

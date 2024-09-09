@@ -4,9 +4,14 @@
   freetype, tradcpp, fontconfig, meson, ninja, ed, fontforge,
   libGL, spice-protocol, zlib, libGLU, dbus, libunwind, libdrm, netbsd,
   ncompress, updateAutotoolsGnuConfigScriptsHook,
-  mesa, udev, bootstrap_cmds, bison, flex, clangStdenv, autoreconfHook,
+  mesa, udev, bison, flex, autoreconfHook,
   mcpp, libepoxy, openssl, pkg-config, llvm, libxslt, libxcrypt, hwdata,
-  ApplicationServices, Carbon, Cocoa, Xplugin,
+  # TODO: core-pkgs: support darwin
+  bootstrap_cmds ? null,
+  ApplicationServices ? null,
+  Carbon ? null,
+  Cocoa ? null,
+  Xplugin ? null,
   xorg, windows
 }:
 
@@ -983,9 +988,7 @@ self: super:
     configureFlags = [ "--with-cursordir=$(out)/share/icons" ];
   });
 
-  xinit = (super.xinit.override {
-    stdenv = if isDarwin then clangStdenv else stdenv;
-  }).overrideAttrs (attrs: {
+  xinit = super.xinit.overrideAttrs (attrs: {
     nativeBuildInputs = attrs.nativeBuildInputs ++ lib.optional isDarwin bootstrap_cmds;
     depsBuildBuild = [ buildPackages.stdenv.cc ];
     configureFlags = [

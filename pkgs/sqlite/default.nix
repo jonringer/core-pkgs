@@ -2,7 +2,10 @@
 , updateAutotoolsGnuConfigScriptsHook
 
 # for tests
-, python3Packages, sqldiff, sqlite-analyzer, tracker
+, python3Packages ? { }
+, sqldiff ? null
+, sqlite-analyzer ? null
+, tracker ? null
 
 # uses readline & ncurses for a better interactive experience if set to true
 , interactive ? false

@@ -51,7 +51,7 @@ let
       ++ lib.optionals lld17Plus [ "LDFLAGS+=-Wl,--undefined-version" ]
     ;
 
-    nativeBuildCheckInputs = lib.optionals doCheck [
+    nativeBuildInputs = [
       perl
     ];
 
