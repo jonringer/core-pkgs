@@ -5,7 +5,7 @@
 , itstool, libbsd, libxml2, libxslt
 , libxcrypt, pkg-config
 , glibcCross ? null
-, pam ? null
+, pam
 , withTcb ? lib.meta.availableOn stdenv.hostPlatform tcb, tcb
 }:
 let

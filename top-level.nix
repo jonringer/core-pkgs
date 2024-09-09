@@ -29,6 +29,25 @@ in
 
   db_4 = callPackage ./pkgs/db/db-4.8.nix { };
 
+  docbook_xml_dtd_412 = callPackage ./pkgs/docbook-xml-dtd/4.1.2.nix { };
+
+  docbook_xml_dtd_43 = callPackage ./pkgs/docbook-xml-dtd/4.3.nix { };
+
+  docbook_xml_dtd_44 = callPackage ./pkgs/docbook-xml-dtd/4.4.nix { };
+
+  docbook_xml_dtd_45 = callPackage ./pkgs/docbook-xml-dtd/4.5.nix { };
+
+  docbook_xml_ebnf_dtd = callPackage ./pkgs/docbook-xml-dtd/docbook-ebnf { };
+
+  inherit (callPackage ./pkgs/docbook_xsl { })
+    docbook-xsl-nons
+    docbook-xsl-ns
+    ;
+
+  # TODO: move this to aliases
+  docbook_xsl = docbook-xsl-nons;
+  docbook_xsl_ns = docbook-xsl-ns;
+
   fetchgit = (callPackage ./build-support/fetchgit {
     git = buildPackages.gitMinimal;
     cacert = buildPackages.cacert;
@@ -145,6 +164,8 @@ in
 
   libsoup_3 = callPackage ./pkgs/libsoup/3.x.nix { };
 
+  linux-pam = pam;
+
   memstreamHook = makeSetupHook {
     name = "memstream-hook";
     propagatedBuildInputs = [ memstream ];
@@ -192,6 +213,7 @@ in
 
   perlInterpreters = callPackage ./pkgs/perl { };
   perl = perlInterpreters.perl538;
+  perlPackages = perl.pkgs;
 
   pkg-config = callPackage ./build-support/pkg-config-wrapper { };
 
@@ -199,9 +221,20 @@ in
     then callPackage ./os-specific/linux/procps-ng { }
     else throw "non-linux procps is not supported yet";
 
+  inherit (callPackage ./python { })
+    python310
+    python311
+    python312
+    pypy
+    ;
   removeReferencesTo = callPackage ./build-support/remove-references-to {
     inherit (darwin) signingUtils;
   };
+
+  shortenPerlShebang = makeSetupHook {
+    name = "shorten-perl-shebang-hook";
+    propagatedBuildInputs = [ dieHook ];
+  } ./build-support/setup-hooks/shorten-perl-shebang.sh;
 
   substitute = callPackage ./build-support/substitute/substitute.nix { };
 
@@ -211,6 +244,14 @@ in
 
   swig_3 = prev.swig;
   swig_4 = callPackage ./pkgs/swig/4.nix { };
+
+  tcl = tcl_8_6;
+  tcl_8_6 = callPackage ./pkgs/tcl/8.6.nix { };
+  tcl_8_5 = callPackage ./pkgs/tcl/8.5.nix { };
+
+  tk = tcl_8_6;
+  tk_8_6 = callPackage ./pkgs/tk/8.6.nix { };
+  tk_8_5 = callPackage ./pkgs/tk/8.5.nix { tcl = tcl_8_5; };
 
   libxcrypt = prev.libxcrypt.override {
     # Prevent infinite recursion
@@ -227,6 +268,11 @@ in
     systemdSupport = false;
     translateManpages = false;
   };
+
+  xorg = callPackage ./xorg { };
+  inherit (xorg)
+    libX11
+    ;
 
   # Support windows
   windows = {
