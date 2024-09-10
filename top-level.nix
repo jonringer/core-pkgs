@@ -25,6 +25,22 @@ final: prev: with final; {
     };
   } ./build-support/setup-hooks/auto-patchelf.sh;
 
+  boostPackages = callPackage ./pkgs/boost { };
+  inherit (boostPackages)
+    boost175
+    boost177
+    boost178
+    boost179
+    boost180
+    boost181
+    boost182
+    boost183
+    boost184
+    boost185
+    boost186
+    ;
+  boost = boost186;
+
   buildEnv = callPackage ./build-support/buildenv { }; # not actually a package
 
   c-aresMinimal = callPackage ./pkgs/c-ares { withCMake = false; };
@@ -32,6 +48,10 @@ final: prev: with final; {
   closureInfo = callPackage ../build-support/closure-info.nix { };
 
   cmakeMinimal = prev.cmake.override { isMinimalBuild = true; };
+
+  copyPkgconfigItems = makeSetupHook {
+    name = "copy-pkg-config-items-hook";
+  } ./build-support/setup-hooks/copy-pkgconfig-items.sh;
 
   curlMinimal = prev.curl;
 
@@ -240,6 +260,9 @@ final: prev: with final; {
 
   grpc = null;
 
+  icu-versions = callPackage ./pkgs/icu { };
+  icu = icu-versions.icu74;
+
   installShellFiles = callPackage ./build-support/install-shell-files { };
 
   # TODO: core-pkgs: move openGL into it's own file
@@ -408,10 +431,14 @@ final: prev: with final; {
 
   makeBinaryWrapper = callPackage ./build-support/setup-hooks/make-binary-wrapper { };
 
+  makePkgconfigItem = callPackage ./build-support/make-pkgconfigitem { };
+
   memstreamHook = makeSetupHook {
     name = "memstream-hook";
     propagatedBuildInputs = [ memstream ];
   } ./pkgs/memstream/setup-hook.sh;
+
+  mpi = openmpi;
 
   # TODO: support NixOS tests
   nixosTests = { };
