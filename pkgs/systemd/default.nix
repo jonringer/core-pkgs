@@ -20,7 +20,8 @@
 , autoPatchelfHook
 
   # glib is only used during tests (test-bus-gvariant, test-bus-marshal)
-, glib
+  # TODO: core-pkgs: enable tests and glib
+, glib ? null
 , gettext
 , python3Packages
 

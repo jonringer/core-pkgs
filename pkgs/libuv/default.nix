@@ -10,13 +10,13 @@
 # for passthru.tests
 , bind
 , cmake
-, knot-resolver
-, sbclPackages
-, luajitPackages
-, mosquitto
-, neovim
-, nodejs
-, ocamlPackages
+, knot-resolver ? null
+, sbclPackages ? null
+, luajitPackages ? null
+, mosquitto ? null
+, neovim ? null
+, nodejs ? null
+, ocamlPackages ? null
 , python3
 , testers
 }:

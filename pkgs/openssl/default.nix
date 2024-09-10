@@ -71,7 +71,7 @@ let
 
     nativeBuildInputs =
          lib.optional (!stdenv.hostPlatform.isWindows) makeWrapper
-     # ++ [ perl ]
+      ++ [ perl ]
       ++ lib.optionals static [ removeReferencesTo ];
     buildInputs = lib.optional withCryptodev cryptodev
       ++ lib.optional withZlib zlib;

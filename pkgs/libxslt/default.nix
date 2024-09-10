@@ -74,6 +74,7 @@ stdenv.mkDerivation (finalAttrs: {
   passthru = {
     inherit pythonSupport;
 
+    # TODO
     updateScript = gnome.updateScript {
       packageName = "libxslt";
       versionPolicy = "none";

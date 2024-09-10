@@ -2,7 +2,7 @@
   lib, stdenv, makeWrapper, fetchurl, fetchpatch, fetchFromGitLab, buildPackages,
   automake, autoconf, libiconv, libtool, intltool, gettext, python3, perl,
   freetype, tradcpp, fontconfig, meson, ninja, ed, fontforge,
-  libGL, spice-protocol, zlib, libGLU, dbus, libunwind, libdrm, netbsd,
+  libGL, spice-protocol, zlib, libGLU, dbus, libunwind, libdrm,
   ncompress, updateAutotoolsGnuConfigScriptsHook,
   mesa, udev, bison, flex, autoreconfHook,
   mcpp, libepoxy, openssl, pkg-config, llvm, libxslt, libxcrypt, hwdata,
@@ -12,7 +12,8 @@
   Carbon ? null,
   Cocoa ? null,
   Xplugin ? null,
-  xorg, windows
+  xorg, windows,
+  netbsd ? null
 }:
 
 let

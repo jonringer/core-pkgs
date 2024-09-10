@@ -2,11 +2,34 @@
 # This mainly serves as a way to define attrs at the top-level of pkgs which
 # require more than just passing default arguments to nix expressions
 
-final: prev: with final; let
+final: prev: with final; {
+
   inherit (final.lib) recurseIntoAttrs;
-in {
+
+  lib = prev.lib.extend(self: _: {
+    # Add maintainer information
+    maintainers = import ./maintainers/maintainer-list.nix;
+    teams = import ./maintainers/team-list.nix { lib = self; };
+  });
+
+  inherit (callPackages ./apparmor { })
+    libapparmor apparmor-utils apparmor-bin-utils apparmor-parser apparmor-pam
+    apparmor-profiles apparmor-kernel-patches apparmorRulesFromClosure;
+
+  autoPatchelfHook = makeSetupHook {
+    name = "auto-patchelf-hook";
+    propagatedBuildInputs = [ bintools ];
+    substitutions = {
+      pythonInterpreter = "${python3.withPackages (ps: [ ps.pyelftools ])}/bin/python";
+      autoPatchelfScript = ./build-support/setup-hooks/auto-patchelf.py;
+    };
+  } ./build-support/setup-hooks/auto-patchelf.sh;
+
+  buildEnv = callPackage ./build-support/buildenv { }; # not actually a package
 
   c-aresMinimal = callPackage ./pkgs/c-ares { withCMake = false; };
+
+  closureInfo = callPackage ../build-support/closure-info.nix { };
 
   cmakeMinimal = prev.cmake.override { isMinimalBuild = true; };
 
@@ -20,6 +43,26 @@ in {
     brotliSupport = true;
   });
 
+  # TODO: core-pkgs: move to build-support
+  ensureNewerSourcesHook = { year }: makeSetupHook {
+    name = "ensure-newer-sources-hook";
+  } (writeScript "ensure-newer-sources-hook.sh" ''
+      postUnpackHooks+=(_ensureNewerSources)
+      _ensureNewerSources() {
+        local r=$sourceRoot
+        # Avoid passing option-looking directory to find. The example is diffoscope-269:
+        #   https://salsa.debian.org/reproducible-builds/diffoscope/-/issues/378
+        [[ $r == -* ]] && r="./$r"
+        '${findutils}/bin/find' "$r" \
+          '!' -newermt '${year}-01-01' -exec touch -h -d '${year}-01-02' '{}' '+'
+      }
+    '');
+
+  # Zip file format only allows times after year 1980, which makes e.g. Python
+  # wheel building fail with:
+  # ValueError: ZIP does not support timestamps before 1980
+  ensureNewerSourcesForZipFilesHook = ensureNewerSourcesHook { year = "1980"; };
+
   # TODO: support darwin builds
   darwin = {
     autoSignDarwinBinariesHook = null;
@@ -31,6 +74,8 @@ in {
   db_4 = callPackage ./pkgs/db/db-4.8.nix { };
 
   docbook_xml_dtd_412 = callPackage ./pkgs/docbook-xml-dtd/4.1.2.nix { };
+
+  docbook_xml_dtd_42 = callPackage ./pkgs/docbook-xml-dtd/4.2.nix { };
 
   docbook_xml_dtd_43 = callPackage ./pkgs/docbook-xml-dtd/4.3.nix { };
 
@@ -67,12 +112,14 @@ in {
     version = 1;
   };
 
-  fetchpatch2 = callPackage ../build-support/fetchpatch {
+  fetchpatch2 = callPackage ./build-support/fetchpatch {
     patchutils = __splicedPackages.patchutils_0_4_2;
   } // {
     tests = pkgs.tests.fetchpatch2;
     version = 2;
   };
+
+  fetchPypi = callPackage ./build-support/fetchpypi { };
 
   # `fetchurl' downloads a file from the network.
   fetchurl =
@@ -142,6 +189,11 @@ in {
     name = "find-xml-catalogs-hook";
   } ./build-support/setup-hooks/find-xml-catalogs.sh;
 
+  # TODO: core-pkgs: darwin support
+  fixDarwinDylibNames = null;
+
+  # TODO: core-pkgs: make less ugly
+  fusePackages = prev.fuse;
   fuse_2 = prev.fuse.fuse_2;
   fuse_3 = prev.fuse.fuse_3;
   fuse = prev.fuse.fuse_3;
@@ -168,8 +220,21 @@ in {
     withLibsecret = !stdenv.isDarwin;
   };
 
+    glib = callPackage ../development/libraries/glib (let
+    glib-untested = glib.overrideAttrs { doCheck = false; };
+  in {
+    # break dependency cycles
+    # these things are only used for tests, they don't get into the closure
+    shared-mime-info = shared-mime-info.override { glib = glib-untested; };
+    desktop-file-utils = desktop-file-utils.override { glib = glib-untested; };
+    dbus = dbus.override { enableSystemd = false; };
+  });
 
   glibcLocalesUtf8 = prev.glibcLocales.override { allLocales = false; };
+
+  # TODO: core-pkgs: determine if gnome pkgset should go in core or "pkgs"
+  # If it shouldn't be in core, move gnome.update-script to this repo
+  gnome = { };
 
   gpm_ncurses = gpm.override { withNcurses = true; };
 
@@ -239,14 +304,116 @@ in {
 
   libsoup_3 = callPackage ./pkgs/libsoup/3.x.nix { };
 
+  # TODO: core-pkgs: just replace usages with util-linuxMinimal?
+  libuuid = if stdenv.isLinux
+    then util-linuxMinimal
+    else null;
+
   linux-pam = pam;
+
+  # TODO: core-pkgs: cleanup llvm aliases packageSets
+  lld = llvmPackages.lld;
+  lld_12 = llvmPackages_12.lld;
+  lld_13 = llvmPackages_13.lld;
+  lld_14 = llvmPackages_14.lld;
+  lld_15 = llvmPackages_15.lld;
+  lld_16 = llvmPackages_16.lld;
+  lld_17 = llvmPackages_17.lld;
+
+  lldb = llvmPackages.lldb;
+  lldb_12 = llvmPackages_12.lldb;
+  lldb_13 = llvmPackages_13.lldb;
+  lldb_14 = llvmPackages_14.lldb;
+  lldb_15 = llvmPackages_15.lldb;
+  lldb_16 = llvmPackages_16.lldb;
+  lldb_17 = llvmPackages_17.lldb;
+
+  llvm = llvmPackages.llvm;
+  llvm_12 = llvmPackages_12.llvm;
+  llvm_13 = llvmPackages_13.llvm;
+  llvm_14 = llvmPackages_14.llvm;
+  llvm_15 = llvmPackages_15.llvm;
+  llvm_16 = llvmPackages_16.llvm;
+  llvm_17 = llvmPackages_17.llvm;
+
+  mlir_16 = llvmPackages_16.mlir;
+  mlir_17 = llvmPackages_17.mlir;
+
+  libllvm = llvmPackages.libllvm;
+  llvm-manpages = llvmPackages.llvm-manpages;
+
+  llvmPackages = let
+    # This returns the minimum supported version for the platform. The
+    # assumption is that or any later version is good.
+    choose = platform:
+      /**/ if platform.isDarwin then 16
+      else if platform.isFreeBSD then 18
+      else if platform.isOpenBSD then 18
+      else if platform.isAndroid then 12
+      else if platform.isLinux then 18
+      else if platform.isWasm then 16
+      # For unknown systems, assume the latest version is required.
+      else 18;
+    # We take the "max of the mins". Why? Since those are lower bounds of the
+    # supported version set, this is like intersecting those sets and then
+    # taking the min bound of that.
+    minSupported = toString (lib.trivial.max (choose stdenv.hostPlatform) (choose
+      stdenv.targetPlatform));
+  in pkgs.${"llvmPackages_${minSupported}"};
+
+  llvmPackages_12 = recurseIntoAttrs (callPackage ./pkgs/llvm/12 ({
+    inherit (stdenvAdapters) overrideCC;
+    buildLlvmTools = buildPackages.llvmPackages_12.tools;
+    targetLlvmLibraries = targetPackages.llvmPackages_12.libraries or llvmPackages_12.libraries;
+    targetLlvm = targetPackages.llvmPackages_12.llvm or llvmPackages_12.llvm;
+  }));
+
+  inherit (rec {
+    llvmPackagesSet = recurseIntoAttrs (callPackages ./pkgs/llvm { });
+
+    llvmPackages_13 = llvmPackagesSet."13";
+    llvmPackages_14 = llvmPackagesSet."14";
+    llvmPackages_15 = llvmPackagesSet."15";
+    llvmPackages_16 = llvmPackagesSet."16";
+    llvmPackages_17 = llvmPackagesSet."17";
+
+    llvmPackages_18 = llvmPackagesSet."18";
+    clang_18 = llvmPackages_18.clang;
+    lld_18 = llvmPackages_18.lld;
+    lldb_18 = llvmPackages_18.lldb;
+    llvm_18 = llvmPackages_18.llvm;
+
+    llvmPackages_19 = llvmPackagesSet."19";
+    clang_19 = llvmPackages_19.clang;
+    lld_19 = llvmPackages_19.lld;
+    lldb_19 = llvmPackages_19.lldb;
+    llvm_19 = llvmPackages_19.llvm;
+    bolt_19 = llvmPackages_19.bolt;
+  }) llvmPackages_13
+    llvmPackages_14
+    llvmPackages_15
+    llvmPackages_16
+    llvmPackages_17
+    llvmPackages_18
+    clang_18
+    lld_18
+    lldb_18
+    llvm_18
+    llvmPackages_19
+    clang_19
+    lld_19
+    lldb_19
+    llvm_19
+    bolt_19;
+
+  makeBinaryWrapper = callPackage ./build-support/setup-hooks/make-binary-wrapper { };
 
   memstreamHook = makeSetupHook {
     name = "memstream-hook";
     propagatedBuildInputs = [ memstream ];
   } ./pkgs/memstream/setup-hook.sh;
 
-  # TOOD: support NixOS tests
+  # TODO: support NixOS tests
   nixosTests = { };
 
   opensshPackages = dontRecurseIntoAttrs (callPackage ./pkgs/openssh {});
@@ -292,6 +459,14 @@ in {
 
   pkg-config = callPackage ./build-support/pkg-config-wrapper { };
 
+  # These are used when buiding compiler-rt / libgcc, prior to building libc.
+  preLibcCrossHeaders = let
+    inherit (stdenv.targetPlatform) libc;
+  in     if stdenv.targetPlatform.isMinGW then targetPackages.windows.mingw_w64_headers or windows.mingw_w64_headers
+    else if libc == "nblibc" then targetPackages.netbsd.headers or netbsd.headers
+    else if libc == "libSystem" && stdenv.targetPlatform.isAarch64 then targetPackages.darwin.LibsystemCross or darwin.LibsystemCross
+    else null;
+
   procps = if stdenv.isLinux
     then callPackage ./os-specific/linux/procps-ng { }
     else throw "non-linux procps is not supported yet";
@@ -304,6 +479,7 @@ in {
     ;
   python = python3;
   python3 = python311;
+  python3Packages = recurseIntoAttrs python3.pkgs;
 
   removeReferencesTo = callPackage ./build-support/remove-references-to {
     inherit (darwin) signingUtils;
@@ -327,6 +503,8 @@ in {
   tcl_8_6 = callPackage ./pkgs/tcl/8.6.nix { };
   tcl_8_5 = callPackage ./pkgs/tcl/8.5.nix { };
 
+  tests = callPackage ./test { };
+
   tk = tcl_8_6;
   tk_8_6 = callPackage ./pkgs/tk/8.6.nix { };
   tk_8_5 = callPackage ./pkgs/tk/8.5.nix { tcl = tcl_8_5; };
@@ -339,6 +517,8 @@ in {
       fetchurl = stdenv.fetchurlBoot;
     };
   };
+
+  update-python-libraries = callPackage ./python/update-python-libraries { };
 
   util-linuxMinimal = util-linux.override {
     nlsSupport = false;
@@ -371,11 +551,19 @@ in {
 
   in recurseIntoAttrs xorgPackages;
 
-
   inherit (xorg)
     libX11
     xorgproto
     ;
+
+  # Unix tools
+  unixtools = recurseIntoAttrs (callPackages ./unixtools.nix { });
+  inherit (unixtools) hexdump ps logger eject umount
+                      mount wall hostname more sysctl getconf
+                      getent locale killall xxd watch;
+
+  # TODO: core-pkgs: darwin support
+  xcbuild = null;
 
   # Support windows
   windows = {
