@@ -288,8 +288,7 @@ stdenv.mkDerivation (finalAttrs: {
     homepage = "https://arrow.apache.org/docs/cpp/";
     license = licenses.asl20;
     platforms = platforms.unix;
-    maintainers = with maintainers; [
-    ];
+    maintainers = with maintainers; [ ];
     pkgConfigModules = [
       "arrow"
       "arrow-acero"

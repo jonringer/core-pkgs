@@ -37,6 +37,6 @@ buildPythonPackage rec {
     description = "Experimental type system extensions for programs checked with the mypy typechecker";
     homepage = "https://www.mypy-lang.org";
     license = licenses.mit;
-    maintainers = with maintainers; [ lnl7 ];
+    maintainers = with maintainers; [ ];
   };
 }

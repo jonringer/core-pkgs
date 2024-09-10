@@ -57,7 +57,7 @@ let
         bsd2
         asl20
       ];
-      maintainers = teams.python.members ++ (with maintainers; [ bennofs ]);
+      maintainers = teams.python.members ++ (with maintainers; [ ]);
     };
   };
 in
