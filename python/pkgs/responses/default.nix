@@ -65,6 +65,6 @@ buildPythonPackage rec {
     homepage = "https://github.com/getsentry/responses";
     changelog = "https://github.com/getsentry/responses/blob/${version}/CHANGES";
     license = licenses.asl20;
-    maintainers = with maintainers; [ fab ];
+    maintainers = with maintainers; [ ];
   };
 }

@@ -302,7 +302,7 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Cross-platform media player and streaming server";
     homepage = "https://www.videolan.org/vlc/";
     license = lib.licenses.lgpl21Plus;
-    maintainers = with lib.maintainers; [ AndersonTorres alois31 ];
+    maintainers = with lib.maintainers; [ ];
     platforms = lib.platforms.linux;
   };
 })

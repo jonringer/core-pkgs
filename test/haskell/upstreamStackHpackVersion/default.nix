@@ -142,7 +142,7 @@ stdenv.mkDerivation {
 
   meta = with lib; {
     description = "Test that the stack in Nixpkgs uses the same version of Hpack as the upstream stack release";
-    maintainers = with maintainers; [ cdepillabout ];
+    maintainers = with maintainers; [ ];
 
     # This derivation internally runs a statically-linked version of stack from
     # upstream.  This statically-linked version of stack is only available for

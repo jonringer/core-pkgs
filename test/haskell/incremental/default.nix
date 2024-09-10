@@ -30,6 +30,6 @@ let
 in
   temporary-incremental-build.overrideAttrs (old: {
     meta = {
-      maintainers = lib.teams.mercury.members;
+      maintainers = [ ];
     };
   })

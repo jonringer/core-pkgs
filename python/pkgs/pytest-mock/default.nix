@@ -48,6 +48,6 @@ buildPythonPackage rec {
     homepage = "https://github.com/pytest-dev/pytest-mock";
     changelog = "https://github.com/pytest-dev/pytest-mock/blob/v${version}/CHANGELOG.rst";
     license = licenses.mit;
-    maintainers = with maintainers; [ dotlambda ];
+    maintainers = with maintainers; [ ];
   };
 }

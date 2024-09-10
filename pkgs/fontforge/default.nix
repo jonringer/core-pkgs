@@ -77,6 +77,6 @@ stdenv.mkDerivation rec {
     homepage = "https://fontforge.github.io";
     platforms = platforms.all;
     license = licenses.bsd3;
-    maintainers = [ maintainers.erictapen ];
+    maintainers = [ ];
   };
 }

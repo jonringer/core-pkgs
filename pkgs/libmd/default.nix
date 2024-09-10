@@ -24,7 +24,7 @@ stdenv.mkDerivation (finalAttrs: {
     # Git: https://git.hadrons.org/cgit/libmd.git
     description = "Message Digest functions from BSD systems";
     license = with licenses; [ bsd3 bsd2 isc beerware publicDomain ];
-    maintainers = with maintainers; [ primeos ];
+    maintainers = with maintainers; [ ];
     platforms = platforms.unix;
   };
 })

@@ -94,6 +94,6 @@ stdenv.mkDerivation rec {
     description = "Linux keyboard tools and keyboard maps";
     platforms = platforms.linux;
     license = licenses.gpl2Plus;
-    maintainers = with maintainers; [ davidak ];
+    maintainers = with maintainers; [ ];
   };
 }

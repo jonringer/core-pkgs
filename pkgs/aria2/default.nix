@@ -1,7 +1,9 @@
 { lib, stdenv, fetchFromGitHub, pkg-config, autoreconfHook
 , gnutls, c-ares, libxml2, sqlite, zlib, libssh2
 , cppunit, sphinx
-, Security, nixosTests
+
+, Security ? null
+, nixosTests
 }:
 
 stdenv.mkDerivation rec {
@@ -48,6 +50,6 @@ stdenv.mkDerivation rec {
     mainProgram = "aria2c";
     license = licenses.gpl2Plus;
     platforms = platforms.unix;
-    maintainers = with maintainers; [ Br1ght0ne koral timhae ];
+    maintainers = with maintainers; [ ];
   };
 }

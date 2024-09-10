@@ -827,7 +827,7 @@ stdenv.mkDerivation (finalAttrs: {
       ofl
       publicDomain
     ];
-    maintainers = with lib.maintainers; [ flokli kloenk ];
+    maintainers = with lib.maintainers; [ ];
     platforms = lib.platforms.linux;
     priority = 10;
     badPlatforms = [

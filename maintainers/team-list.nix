@@ -39,5 +39,14 @@ with lib.maintainers; {
     enableFeatureFreezePing = true;
   };
 
+  llvm = {
+    members = [
+    ];
+    scope = "Maintain LLVM and supporting tooling";
+    shortName = "LLVM";
+    enableFeatureFreezePing = true;
+  };
+
+
 }
 

@@ -215,7 +215,7 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Command line tool for transferring files with URL syntax";
     homepage    = "https://curl.se/";
     license = lib.licenses.curl;
-    maintainers = with lib.maintainers; [ lovek323 ];
+    maintainers = with lib.maintainers; [ ];
     platforms = lib.platforms.all;
     # Fails to link against static brotli or gss
     broken = stdenv.hostPlatform.isStatic && (brotliSupport || gssSupport || stdenv.hostPlatform.system == "x86_64-darwin");

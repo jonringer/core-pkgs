@@ -45,7 +45,7 @@ stdenv.mkDerivation (finalAttrs: {
     homepage = "https://github.com/akheron/jansson";
     changelog = "https://github.com/akheron/jansson/raw/${finalAttrs.src.rev}/CHANGES";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ getchoo ];
+    maintainers = with lib.maintainers; [ ];
     platforms = lib.platforms.all;
     pkgConfigModules = [ "jansson" ];
   };

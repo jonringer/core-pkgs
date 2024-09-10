@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
       module supports all the options of pam_cracklib.
     '';
     license = with licenses; [ bsd3 /* or */ gpl2Plus ];
-    maintainers = with maintainers; [ jk ];
+    maintainers = with maintainers; [ ];
     platforms = platforms.unix;
   };
 }

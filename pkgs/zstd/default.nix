@@ -130,6 +130,6 @@ stdenv.mkDerivation rec {
     license = with licenses; [ bsd3 ]; # Or, at your opinion, GPL-2.0-only.
     mainProgram = "zstd";
     platforms = platforms.all;
-    maintainers = with maintainers; [ orivej ];
+    maintainers = with maintainers; [ ];
   };
 }

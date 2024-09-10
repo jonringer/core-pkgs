@@ -36,7 +36,7 @@ rustPlatform.buildRustPackage rec {
     description = "Python 3 interpreter in written Rust";
     homepage = "https://rustpython.github.io";
     license = licenses.mit;
-    maintainers = with maintainers; [ prusnak ];
+    maintainers = with maintainers; [ ];
     #   = note: Undefined symbols for architecture x86_64:
     #       "_utimensat", referenced from:
     #           rustpython_vm::function::builtin::IntoPyNativeFn::into_func::... in

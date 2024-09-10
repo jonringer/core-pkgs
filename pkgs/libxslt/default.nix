@@ -86,7 +86,7 @@ stdenv.mkDerivation (finalAttrs: {
     description = "C library and tools to do XSL transformations";
     license = licenses.mit;
     platforms = platforms.all;
-    maintainers = with maintainers; [ jtojnar ];
+    maintainers = with maintainers; [ ];
     broken = pythonSupport && !libxml2.pythonSupport; # see #73102 for why this is not an assert
   };
 })

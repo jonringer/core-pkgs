@@ -47,6 +47,6 @@ stdenv.mkDerivation rec {
     description = "Debugging/program analysis tools for the eBPF subsystem";
     license     = [ licenses.gpl2Only licenses.bsd2 ];
     platforms   = platforms.linux;
-    maintainers = with maintainers; [ thoughtpolice ];
+    maintainers = with maintainers; [ ];
   };
 }

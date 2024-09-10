@@ -48,7 +48,7 @@ stdenv.mkDerivation rec {
     description = "Upstream mirror of libbpf";
     homepage = "https://github.com/libbpf/libbpf";
     license = with licenses; [ lgpl21 /* or */ bsd2 ];
-    maintainers = with maintainers; [ thoughtpolice vcunat saschagrunert martinetd ];
+    maintainers = with maintainers; [ ];
     platforms = platforms.linux;
   };
 }

@@ -82,7 +82,7 @@ stdenv.mkDerivation rec {
     changelog = "https://gitlab.com/cryptsetup/cryptsetup/-/raw/v${version}/docs/v${version}-ReleaseNotes";
     license = lib.licenses.gpl2Plus;
     mainProgram = "cryptsetup";
-    maintainers = with lib.maintainers; [ raitobezarius ];
+    maintainers = with lib.maintainers; [ ];
     platforms = with lib.platforms; linux;
   };
 }

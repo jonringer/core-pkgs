@@ -50,6 +50,6 @@ stdenv.mkDerivation rec {
     description = "Console utility and library for computing and verifying hash sums of files";
     license = licenses.bsd0;
     platforms = platforms.all;
-    maintainers = with maintainers; [ andrewrk ];
+    maintainers = with maintainers; [ ];
   };
 }

@@ -53,6 +53,6 @@ stdenv.mkDerivation {
     homepage = "https://rtmpdump.mplayerhq.hu/";
     license = licenses.gpl2Plus;
     platforms = platforms.unix;
-    maintainers = with maintainers; [ codyopel ];
+    maintainers = with maintainers; [ ];
   };
 }

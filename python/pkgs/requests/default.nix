@@ -90,6 +90,6 @@ buildPythonPackage rec {
     homepage = "http://docs.python-requests.org/";
     changelog = "https://github.com/psf/requests/blob/v${version}/HISTORY.md";
     license = licenses.asl20;
-    maintainers = with maintainers; [ fab ];
+    maintainers = with maintainers; [ ];
   };
 }

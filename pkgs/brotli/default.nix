@@ -67,7 +67,7 @@ stdenv.mkDerivation (finalAttrs: {
           http://www.ietf.org/id/draft-alakuijala-brotli
       '';
     license = licenses.mit;
-    maintainers = with maintainers; [ freezeboy ];
+    maintainers = with maintainers; [ ];
     pkgConfigModules = [
       "libbrotlidec"
       "libbrotlienc"

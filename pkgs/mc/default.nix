@@ -91,7 +91,7 @@ stdenv.mkDerivation rec {
     downloadPage = "https://www.midnight-commander.org/downloads/";
     homepage = "https://www.midnight-commander.org";
     license = licenses.gpl2Plus;
-    maintainers = with maintainers; [ sander ];
+    maintainers = with maintainers; [ ];
     platforms = with platforms; linux ++ darwin;
     mainProgram = "mc";
   };

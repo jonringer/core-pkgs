@@ -182,7 +182,7 @@ stdenv.mkDerivation rec {
 
     homepage = "https://gnutls.org/";
     license = licenses.lgpl21Plus;
-    maintainers = with maintainers; [ vcunat ];
+    maintainers = with maintainers; [ ];
     platforms = platforms.all;
   };
 }

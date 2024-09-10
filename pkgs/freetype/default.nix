@@ -117,6 +117,6 @@ stdenv.mkDerivation (finalAttrs: {
     license = licenses.gpl2Plus; # or the FreeType License (BSD + advertising clause)
     platforms = platforms.all;
     pkgConfigModules = [ "freetype2" ];
-    maintainers = with maintainers; [ ttuegel ];
+    maintainers = with maintainers; [ ];
   };
 })

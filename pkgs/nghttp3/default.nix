@@ -38,6 +38,6 @@ stdenv.mkDerivation rec {
     description = "nghttp3 is an implementation of HTTP/3 mapping over QUIC and QPACK in C";
     license = licenses.mit;
     platforms = platforms.unix;
-    maintainers = with maintainers; [ izorkin ];
+    maintainers = with maintainers; [ ];
   };
 }

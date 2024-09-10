@@ -19,7 +19,7 @@ stdenv.mkDerivation rec {
     homepage = "https://github.com/vcrhonek/hwdata";
     description = "Hardware Database, including Monitors, pci.ids, usb.ids, and video cards";
     license = lib.licenses.gpl2Plus;
-    maintainers = with lib.maintainers; [ pedrohlc ];
+    maintainers = with lib.maintainers; [ ];
     platforms = lib.platforms.all;
   };
 }

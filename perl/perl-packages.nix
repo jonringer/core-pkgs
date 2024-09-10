@@ -228,7 +228,7 @@ with self; {
     meta = {
       description = "Perl extension for getting the Longest Common Sub-Sequence";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -309,7 +309,7 @@ with self; {
       homepage = "https://metacpan.org/pod/Alien::FFI";
       description = "Build and make available libffi";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -492,7 +492,7 @@ with self; {
       description = "RSA public-key cryptosystem, using Math::BigInt";
       homepage = "https://github.com/danaj/Alt-Crypt-RSA-BigInt";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -876,7 +876,7 @@ with self; {
       description = "Fast CPAN module installer";
       homepage = "https://github.com/skaji/cpm";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.zakame ];
+      maintainers = [ ];
       mainProgram = "cpm";
     };
   };
@@ -892,7 +892,7 @@ with self; {
       description = "Write object oriented scripts with ease";
       homepage = "https://github.com/jhthorsen/applify";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -952,7 +952,7 @@ with self; {
       homepage = "https://spwhitton.name/tech/code/papersway/";
       license = lib.licenses.gpl3Plus;
       mainProgram = "papersway";
-      maintainers = with lib.maintainers; [ fgaz ];
+      maintainers = with lib.maintainers; [ ];
     };
   };
 
@@ -1062,7 +1062,7 @@ with self; {
       homepage = "https://metacpan.org/pod/Archive::Libarchive";
       description = "Modern Perl bindings to libarchive";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -1079,7 +1079,7 @@ with self; {
       homepage = "https://metacpan.org/pod/Archive::Libarchive::Extract";
       description = "Archive extracting mechanism (using libarchive)";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -1096,7 +1096,7 @@ with self; {
       homepage = "https://metacpan.org/pod/Archive::Libarchive::Peek";
       description = "Peek into archives without extracting them";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -1437,7 +1437,7 @@ with self; {
       description = "OATH One Time Passwords";
       homepage = "https://github.com/oalders/authen-oath";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -1496,7 +1496,7 @@ with self; {
     meta = {
       description = "Stringprep Profile for User Names and Passwords (RFC 4013)";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -1513,7 +1513,7 @@ with self; {
       description = "Salted Challenge Response Authentication Mechanism (RFC 5802)";
       homepage = "https://github.com/dagolden/Authen-SCRAM";
       license = with lib.licenses; [ asl20 ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -1959,7 +1959,7 @@ with self; {
     meta = {
       description = "BSD process resource limit and priority functions";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
     };
   };
 
@@ -2095,7 +2095,7 @@ with self; {
     meta = {
       description = "Perl extension to generate cryptographically-secure random bytes";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -2109,7 +2109,7 @@ with self; {
     meta = {
       description = "Tiny Perl extension to generate cryptographically-secure random bytes";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -2257,7 +2257,7 @@ with self; {
     meta = {
       description = "Sanity-check calling context";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -3086,7 +3086,7 @@ with self; {
     meta = {
       description = "Get the CDDB info for an audio cd";
       license = with lib.licenses; [ artistic1 ];
-      maintainers = [ maintainers.endgame ];
+      maintainers = [ ];
       mainProgram = "cddb.pl";
     };
   };
@@ -3340,7 +3340,7 @@ with self; {
       description = "Communicate with a smart card using PC/SC";
       homepage = "https://pcsc-perl.apdu.fr/";
       license = with lib.licenses; [ gpl2Plus ];
-      maintainers = with maintainers; [ abbradar anthonyroussel ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -3368,7 +3368,7 @@ with self; {
       description = "Alias for __PACKAGE__";
       homepage = "https://metacpan.org/pod/CLASS";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -3565,7 +3565,7 @@ with self; {
     meta = {
       description = "Base class for hierarchally ordered objects";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
     };
   };
 
@@ -4078,7 +4078,7 @@ with self; {
       description = "Run external commands and Perl code refs";
       homepage = "https://github.com/skaji/Command-Runner";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.zakame ];
+      maintainers = [ ];
     };
   };
 
@@ -4333,7 +4333,7 @@ with self; {
       description = "Module for reading .ini-style configuration files";
       homepage = "https://metacpan.org/release/Config-IniFiles";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
     };
   };
 
@@ -4518,7 +4518,7 @@ with self; {
     meta = {
       description = "Convert binary octets into ASCII armoured messages";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -4546,7 +4546,7 @@ with self; {
     meta = {
       description = "Encoding and decoding of base32 strings";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -4772,7 +4772,7 @@ with self; {
       description = "Create a minimal mirror of CPAN";
       homepage = "https://github.com/rjbs/CPAN-Mini";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
       mainProgram = "minicpan";
     };
   };
@@ -4804,7 +4804,7 @@ with self; {
       description = "Search packages in 02packages.details.txt";
       homepage = "https://github.com/skaji/CPAN-02Packages-Search";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.zakame ];
+      maintainers = [ ];
     };
   };
 
@@ -4975,7 +4975,7 @@ with self; {
     meta = {
       description = "CAST5 block cipher in pure Perl";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -5030,7 +5030,7 @@ with self; {
     meta = {
       description = "Triple-DES EDE encryption/decryption";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -5075,7 +5075,7 @@ with self; {
     meta = {
       description = "DSA Signatures and Key Generation";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -5118,7 +5118,7 @@ with self; {
     meta = {
       description = "Conversion utilities for encryption applications";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -5139,7 +5139,7 @@ with self; {
       description = "Secure memorable password generator";
       homepage = "http://www.bartb.ie/hsxkpasswd";
       license = with lib.licenses; [ bsd2 ];
-      maintainers = [ maintainers.dannixon ];
+      maintainers = [ ];
       mainProgram = "hsxkpasswd";
     };
     # Two tests fail as a result of https://github.com/bbusschots/hsxkpasswd/issues/42
@@ -5258,7 +5258,7 @@ with self; {
       description = "Provide strong randomness for seeding";
       homepage = "https://github.com/danaj/Crypt-Random-Seed";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -5344,7 +5344,7 @@ with self; {
       description = "Perl extension for the RIPEMD-160 Hash function";
       homepage = "https://wiki.github.com/toddr/Crypt-RIPEMD160";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -5399,7 +5399,7 @@ with self; {
     meta = {
       description = "Provide non blocking randomness";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -5416,7 +5416,7 @@ with self; {
       description = "Scrypt password based key derivation function";
       homepage = "https://github.com/DCIT/perl-Crypt-ScryptKDF";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -5446,7 +5446,7 @@ with self; {
       description = "Perl bindings for libsodium (NaCL)";
       homepage = "https://metacpan.org/release/Crypt-Sodium";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -5460,7 +5460,7 @@ with self; {
     meta = {
       description = "Twofish Encryption Algorithm";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -5488,7 +5488,7 @@ with self; {
       description = "Pure-Perl OpenPGP implementation";
       homepage = "https://github.com/btrott/Crypt-OpenPGP";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
       mainProgram = "pgplet";
     };
   };
@@ -5589,7 +5589,7 @@ with self; {
       description = "Perl extension to OpenSSL's X509 API";
       homepage = "https://github.com/dsully/perl-crypt-openssl-x509";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -5606,7 +5606,7 @@ with self; {
       description = "PBKDF2 password hash algorithm";
       homepage = "https://metacpan.org/release/Crypt-PBKDF2";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -5623,7 +5623,7 @@ with self; {
     meta = {
       description = "Cryptography in pure Perl";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -5641,7 +5641,7 @@ with self; {
     meta = {
       description = "Minimal Ed25519 bindings";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.thoughtpolice ];
+      maintainers = [ ];
     };
   };
 
@@ -5970,7 +5970,7 @@ with self; {
       description = "Hexadecial Dumper";
       homepage = "https://github.com/neilb/Data-HexDump";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ AndersonTorres ];
+      maintainers = with maintainers; [ ];
       mainProgram = "hexdump";
     };
   };
@@ -6057,7 +6057,7 @@ with self; {
       description = "Grep-like program for searching source code";
       homepage = "https://github.com/msgpack/msgpack-perl";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
       broken = stdenv.isDarwin; # never built on Hydra https://hydra.nixos.org/job/nixpkgs/staging-next/perl534Packages.DataMessagePack.x86_64-darwin
     };
   };
@@ -6307,7 +6307,7 @@ with self; {
       description = "Universally Unique Lexicographically Sortable Identifier";
       homepage = "https://metacpan.org/release/Data-ULID";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ sgo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -7080,7 +7080,7 @@ with self; {
     meta = {
       description = "Handle hardware MAC Addresses (EUI-48 and EUI-64)";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -7097,7 +7097,7 @@ with self; {
     meta = {
       description = "Resolve an Organizationally Unique Identifier";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -7183,7 +7183,7 @@ with self; {
       description = "MariaDB and MySQL driver for the Perl5 Database Interface (DBI)";
       homepage = "https://github.com/gooddata/DBD-MariaDB";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -7367,7 +7367,7 @@ with self; {
       description = "Create a temporary database from a DBIx::Class::Schema";
       homepage = "https://metacpan.org/pod/DBICx::TestDatabase";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -7432,7 +7432,7 @@ with self; {
       description = "Automatically set and update fields";
       homepage = "https://metacpan.org/pod/DBIx::Class::DynamicDefault";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -7479,7 +7479,7 @@ with self; {
       description = "Inflators to serialize data structures for DBIx::Class";
       homepage = "https://metacpan.org/release/DBIx-Class-InflateColumn-Serializer";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -7609,7 +7609,7 @@ with self; {
     meta = {
       description = "Read/write buffer class";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -7895,7 +7895,7 @@ with self; {
     meta = {
       description = "Perl interface to the MD2 Algorithm";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -7963,7 +7963,7 @@ with self; {
       description = "Perl extension for SHA-3";
       homepage = "https://metacpan.org/release/Digest-SHA3";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
       mainProgram = "sha3sum";
     };
   };
@@ -8616,7 +8616,7 @@ with self; {
       homepage = "https://www.matijs.net/software/msgconv/";
       description = ".MSG to mbox converter";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ peterhoeg ];
+      maintainers = with maintainers; [ ];
       mainProgram = "msgconvert";
     };
   };
@@ -8672,7 +8672,7 @@ with self; {
       description = "More casual approach to creating and sending Email:: emails";
       homepage = "https://github.com/rjbs/Email-Stuffer";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ sgo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -8732,7 +8732,7 @@ with self; {
       description = "High speed Base32 encoding using GMP with BigInt and MD5 support";
       homepage = "https://metacpan.org/release/Encode-Base32-GMP";
       license = with lib.licenses; [ mit ];
-      maintainers = with maintainers; [ sgo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -8978,7 +8978,7 @@ with self; {
       description = "Simplified safe evaluation of Perl code";
       homepage = "https://github.com/mkende/perl-eval-safe";
       license = licenses.mit;
-      maintainers = with maintainers; [ figsoda ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -9463,7 +9463,7 @@ with self; {
       homepage = "https://metacpan.org/pod/FFI::C";
       description = "C data types for FFI";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -9511,7 +9511,7 @@ with self; {
       homepage = "https://metacpan.org/pod/FFI::C::Stat";
       description = "Object-oriented FFI interface to native stat and lstat";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -9528,7 +9528,7 @@ with self; {
       homepage = "https://pl.atypus.org";
       description = "Write Perl bindings to non-Perl libraries with FFI. No XS required";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -9545,7 +9545,7 @@ with self; {
       homepage = "https://metacpan.org/pod/FFI::Platypus::Type::PtrObject";
       description = "Platypus custom type for an object wrapped around an opaque pointer";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -9562,7 +9562,7 @@ with self; {
       homepage = "https://metacpan.org/pod/FFI::Platypus::Type::Enum";
       description = "Custom platypus type for dealing with C enumerated types";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -9858,7 +9858,7 @@ with self; {
     meta = {
       description = "Simple filename and pathname matching";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
     };
   };
 
@@ -9872,7 +9872,7 @@ with self; {
     meta = {
       description = "File locking with fcntl(2)";
       license = with lib.licenses; [ artistic1 ];
-      maintainers = with maintainers; [ das_j ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -9886,7 +9886,7 @@ with self; {
     meta = {
       description = "Find matches to a pattern in a series of files and related functions";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
     };
   };
 
@@ -9902,7 +9902,7 @@ with self; {
       description = "FileHandle which supports multi-byte unget";
       homepage = "https://github.com/coppit/filehandle-unget";
       license = with lib.licenses; [ gpl2Only ];
-      maintainers = with maintainers; [ romildo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -10114,7 +10114,7 @@ with self; {
     meta = {
       description = "Pid File Manipulation";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
     };
   };
 
@@ -10201,7 +10201,7 @@ with self; {
       homepage = "https://metacpan.org/pod/File::ShareDir::Dist";
       description = "Locate per-dist shared files";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -10312,7 +10312,7 @@ with self; {
     meta = {
       description = "Perl extension for reading from continously updated files";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
     };
   };
 
@@ -10327,7 +10327,7 @@ with self; {
       description = "Update file access and modification times, optionally creating files if needed";
       homepage = "https://github.com/neilb/File-Touch";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
     };
   };
 
@@ -10385,7 +10385,7 @@ with self; {
       description = "Cross-platform way to get system-wide & user private temporary directory";
       homepage = "https://metacpan.org/release/File-Util-Tempdir";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -10443,7 +10443,7 @@ with self; {
       changelog = "https://github.com/finance-quote/finance-quote/releases/tag/v${version}";
       description = "Get stock and mutual fund quotes from various exchanges";
       license = with lib.licenses; [ gpl2Plus ];
-      maintainers = with lib.maintainers; [ nevivurn ];
+      maintainers = with lib.maintainers; [ ];
     };
   };
 
@@ -10588,7 +10588,7 @@ with self; {
     meta = {
       description = "Deferred subroutine syntax for futures";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.zakame ];
+      maintainers = [ ];
     };
   };
 
@@ -10605,7 +10605,7 @@ with self; {
     meta = {
       description = "Future-returning IO methods";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.zakame ];
+      maintainers = [ ];
     };
   };
 
@@ -10748,7 +10748,7 @@ with self; {
     meta = {
       description = "Interpolates script options from files into @ARGV or another array";
       license = with lib.licenses; [ artistic1 ];
-      maintainers = [ maintainers.pSub ];
+      maintainers = [ ];
     };
   };
 
@@ -10805,7 +10805,7 @@ with self; {
     meta = {
       description = "This is the Git.pm, plus the other files in the perl/Git directory, from github's git/git";
       license = with lib.licenses; [ gpl2Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
     };
   };
 
@@ -10823,7 +10823,7 @@ with self; {
     meta = {
       description = "Create fixup commits for topic branches";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.DamienCassou ];
+      maintainers = [ ];
       mainProgram = "git-autofixup";
     };
   };
@@ -11153,7 +11153,7 @@ with self; {
       description = "Search mailboxes for mail matching a regular expression";
       homepage = "https://github.com/coppit/grepmail";
       license = with lib.licenses; [ gpl2Only ];
-      maintainers = with maintainers; [ romildo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -11184,7 +11184,7 @@ with self; {
     meta = {
       description = "Perl extension providing access to the GSSAPIv2 library";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
     };
   };
 
@@ -12422,7 +12422,7 @@ with self; {
       description = "Cache HTTP::Tiny responses";
       homepage = "https://metacpan.org/release/HTTP-Tiny-Cache";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -12498,7 +12498,7 @@ with self; {
     meta = {
       description = "Generate QR Code with Imager using libqrencode";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ sgo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -12704,7 +12704,7 @@ with self; {
     meta = {
       description = "Use SSL/TLS with IO::Async";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.zakame ];
+      maintainers = [ ];
     };
   };
 
@@ -13197,7 +13197,7 @@ with self; {
       description = "Common utilities for IRC-related tasks";
       homepage = "https://metacpan.org/release/IRC-Utils";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ sgo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -13435,7 +13435,7 @@ with self; {
       description = "Validate data against a JSON schema";
       homepage = "https://github.com/mojolicious/json-validator";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -13557,7 +13557,7 @@ with self; {
       description = "Transforms TeX and LaTeX into XML/HTML/MathML";
       homepage = "https://dlmf.nist.gov/LaTeXML/";
       license = with lib.licenses; [ publicDomain ];
-      maintainers = with maintainers; [ xworld21 ];
+      maintainers = with maintainers; [ ];
       mainProgram = "latexmlc";
     };
   };
@@ -13941,7 +13941,7 @@ with self; {
       description = "Embed / expand oEmbed resources and other URL / links";
       homepage = "https://github.com/jhthorsen/linkembedder";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = with maintainers; [ sgo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -13957,7 +13957,7 @@ with self; {
     meta = {
       description = "Perl extension for reading and setting Access Control Lists for files by libacl linux library";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
     };
   };
 
@@ -14465,7 +14465,7 @@ with self; {
       description = "Perl module to rotate logfiles";
       homepage = "https://metacpan.org/dist/Logfile-Rotate";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -14480,7 +14480,7 @@ with self; {
       description = "Lightweight, flexible logging framework";
       homepage = "https://metacpan.org/release/Log-ger";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -14953,7 +14953,7 @@ with self; {
       description = "Fast and simple mbox folder reader";
       homepage = "https://github.com/coppit/mail-mbox-messageparser";
       license = with lib.licenses; [ gpl2Only ];
-      maintainers = with maintainers; [ romildo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -15060,7 +15060,7 @@ with self; {
       description = "Simple platform independent mailer";
       homepage = "https://github.com/neilb/Mail-Sendmail";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
     };
   };
 
@@ -15169,7 +15169,7 @@ with self; {
       homepage = "https://github.com/Grinnz/Math-Calc-Parser";
       broken = true;
       license = with lib.licenses; [ artistic2 ];
-      maintainers = with maintainers; [ sgo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -15302,7 +15302,7 @@ with self; {
       description = "Perl interface to the GMP integer functions";
       homepage = "https://github.com/sisyphus/math-gmpz";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ sgo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -15403,7 +15403,7 @@ with self; {
       description = "Utilities related to prime numbers, including fast sieves and factoring";
       homepage = "https://github.com/danaj/Math-Prime-Util";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -15421,7 +15421,7 @@ with self; {
       description = "Utilities related to prime numbers, using GMP";
       homepage = "https://github.com/danaj/Math-Prime-Util-GMP";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -15437,7 +15437,7 @@ with self; {
     meta = {
       description = "Generate a provable prime number, in pure Perl";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -15713,7 +15713,7 @@ with self; {
       description = "Comprehensive, DWIM-featured client to the MetaCPAN API";
       homepage = "https://github.com/metacpan/metacpan-client";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ sgo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -15807,7 +15807,7 @@ with self; {
       description = "Deal with RFC 2047 encoded words (improved)";
       homepage = "https://metacpan.org/pod/MIME::EncWords";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -15881,7 +15881,7 @@ with self; {
       description = "High performance job queue for Perl";
       homepage = "https://github.com/mojolicious/minion";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -15898,7 +15898,7 @@ with self; {
       homepage = "https://github.com/Difegue/Minion-Backend-Redis";
       description = "Redis backend for Minion job queue";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -15915,7 +15915,7 @@ with self; {
       description = "SQLite backend for Minion job queue";
       homepage = "https://github.com/Grinnz/Minion-Backend-SQLite";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -15932,7 +15932,7 @@ with self; {
       description = "MySQL backend for the Minion job queue";
       homepage = "https://github.com/preaction/Minion-Backend-mysql";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -16022,7 +16022,7 @@ with self; {
       description = "Parse cpmfile";
       homepage = "https://github.com/skaji/cpmfile";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.zakame ];
+      maintainers = [ ];
     };
   };
 
@@ -16336,7 +16336,7 @@ with self; {
       description = "Module::Install extension to include GitHub meta information in META.yml";
       homepage = "https://github.com/bingos/module-install-githubmeta";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -16353,7 +16353,7 @@ with self; {
       description = "Module::Install extension to automatically convert POD to a README";
       homepage = "https://github.com/bingos/module-install-readmefrompod";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -16370,7 +16370,7 @@ with self; {
       description = "Create README.mkdn from POD";
       homepage = "https://search.cpan.org/dist/Module-Install-ReadmeMarkdownFromPod";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -16385,7 +16385,7 @@ with self; {
     meta = {
       description = "Automatically sets repository URL from svn/svk/Git checkout";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -16626,7 +16626,7 @@ with self; {
       description = "Real-time web framework";
       homepage = "https://mojolicious.org";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = with maintainers; [ marcusramberg sgo thoughtpolice ];
+      maintainers = with maintainers; [ ];
       mainProgram = "mojo";
     };
   };
@@ -16643,7 +16643,7 @@ with self; {
       description = "Compress and convert css, less, sass, javascript and coffeescript files";
       homepage = "https://github.com/jhthorsen/mojolicious-plugin-assetpack";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = with maintainers; [ sgo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -16658,7 +16658,7 @@ with self; {
     meta = {
       description = "Globally Recognized Avatars for Mojolicious";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ sgo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -16689,7 +16689,7 @@ with self; {
       description = "Mojolicious Plugin for send mail";
       homepage = "https://github.com/sharifulin/Mojolicious-Plugin-Mail";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -16705,7 +16705,7 @@ with self; {
       description = "OpenAPI / Swagger plugin for Mojolicious";
       homepage = "https://github.com/jhthorsen/mojolicious-plugin-openapi";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -16721,7 +16721,7 @@ with self; {
       description = "\"render_file\" helper for Mojolicious";
       homepage = "https://github.com/koorchik/Mojolicious-Plugin-RenderFile";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -16737,7 +16737,7 @@ with self; {
       description = "Mojolicious server status";
       homepage = "https://mojolicious.org";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.thoughtpolice ];
+      maintainers = [ ];
     };
   };
 
@@ -16753,7 +16753,7 @@ with self; {
       description = "Plugin for enabling a Mojolicious app to log to syslog";
       homepage = "https://github.com/jhthorsen/mojolicious-plugin-syslog";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -16770,7 +16770,7 @@ with self; {
       homepage = "https://github.com/Grinnz/Mojolicious-Plugin-TemplateToolkit";
       description = "Template Toolkit renderer plugin for Mojolicious";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -16786,7 +16786,7 @@ with self; {
       description = "Render exceptions as text in command line user agents";
       homepage = "https://github.com/marcusramberg/mojolicious-plugin-textexceptions";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -16802,7 +16802,7 @@ with self; {
       description = "Mojolicious <3 Webpack";
       homepage = "https://github.com/jhthorsen/mojolicious-plugin-webpack";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -16818,7 +16818,7 @@ with self; {
       description = "Redis driver based on Mojo::IOLoop";
       homepage = "https://github.com/jhthorsen/mojo-redis";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -16834,7 +16834,7 @@ with self; {
     meta = {
       description = "SAML2 toolkit using the Mojo toolkit";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -16851,7 +16851,7 @@ with self; {
       description = "Tiny Mojolicious wrapper for SQLite";
       homepage = "https://github.com/Grinnz/Mojo-SQLite";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -16868,7 +16868,7 @@ with self; {
       description = "Mojolicious and Async MySQL/MariaDB";
       homepage = "https://github.com/jhthorsen/mojo-mysql";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -16885,7 +16885,7 @@ with self; {
       description = "(DISCOURAGED) Promises/A+ and flow-control helpers";
       homepage = "https://github.com/jberger/Mojo-IOLoop-Delay";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.zakame ];
+      maintainers = [ ];
     };
   };
 
@@ -16906,7 +16906,7 @@ with self; {
       description = "(DEPRECATED) run blocking functions asynchronously by forking";
       homepage = "https://github.com/jberger/Mojo-IOLoop-ForkCall";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.zakame ];
+      maintainers = [ ];
     };
   };
 
@@ -16923,7 +16923,7 @@ with self; {
       description = "JSON Web Token the Mojo way";
       homepage = "https://github.com/jberger/Mojo-JWT";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -16940,7 +16940,7 @@ with self; {
       description = "Mojolicious ♥ PostgreSQL";
       homepage = "https://mojolicious.org";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -16958,7 +16958,7 @@ with self; {
       description = "Caching, Non-blocking I/O HTTP, Local file and WebSocket user agent";
       homepage = "https://github.com/nicomen/mojo-useragent-cached";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -17352,7 +17352,7 @@ with self; {
       homepage = "https://metacpan.org/pod/Test::Archive::Libarchive";
       description = "Testing tools for Archive::Libarchive";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -18183,7 +18183,7 @@ with self; {
       description = "Perl bindings to the msgpack C library";
       homepage = "https://github.com/jacquesg/p5-MsgPack-Raw";
       license = with licenses; [ gpl1Plus /* or */ artistic1 ];
-      maintainers = with maintainers; [ figsoda ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -18249,7 +18249,7 @@ with self; {
       description = "Generates a database upgrade instruction set";
       homepage = "https://github.com/estrabd/mysqldiff";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
       mainProgram = "mysqldiff";
     };
   };
@@ -18312,7 +18312,7 @@ with self; {
       description = "Perl bindings for Neovim";
       homepage = "https://github.com/jacquesg/p5-Neovim-Ext";
       license = with licenses; [ gpl1Plus /* or */ artistic1 ];
-      maintainers = with maintainers; [ figsoda ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -18326,7 +18326,7 @@ with self; {
     meta = {
       description = "Non-blocking system DNS resolver";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -18465,7 +18465,7 @@ with self; {
     meta = {
       description = "Use HTTP with IO::Async";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.zakame ];
+      maintainers = [ ];
     };
   };
 
@@ -18481,7 +18481,7 @@ with self; {
     meta = {
       description = "Serve HTTP with IO::Async";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.anoa ];
+      maintainers = [ ];
     };
   };
 
@@ -18517,7 +18517,7 @@ with self; {
     meta = {
       description = "Use WebSockets with IO::Async";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.zakame ];
+      maintainers = [ ];
     };
   };
 
@@ -18547,7 +18547,7 @@ with self; {
     meta = {
       description = "Manipulate IPv4/IPv6 netblocks in CIDR notation";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.bjornfor ];
+      maintainers = [ ];
     };
   };
 
@@ -18561,7 +18561,7 @@ with self; {
     meta = {
       description = "Perl extension for merging IPv4 or IPv6 CIDR addresses";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -18814,7 +18814,7 @@ with self; {
       description = "Perl extension for manipulating IPv4/IPv6 addresses";
       homepage = "https://metacpan.org/pod/Net::IP::Lite";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -19449,7 +19449,7 @@ with self; {
     meta = {
       description = "NTLM authentication module";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.pSub ];
+      maintainers = [ ];
     };
   };
 
@@ -19507,7 +19507,7 @@ with self; {
     meta = {
       description = "Simple syntax for lexical field-based objects";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.zakame ];
+      maintainers = [ ];
     };
   };
 
@@ -19579,7 +19579,7 @@ with self; {
       description = "Client for talking to an Open API powered server";
       homepage = "https://github.com/jhthorsen/openapi-client";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -19623,7 +19623,7 @@ with self; {
     meta = {
       description = "Perl Open OpenDocument Connector";
       license = with lib.licenses; [ lgpl21Only ];
-      maintainers = [ maintainers.wentasah ];
+      maintainers = [ ];
     };
   };
 
@@ -19697,7 +19697,7 @@ with self; {
       description = "Perl extension for Apache ZooKeeper";
       homepage = "https://github.com/mark-5/p5-net-zookeeper";
       license = with lib.licenses; [ asl20 ];
-      maintainers = teams.deshaw.members ++ [ maintainers.ztzg ];
+      maintainers = [ ];
     };
   };
 
@@ -19819,7 +19819,7 @@ with self; {
       description = "Execute loops using parallel forked subprocesses";
       homepage = "https://github.com/pmorch/perl-Parallel-Loops";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -19835,7 +19835,7 @@ with self; {
       description = "Parallel processing using pipe(2) for communication and synchronization";
       homepage = "https://github.com/skaji/Parallel-Pipes";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.zakame ];
+      maintainers = [ ];
     };
   };
 
@@ -19931,7 +19931,7 @@ with self; {
     meta = {
       description = "General function library for safer, more secure programming";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
     };
   };
 
@@ -20044,7 +20044,7 @@ with self; {
       description = "Parser for the IRC protocol";
       homepage = "https://github.com/bingos/parse-irc";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ sgo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -20074,7 +20074,7 @@ with self; {
     meta = {
       description = "Parser/Generator of human-readable conf files";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
     };
   };
 
@@ -20243,7 +20243,7 @@ with self; {
       description = "Minimalist PBKDF2 (RFC 2898) with HMAC-SHA1 or HMAC-SHA2";
       homepage = "https://github.com/dagolden/PBKDF2-Tiny";
       license = with lib.licenses; [ asl20 ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -20601,7 +20601,7 @@ with self; {
       description = "LDAP client library";
       homepage = "https://ldap.perl.org";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
     };
   };
 
@@ -20668,7 +20668,7 @@ with self; {
       description = "Pure-Perl Core-Only replacement for pkg-config";
       homepage = "https://metacpan.org/pod/PkgConfig";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
       mainProgram = "ppkg-config";
     };
   };
@@ -20892,7 +20892,7 @@ with self; {
       description = "Perl Language Server";
       homepage = "https://github.com/FractalBoy/perl-language-server";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.artturin ];
+      maintainers = [ ];
       mainProgram = "pls";
     };
   };
@@ -20946,7 +20946,7 @@ with self; {
       description = "Portable, event-loop agnostic eventy networking and multitasking";
       homepage = "http://poe.perl.org";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
     };
   };
 
@@ -20961,7 +20961,7 @@ with self; {
       description = "Reusable tests for POE::Loop authors";
       homepage = "https://search.cpan.org/dist/POE-Test-Loops";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = teams.deshaw.members;
+      maintainers = [ ];
       mainProgram = "poe-gen-tests";
     };
   };
@@ -21055,7 +21055,7 @@ with self; {
     meta = {
       description = "Pattern-based Perl Recognizer";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.artturin ];
+      maintainers = [ ];
     };
   };
 
@@ -21225,7 +21225,7 @@ with self; {
       description = "Redis protocol parser/encoder with asynchronous capabilities";
       homepage = "https://github.com/und3f/protocol-redis";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -21241,7 +21241,7 @@ with self; {
       description = "Optimized pure-perl Redis protocol parser/encoder";
       homepage = "https://github.com/Grinnz/Protocol-Redis-Faster";
       license = with lib.licenses; [ artistic2 ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -21967,7 +21967,7 @@ with self; {
       description = "Date and time regexps";
       homepage = "https://github.com/manwar/Regexp-Common-time";
       license = with lib.licenses; [ artistic2 mit bsd3 ];
-      maintainers = [ maintainers.artturin ];
+      maintainers = [ ];
     };
   };
 
@@ -22361,7 +22361,7 @@ with self; {
       description = "Fast, compact, powerful binary deserialization";
       homepage = "https://github.com/Sereal/Sereal";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.thoughtpolice ];
+      maintainers = [ ];
     };
   };
 
@@ -22377,7 +22377,7 @@ with self; {
       description = "Fast, compact, powerful binary serialization";
       homepage = "https://github.com/Sereal/Sereal";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.thoughtpolice ];
+      maintainers = [ ];
     };
   };
 
@@ -22393,7 +22393,7 @@ with self; {
     meta = {
       description = "Fast, compact, powerful binary (de-)serialization";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.thoughtpolice ];
+      maintainers = [ ];
     };
   };
 
@@ -22446,7 +22446,7 @@ with self; {
       description = "Secure, efficient, simple random session token generation";
       homepage = "https://github.com/hoytech/Session-Token";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -22514,7 +22514,7 @@ with self; {
       description = "Comments that do more than just sit there";
       homepage = "https://github.com/neilb/Smart-Comments";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -23164,7 +23164,7 @@ with self; {
       description = "Simple diff to String";
       homepage = "https://github.com/yappo/p5-String-Diff";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -23717,7 +23717,7 @@ with self; {
     meta = {
       description = "Read Perl's symbol table programmatically";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -23791,7 +23791,7 @@ with self; {
     meta = {
       description = "Try/catch/finally syntax for perl";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.zakame ];
+      maintainers = [ ];
     };
   };
 
@@ -23804,7 +23804,7 @@ with self; {
     };
     meta = {
       description = "Use mmap to map in a file as a Perl variable";
-      maintainers = with maintainers; [ peterhoeg ];
+      maintainers = with maintainers; [ ];
       license = with lib.licenses; [ gpl2Plus ];
     };
   };
@@ -23819,7 +23819,7 @@ with self; {
     meta = {
       description = "Memory information";
       license = with lib.licenses; [ gpl2Plus ];
-      maintainers = [ maintainers.pSub ];
+      maintainers = [ ];
     };
   };
 
@@ -23861,7 +23861,7 @@ with self; {
     meta = {
       description = "Set CPU affinity for processes";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -24599,7 +24599,7 @@ with self; {
       homepage = "https://metacpan.org/pod/Test2::Tools::FFI";
       description = "Tools for testing FFI";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -24616,7 +24616,7 @@ with self; {
       homepage = "https://metacpan.org/pod/Test2::Tools::MemoryCycle";
       description = "Check for memory leaks and circular memory references";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ tomasajt ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -25522,7 +25522,7 @@ with self; {
       description = "Mysqld runner for tests";
       homepage = "https://github.com/kazuho/p5-test-mysqld";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -26489,7 +26489,7 @@ with self; {
       description = "Various subroutines to format text";
       homepage = "https://github.com/shlomif/perl-Module-Format";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ bcdarwin ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -26504,7 +26504,7 @@ with self; {
     meta = {
       description = "Generate a colorful HTML diff of strings/files";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -26587,7 +26587,7 @@ with self; {
       description = "Test environment setup for development with IDE";
       homepage = "https://github.com/wchristian/Test-InDistDir";
       license = with lib.licenses; [ wtfpl ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -26642,7 +26642,7 @@ with self; {
     meta = {
       description = "Generate random Latin looking text";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
       mainProgram = "lorem";
     };
   };
@@ -27077,7 +27077,7 @@ with self; {
     meta = {
       description = "Extract collocations and Ngrams from text";
       license = with lib.licenses; [ gpl2Plus ];
-      maintainers = [ maintainers.bzizou ];
+      maintainers = [ ];
     };
   };
 
@@ -27224,7 +27224,7 @@ with self; {
     meta = {
       description = "Hashes (and objects based on hashes) with encrypting fields";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -27470,7 +27470,7 @@ with self; {
     meta = {
       description = "Perl module to deal with time periods";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.winpat ];
+      maintainers = [ ];
     };
   };
 
@@ -27485,7 +27485,7 @@ with self; {
       description = "Object Oriented time objects";
       homepage = "https://metacpan.org/release/Time-Piece";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ sgo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -27768,7 +27768,7 @@ with self; {
     meta = {
       description = "Preparation of Internationalized Strings (RFC 3454)";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -27784,7 +27784,7 @@ with self; {
       description = "Encoding and decoding of UTF-8 encoding form";
       homepage = "https://github.com/chansen/p5-unicode-utf8";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = with maintainers; [ sgo ];
+      maintainers = with maintainers; [ ];
     };
   };
 
@@ -28066,7 +28066,7 @@ with self; {
     meta = {
       description = "File manager USING vim itself";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.chreekat ];
+      maintainers = [ ];
       mainProgram = "vidir";
     };
   };
@@ -28408,7 +28408,7 @@ with self; {
     meta = {
       description = "Perl extension for inclusive (1.0 and 1.1) and exclusive canonicalization of XML using libxml2";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.sgo ];
+      maintainers = [ ];
     };
   };
 
@@ -28962,7 +28962,7 @@ with self; {
     meta = {
       description = "XS functions to assist in parsing keyword syntax";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.zakame ];
+      maintainers = [ ];
     };
   };
 
@@ -28978,7 +28978,7 @@ with self; {
     meta = {
       description = "XS functions to assist in parsing sub-like syntax";
       license = with lib.licenses; [ artistic1 gpl1Plus ];
-      maintainers = [ maintainers.zakame ];
+      maintainers = [ ];
     };
   };
 
@@ -29185,7 +29185,7 @@ with self; {
     meta = {
       description = "Run Zonemaster tests from the command line";
       license = with lib.licenses; [ bsd3 ];
-      maintainers = with lib.maintainers; [ qbit ];
+      maintainers = with lib.maintainers; [ ];
     };
   };
 

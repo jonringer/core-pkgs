@@ -102,7 +102,7 @@ stdenv.mkDerivation rec {
     description = "Extraction utility for archives compressed in .zip format";
     license = lib.licenses.info-zip;
     platforms = lib.platforms.all;
-    maintainers = with lib.maintainers; [ RossComputerGuy ];
+    maintainers = with lib.maintainers; [ ];
     mainProgram = "unzip";
   };
 }

@@ -485,7 +485,7 @@ self: super:
 
   xcbutilcursor = super.xcbutilcursor.overrideAttrs (attrs: {
     outputs = [ "out" "dev" ];
-    meta = attrs.meta // { maintainers = [ lib.maintainers.lovek323 ]; };
+    meta = attrs.meta // { maintainers = [ ]; };
   });
 
   xcbutilimage = super.xcbutilimage.overrideAttrs (attrs: {

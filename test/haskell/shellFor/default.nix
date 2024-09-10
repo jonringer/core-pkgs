@@ -47,7 +47,7 @@
     let
       oldMeta = oldAttrs.meta or {};
       oldMaintainers = oldMeta.maintainers or [];
-      additionalMaintainers = with lib.maintainers; [ cdepillabout ];
+      additionalMaintainers = with lib.maintainers; [ ];
       allMaintainers = oldMaintainers ++ additionalMaintainers;
     in
     oldMeta // {

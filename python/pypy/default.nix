@@ -205,6 +205,6 @@ in with passthru; stdenv.mkDerivation rec {
     license = licenses.mit;
     platforms = [ "aarch64-linux" "x86_64-linux" "aarch64-darwin" "x86_64-darwin" ];
     broken = optimizationLevel == "0"; # generates invalid code
-    maintainers = with maintainers; [ andersk ];
+    maintainers = with maintainers; [ ];
   };
 }

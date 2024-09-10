@@ -97,6 +97,6 @@ stdenv.mkDerivation (finalAttrs: {
     homepage = "https://ninja-build.org/";
     license = lib.licenses.asl20;
     platforms = lib.platforms.unix;
-    maintainers = with lib.maintainers; [ thoughtpolice bjornfor orivej ];
+    maintainers = with lib.maintainers; [ ];
   };
 })

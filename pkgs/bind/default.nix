@@ -125,7 +125,7 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Domain name server";
     license = licenses.mpl20;
     changelog = "https://downloads.isc.org/isc/bind9/cur/${lib.versions.majorMinor finalAttrs.version}/CHANGES";
-    maintainers = with maintainers; [ globin ];
+    maintainers = with maintainers; [ ];
     platforms = platforms.unix;
 
     outputsToInstall = [ "out" "dnsutils" "host" ];

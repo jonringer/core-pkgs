@@ -45,6 +45,6 @@ stdenv.mkDerivation rec {
     platforms = platforms.unix;
     # See architectures defined in src/local-elf.h.
     badPlatforms = lib.platforms.microblaze;
-    maintainers = with maintainers; [ matthewbauer ];
+    maintainers = with maintainers; [ ];
   };
 }

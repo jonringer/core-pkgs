@@ -13,7 +13,7 @@ in
     };
 
     extraPatches = [ ./ssh-keysign-8.5.patch ];
-    extraMeta.maintainers = lib.teams.helsinki-systems.members;
+    extraMeta.maintainers = [ ];
   };
 
   openssh_hpn = common rec {
@@ -52,7 +52,7 @@ in
 
     extraConfigureFlags = [ "--with-hpn" ];
     extraMeta = {
-      maintainers = with lib.maintainers; [ abbe ];
+      maintainers = with lib.maintainers; [ ];
     };
   };
 

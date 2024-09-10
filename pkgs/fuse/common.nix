@@ -103,6 +103,6 @@ in stdenv.mkDerivation rec {
     changelog = "https://github.com/libfuse/libfuse/releases/tag/fuse-${version}";
     platforms = platforms.linux;
     license = with licenses; [ gpl2Only lgpl21Only ];
-    maintainers = [ maintainers.primeos ];
+    maintainers = [ ];
   };
 }

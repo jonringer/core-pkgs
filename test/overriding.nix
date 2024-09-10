@@ -101,7 +101,7 @@ let
       description = "Simple command-line snippet manager, written in Go";
       homepage = "https://github.com/knqyf263/pet";
       license = lib.licenses.mit;
-      maintainers = with lib.maintainers; [ kalbasit ];
+      maintainers = with lib.maintainers; [ ];
     };
   };
 
@@ -122,7 +122,7 @@ let
       description = "Simple command-line snippet manager, written in Go";
       homepage = "https://github.com/knqyf263/pet";
       license = lib.licenses.mit;
-      maintainers = with lib.maintainers; [ kalbasit ];
+      maintainers = with lib.maintainers; [ ];
     };
   };
 

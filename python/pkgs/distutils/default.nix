@@ -49,6 +49,6 @@ buildPythonPackage rec {
     description = "Distutils as found in cpython";
     homepage = "https://github.com/pypa/distutils";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ dotlambda ];
+    maintainers = with lib.maintainers; [ ];
   };
 }

@@ -289,9 +289,6 @@ stdenv.mkDerivation (finalAttrs: {
     license = licenses.asl20;
     platforms = platforms.unix;
     maintainers = with maintainers; [
-      tobim
-      veprbl
-      cpcloud
     ];
     pkgConfigModules = [
       "arrow"
