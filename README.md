@@ -1,7 +1,7 @@
 # Core-pkgs (WIP)
 
 This repository is meant to be the provider of most common
-development concerns for a nixpkgs fork. There there should
+development concerns for a nixpkgs fork. There should
 be a high degree of scrutiny and quality put into the nix
 expressions in this repository, as it will impact the most
 use cases.
