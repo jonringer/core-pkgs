@@ -443,13 +443,11 @@ final: prev: with final; {
     withKerberos = true;
   };
 
-  openssl = openssl_3;
-  inherit (callPackages ./pkgs/openssl { })
-    openssl_1_1
-    openssl_3
-    openssl_3_2
-    openssl_3_3
-    ;
+  # Aliases for backwards compat
+  openssl_1_1 = openssl.v1_1;
+  openssl_3 = openssl.v3_0;
+  openssl_3_2 = openssl.v3_2;
+  openssl_3_3 = openssl.v3_3;
 
   patchutils_0_3_3 = callPackage ./pkgs/patchutils/0.3.3.nix { };
 
