@@ -413,6 +413,8 @@ final: prev: with final; {
     propagatedBuildInputs = [ memstream ];
   } ./pkgs/memstream/setup-hook.sh;
 
+  mkGenericPkg = callPackage ./build-support/mkgeneric { };
+
   # TODO: support NixOS tests
   nixosTests = { };
 
