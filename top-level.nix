@@ -221,6 +221,8 @@ final: prev: with final; {
   # TODO: Move this into an "updaters.*" package set
   genericUpdater = prev.generic-updater;
   gitUpdater = prev.git-updater;
+  unstableGitUpdater = callPackage ./common-updater/unstable-updater.nix { };
+
 
   git = callPackage ./pkgs/git {
     perlLibs = [perlPackages.LWP perlPackages.URI perlPackages.TermReadKey];
@@ -517,6 +519,8 @@ final: prev: with final; {
     propagatedBuildInputs = [ dieHook ];
   } ./build-support/setup-hooks/shorten-perl-shebang.sh;
 
+  sphinx = with python3Packages; toPythonApplication sphinx;
+
   substitute = callPackage ./build-support/substitute/substitute.nix { };
 
   substituteAll = callPackage ./build-support/substitute/substitute-all.nix { };
@@ -591,6 +595,7 @@ final: prev: with final; {
 
   # TODO: core-pkgs: darwin support
   xcbuild = null;
+  xcodebuild = null;
 
   # Support windows
   windows = {

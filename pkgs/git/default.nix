@@ -2,14 +2,19 @@
 , curl, openssl, zlib, expat, perlPackages, python3, gettext, cpio
 , gnugrep, gnused, gawk, coreutils # needed at runtime by git-filter-branch etc
 , openssh, pcre2, bash
-, asciidoc, texinfo, xmlto, docbook2x, docbook_xsl, docbook_xml_dtd_45
+, asciidoc ? null
+, texinfo ? null
+, xmlto ? null
+, docbook2x ? null
+, docbook_xsl, docbook_xml_dtd_45
 , libxslt, tcl, tk, makeWrapper, libiconv, libiconvReal
-, svnSupport ? false, subversionClient, perlLibs, smtpPerlLibs
+, svnSupport ? false, subversionClient ? null, perlLibs, smtpPerlLibs
 , perlSupport ? stdenv.buildPlatform == stdenv.hostPlatform
 , nlsSupport ? true
 , osxkeychainSupport ? stdenv.isDarwin
 , guiSupport ? false
-, withManual ? true
+# TODO: core-pkgs: build with manual by default
+, withManual ? false
 , pythonSupport ? true
 , withpcre2 ? true
 , sendEmailSupport ? perlSupport
@@ -27,6 +32,11 @@
 assert osxkeychainSupport -> stdenv.isDarwin;
 assert sendEmailSupport -> perlSupport;
 assert svnSupport -> perlSupport;
+assert svnSupport -> subversionClient != null;
+assert withManual -> asciidoc != null;
+assert withManual -> texinfo != null;
+assert withManual -> xmlto != null;
+assert withManual -> docbook2x != null;
 
 let
   version = "2.45.2";

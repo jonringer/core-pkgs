@@ -22,7 +22,7 @@ final: prev: with final; {
 
   libxslt = (toPythonModule (pkgs.libxslt.override {
     pythonSupport = true;
-    inherit (self) python3 libxml2;
+    inherit (final) python libxml2;
   })).py;
 
 }
