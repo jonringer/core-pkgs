@@ -16,7 +16,8 @@
 , nlsSupport ? true
 , osxkeychainSupport ? stdenv.isDarwin
 , guiSupport ? false
-, withManual ? true
+# TODO: core-pkgs: build with manual by default
+, withManual ? false
 , pythonSupport ? true
 , withpcre2 ? true
 , sendEmailSupport ? perlSupport
@@ -34,6 +35,11 @@
 assert osxkeychainSupport -> stdenv.isDarwin;
 assert sendEmailSupport -> perlSupport;
 assert svnSupport -> perlSupport;
+assert svnSupport -> subversionClient != null;
+assert withManual -> asciidoc != null;
+assert withManual -> texinfo != null;
+assert withManual -> xmlto != null;
+assert withManual -> docbook2x != null;
 
 let
   version = "2.45.2";

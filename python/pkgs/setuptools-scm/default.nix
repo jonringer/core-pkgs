@@ -14,7 +14,7 @@
   tomli,
 
   # optional-dependencies
-  rich,
+  rich ? null,
 }:
 
 buildPythonPackage rec {

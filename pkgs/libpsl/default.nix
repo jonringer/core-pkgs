@@ -14,6 +14,8 @@
 , publicsuffix-list ? null
 }:
 
+assert withManual -> gtk-doc != null;
+
 stdenv.mkDerivation rec {
   pname = "libpsl";
   version = "0.21.5";
@@ -28,11 +30,12 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     autoreconfHook
+    lzip
+    pkg-config
+  ] ++ lib.optionals withManual [
     docbook_xsl
     docbook_xml_dtd_43
     gtk-doc
-    lzip
-    pkg-config
     libxslt
   ];
 
@@ -50,7 +53,7 @@ stdenv.mkDerivation rec {
     patchShebangs src/psl-make-dafsa
   '';
 
-  preAutoreconf = ''
+  preAutoreconf = lib.optionalString withManual ''
     gtkdocize
   '';
 
@@ -61,6 +64,9 @@ stdenv.mkDerivation rec {
     # "--with-psl-file=${publicsuffix-list}/share/publicsuffix/public_suffix_list.dat"
     # "--with-psl-testfile=${publicsuffix-list}/share/publicsuffix/test_psl.txt"
     "PYTHON=${lib.getExe buildPackages.python3}"
+  ] ++ lib.optionals withManual [
+    "--enable-gtk-doc"
+    "--enable-man"
   ];
 
   enableParallelBuilding = true;
