@@ -1,9 +1,8 @@
 {
-  #stdenvRepo = builtins.fetchGit {
-  #  url = "https://github.com/jonringer/stdenv.git";
-  #  rev = "baa4b77ac334345ba243e6618a137b35a259efd5";
-  #};
-  stdenvRepo = ../stdenv;
+  stdenvRepo = builtins.fetchGit {
+    url = "https://github.com/jonringer/stdenv.git";
+    rev = "a80f322f206206e1bab1cf76eb7dad1351e57aa1";
+  };
 
   lib = import (builtins.fetchGit {
     url = "https://github.com/jonringer/nix-lib.git";
