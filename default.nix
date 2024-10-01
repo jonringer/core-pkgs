@@ -1,3 +1,8 @@
+{
+  overlays ? [ ]
+, ...
+}@args:
+
 let
   stdenvRepo = builtins.fetchGit {
     url = "https://github.com/jonringer/stdenv.git";
@@ -13,11 +18,13 @@ let
   pkgsOverlay = lib.mkAutoCalledPackageDir ./pkgs;
 
   toplevelOverlay = import ./top-level.nix;
+
+  filteredArgs = lib.filterAttrs [ "overlays" ] args;
 in
 
-import stdenvRepo {
+import stdenvRepo ({
   overlays = [
     pkgsOverlay
     toplevelOverlay
-  ];
-}
+  ] ++ overlays;
+} // filteredArgs)
