@@ -41,6 +41,8 @@ final: prev: with final; {
     ;
   boost = boost186;
 
+  buildcatrust = with python3.pkgs; toPythonApplication buildcatrust;
+
   buildEnv = callPackage ./build-support/buildenv { }; # not actually a package
 
   c-aresMinimal = callPackage ./pkgs/c-ares { withCMake = false; };
