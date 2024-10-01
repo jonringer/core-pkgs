@@ -4,16 +4,9 @@
 }@args:
 
 let
-  stdenvRepo = builtins.fetchGit {
-    url = "https://github.com/jonringer/stdenv.git";
-    rev = "da940131d41b102d78014eb3084cef0d1033add9";
-  };
-  #stdenvRepo = ../stdenv;
+  pins = import ./pins.nix;
 
-  lib = import (builtins.fetchGit {
-    url = "https://github.com/jonringer/nix-lib.git";
-    rev = "c19c816e39d14a60dd368d601aa9b389b09d0bbb";
-  });
+  inherit (pins) lib;
 
   pkgsOverlay = lib.mkAutoCalledPackageDir ./pkgs;
 
@@ -22,7 +15,7 @@ let
   filteredArgs = lib.filterAttrs [ "overlays" ] args;
 in
 
-import stdenvRepo ({
+import pins.stdenvRepo ({
   overlays = [
     pkgsOverlay
     toplevelOverlay
