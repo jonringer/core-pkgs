@@ -12,7 +12,7 @@ let
 
   toplevelOverlay = import ./top-level.nix;
 
-  filteredArgs = lib.filterAttrs [ "overlays" ] args;
+  filteredArgs = builtins.removeAttrs args [ "overlays" ];
 in
 
 import pins.stdenvRepo ({
