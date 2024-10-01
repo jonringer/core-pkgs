@@ -19,3 +19,11 @@ top-level.nix # Overlay for specifying overrides at `pkgs` scope
 default.nix   # Entry point for people to import
 ```
 
+## Binary cache
+
+*WARNING*: This is a personal server, and should be considered untrusted
+
+```
+substituters = https://cache.jonringer.us
+trusted-public-keys = cache.jonringer.us:BZogIwFAp94LYcmaOi6xkHGJeRhMcQtFO8l6AmJNsng=
+```
