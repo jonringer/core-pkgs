@@ -1,7 +1,7 @@
 {
   stdenvRepo = builtins.fetchGit {
     url = "https://github.com/jonringer/stdenv.git";
-    rev = "a80f322f206206e1bab1cf76eb7dad1351e57aa1";
+    rev = "6b2b03e324d50abdf15f2fa687f20a3a2798be6e";
   };
 
   lib = import (builtins.fetchGit {
