@@ -56,6 +56,7 @@ let
 
   release-lib = stdenv.mkReleaseLib {
     inherit supportedSystems scrubJobs pkgsArgs system;
+    packageSet = import ./.;
   };
 
   inherit (release-lib) mapTestOn pkgs;
