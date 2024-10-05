@@ -94,6 +94,9 @@ final: prev: with final; {
   };
 
   db_4 = callPackage ./pkgs/db/db-4.8.nix { };
+  db_5_3 = callPackage ./pkgs/db/db-5.3.nix { };
+  db_5 = db_5_3;
+  db = db_5;
 
   docbook_xml_dtd_412 = callPackage ./pkgs/docbook-xml-dtd/4.1.2.nix { };
 
@@ -125,6 +128,8 @@ final: prev: with final; {
   };
 
   fetchFromGitLab = callPackage ./build-support/fetchgitlab { };
+
+  fetchFromRepoOrCz = callPackage ./build-support/fetchrepoorcz { };
 
   fetchpatch = callPackage ./build-support/fetchpatch {
     # 0.3.4 would change hashes: https://github.com/NixOS/nixpkgs/issues/25154
@@ -223,6 +228,13 @@ final: prev: with final; {
   # TODO: Move this into an "updaters.*" package set
   genericUpdater = prev.generic-updater;
   gitUpdater = prev.git-updater;
+  unstableGitUpdater = callPackage ./common-updater/unstable-updater.nix { };
+
+
+  ghostscript_headless = ghostscript.override {
+    cupsSupport = false;
+    x11Support = false;
+  };
 
   git = callPackage ./pkgs/git {
     perlLibs = [perlPackages.LWP perlPackages.URI perlPackages.TermReadKey];
@@ -266,6 +278,10 @@ final: prev: with final; {
   icu = icu-versions.icu74;
 
   installShellFiles = callPackage ./build-support/install-shell-files { };
+
+  openjdk21 = javaPackages.compiler.openjdk21;
+  jdk21 = openjdk21;
+  jdk = jdk21;
 
   # TODO: core-pkgs: move openGL into it's own file
   ## libGL/libGLU/Mesa stuff
@@ -433,6 +449,8 @@ final: prev: with final; {
 
   makeBinaryWrapper = callPackage ./build-support/setup-hooks/make-binary-wrapper { };
 
+  makeFontsConf = callPackage ./build-support/make-fonts-conf { };
+
   makePkgconfigItem = callPackage ./build-support/make-pkgconfigitem { };
 
   memstreamHook = makeSetupHook {
@@ -514,10 +532,27 @@ final: prev: with final; {
     inherit (darwin) signingUtils;
   };
 
+  inherit (callPackage ./pkgs/ruby { })
+    mkRubyVersion
+    mkRuby
+    ruby_3_1
+    ruby_3_2
+    ruby_3_3;
+
+  ruby = ruby_3_3;
+  rubyPackages = rubyPackages_3_3;
+
+  rubyPackages_3_1 = recurseIntoAttrs ruby_3_1.gems;
+  rubyPackages_3_2 = recurseIntoAttrs ruby_3_2.gems;
+  rubyPackages_3_3 = recurseIntoAttrs ruby_3_3.gems;
+
+
   shortenPerlShebang = makeSetupHook {
     name = "shorten-perl-shebang-hook";
     propagatedBuildInputs = [ dieHook ];
   } ./build-support/setup-hooks/shorten-perl-shebang.sh;
+
+  sphinx = with python3Packages; toPythonApplication sphinx;
 
   substitute = callPackage ./build-support/substitute/substitute.nix { };
 
@@ -527,6 +562,9 @@ final: prev: with final; {
 
   swig_3 = prev.swig;
   swig_4 = callPackage ./pkgs/swig/4.nix { };
+
+  inherit (texlive.schemes) texliveBasic texliveBookPub texliveConTeXt texliveFull texliveGUST texliveInfraOnly texliveMedium texliveMinimal texliveSmall texliveTeTeX;
+  texlivePackages = recurseIntoAttrs (lib.mapAttrs (_: v: v.build) texlive.pkgs);
 
   tcl = tcl_8_6;
   tcl_8_6 = callPackage ./pkgs/tcl/8.6.nix { };
@@ -593,6 +631,7 @@ final: prev: with final; {
 
   # TODO: core-pkgs: darwin support
   xcbuild = null;
+  xcodebuild = null;
 
   # Support windows
   windows = {
