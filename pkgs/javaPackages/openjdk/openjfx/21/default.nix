@@ -88,7 +88,7 @@ in stdenv.mkDerivation {
     homepage = "https://openjdk.org/projects/openjfx/";
     license = licenses.gpl2Classpath;
     description = "Next-generation Java client toolkit";
-    maintainers = with maintainers; [ abbradar ];
+    maintainers = [ ];
     platforms = platforms.unix;
   };
 }

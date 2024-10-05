@@ -46,6 +46,6 @@ buildPythonPackage rec {
       asl20
       bsd3
     ];
-    maintainers = with maintainers; [ dotlambda ];
+    maintainers = [ ];
   };
 }

@@ -51,6 +51,6 @@ buildPythonPackage rec {
     homepage = "https://mg.pov.lt/objgraph/";
     changelog = "https://github.com/mgedmin/objgraph/blob/${version}/CHANGES.rst";
     license = licenses.mit;
-    maintainers = with maintainers; [ dotlambda ];
+    maintainers = [ ];
   };
 }

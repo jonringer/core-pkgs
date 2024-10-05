@@ -119,7 +119,7 @@ in stdenv.mkDerivation rec {
     description = "GNU Troff, a typesetting package that reads plain text and produces formatted output";
     license = licenses.gpl3Plus;
     platforms = platforms.all;
-    maintainers = with maintainers; [ pSub ];
+    maintainers = [ ];
 
     longDescription = ''
       groff is the GNU implementation of troff, a document formatting

@@ -10,7 +10,7 @@
 rec {
   llvm_meta = {
     license = lib.licenses.ncsa;
-    maintainers = lib.teams.llvm.members;
+    maintainers = [ ];
 
     # See llvm/cmake/config-ix.cmake.
     platforms =

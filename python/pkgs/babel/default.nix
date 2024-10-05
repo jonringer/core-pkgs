@@ -49,7 +49,7 @@ buildPythonPackage rec {
     homepage = "https://babel.pocoo.org/";
     changelog = "https://github.com/python-babel/babel/releases/tag/v${version}";
     license = lib.licenses.bsd3;
-    maintainers = with lib.maintainers; [ getchoo ];
+    maintainers = [ ];
     mainProgram = "pybabel";
   };
 }

@@ -37,6 +37,6 @@ buildPythonPackage rec {
     downloadPage = "https://github.com/kislyuk/argcomplete";
     homepage = "https://kislyuk.github.io/argcomplete/";
     license = licenses.asl20;
-    maintainers = with maintainers; [ womfoo ];
+    maintainers = [ ];
   };
 }

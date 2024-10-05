@@ -23,6 +23,6 @@ buildPythonPackage rec {
     description = "Python library for parsing and creating TOML";
     homepage = "https://github.com/uiri/toml";
     license = licenses.mit;
-    maintainers = with maintainers; [ twey ];
+    maintainers = [ ];
   };
 }

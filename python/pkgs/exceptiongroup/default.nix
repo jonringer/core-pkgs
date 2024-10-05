@@ -35,6 +35,6 @@ buildPythonPackage rec {
     homepage = "https://github.com/agronholm/exceptiongroup";
     changelog = "https://github.com/agronholm/exceptiongroup/blob/${version}/CHANGES.rst";
     license = with licenses; [ mit ];
-    maintainers = with maintainers; [ fab ];
+    maintainers = [ ];
   };
 }

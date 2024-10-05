@@ -46,6 +46,6 @@ in stdenv.mkDerivation (finalAttrs: {
     license = licenses.libpng2;
     pkgConfigModules = [ "libpng" "libpng16" ];
     platforms = platforms.all;
-    maintainers = with maintainers; [ vcunat ];
+    maintainers = [ ];
   };
 })

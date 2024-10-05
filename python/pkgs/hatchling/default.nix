@@ -70,9 +70,6 @@ buildPythonPackage rec {
     homepage = "https://hatch.pypa.io/latest/";
     changelog = "https://github.com/pypa/hatch/releases/tag/hatchling-v${version}";
     license = licenses.mit;
-    maintainers = with maintainers; [
-      hexa
-      ofek
-    ];
+    maintainers = [ ];
   };
 }

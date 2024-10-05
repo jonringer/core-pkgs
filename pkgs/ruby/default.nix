@@ -274,7 +274,7 @@ let
           description = "Object-oriented language for quick and easy programming";
           homepage    = "https://www.ruby-lang.org/";
           license     = licenses.ruby;
-          maintainers = with maintainers; [ manveru ];
+          maintainers = [ ];
           platforms   = platforms.all;
           mainProgram = "ruby";
           knownVulnerabilities = op (lib.versionOlder ver.majMin "3.0") "This Ruby release has reached its end of life. See https://www.ruby-lang.org/en/downloads/branches/.";

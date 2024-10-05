@@ -65,7 +65,7 @@ stdenv.mkDerivation (finalAttrs: {
     description = "Library and utilities for working with the TIFF image file format (fork containing tools dropped in original libtiff version)";
     homepage = "http://www.libtiff.org";
     changelog = "http://www.libtiff.org/releases/v${finalAttrs.version}.html";
-    maintainers = with maintainers; [ yarny ];
+    maintainers = [ ];
     license = licenses.libtiff;
     platforms = platforms.unix ++ platforms.windows;
     pkgConfigModules = [ "libtiff-4" ];

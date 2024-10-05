@@ -97,7 +97,7 @@ in stdenv.mkDerivation rec {
     homepage = "https://w3m.sourceforge.net/";
     changelog = "https://github.com/tats/w3m/blob/v${version}/ChangeLog";
     description = "Text-mode web browser";
-    maintainers = with maintainers; [ anthonyroussel ];
+    maintainers = [ ];
     platforms = platforms.unix;
     license = licenses.mit;
     mainProgram = "w3m";

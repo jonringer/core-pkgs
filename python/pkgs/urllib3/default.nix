@@ -55,7 +55,7 @@ let
       homepage = "https://github.com/urllib3/urllib3";
       changelog = "https://github.com/urllib3/urllib3/blob/${version}/CHANGES.rst";
       license = licenses.mit;
-      maintainers = with maintainers; [ fab ];
+      maintainers = [ ];
     };
   };
 in

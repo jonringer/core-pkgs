@@ -212,7 +212,7 @@ let
       homepage = "http://openjdk.java.net/";
       license = licenses.gpl2;
       description = "Open-source Java Development Kit";
-      maintainers = with maintainers; [ edwtjo ];
+      maintainers = [ ];
       platforms = [ "i686-linux" "x86_64-linux" "aarch64-linux" ];
       mainProgram = "java";
       # Broken for musl at 2024-01-17. Tracking issue:

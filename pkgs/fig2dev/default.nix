@@ -39,6 +39,6 @@ stdenv.mkDerivation rec {
     homepage = "https://mcj.sourceforge.net/";
     license = licenses.xfig;
     platforms = platforms.unix;
-    maintainers = with maintainers; [ lesuisse ];
+    maintainers = [ ];
   };
 }

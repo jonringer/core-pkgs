@@ -78,6 +78,6 @@ else
       downloadPage = "https://github.com/python-cffi/cffi";
       homepage = "https://cffi.readthedocs.org/";
       license = licenses.mit;
-      maintainers = teams.python.members;
+      maintainers = [ ];
     };
   }

@@ -52,7 +52,7 @@ buildPythonPackage rec {
       major web browsers.
     '';
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [
+    maintainers = [ ];
       domenkozar
       prikhi
     ];

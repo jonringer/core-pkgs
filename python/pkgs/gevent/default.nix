@@ -77,7 +77,7 @@ buildPythonPackage rec {
     description = "Coroutine-based networking library";
     homepage = "http://www.gevent.org/";
     license = licenses.mit;
-    maintainers = with maintainers; [ bjornfor ];
+    maintainers = [ ];
     platforms = platforms.unix;
   };
 }

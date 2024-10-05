@@ -49,7 +49,7 @@ stdenv.mkDerivation rec {
     homepage = "https://github.com/wolfcw/libfaketime/";
     license = licenses.gpl2;
     platforms = platforms.all;
-    maintainers = [ maintainers.bjornfor ];
+    maintainers = [ ];
     mainProgram = "faketime";
   };
 }
