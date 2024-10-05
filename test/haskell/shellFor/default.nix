@@ -51,7 +51,7 @@
       allMaintainers = oldMaintainers ++ additionalMaintainers;
     in
     oldMeta // {
-      maintainers = [ ];
+      maintainers = allMaintainers;
       inherit (cabal-install.meta) platforms;
     };
 })

@@ -50,8 +50,5 @@ buildPythonPackage rec {
     homepage = "https://importlib-metadata.readthedocs.io/";
     license = licenses.asl20;
     maintainers = [ ];
-      fab
-      AndersonTorres
-    ];
   };
 }
