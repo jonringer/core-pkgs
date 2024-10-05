@@ -25,6 +25,32 @@ final: prev: with final; {
     };
   } ./build-support/setup-hooks/auto-patchelf.sh;
 
+  binutils-unwrapped = callPackage ./pkgs/binutils {
+    autoreconfHook = autoreconfHook269;
+    inherit (darwin.apple_sdk.frameworks) CoreServices;
+    # FHS sys dirs presumably only have stuff for the build platform
+    noSysDirs = (stdenv.targetPlatform != stdenv.hostPlatform) || noSysDirs;
+  };
+  binutils-unwrapped-all-targets = callPackage ./pkgs/binutils {
+    autoreconfHook = if targetPlatform.isiOS then autoreconfHook269 else autoreconfHook;
+    inherit (darwin.apple_sdk.frameworks) CoreServices;
+    # FHS sys dirs presumably only have stuff for the build platform
+    noSysDirs = (stdenv.targetPlatform != stdenv.hostPlatform) || noSysDirs;
+    withAllTargets = true;
+  };
+  binutils = wrapBintoolsWith {
+    bintools = binutils-unwrapped;
+  };
+  binutils_nogold = lowPrio (wrapBintoolsWith {
+    bintools = binutils-unwrapped.override {
+      enableGold = false;
+    };
+  });
+  binutilsNoLibc = wrapBintoolsWith {
+    bintools = binutils-unwrapped;
+    libc = preLibcCrossHeaders;
+  };
+
   boostPackages = callPackage ./pkgs/boost { };
   inherit (boostPackages)
     boost175
@@ -546,6 +572,20 @@ final: prev: with final; {
   rubyPackages_3_2 = recurseIntoAttrs ruby_3_2.gems;
   rubyPackages_3_3 = recurseIntoAttrs ruby_3_3.gems;
 
+  rust_1_80 = callPackage ./pkgs/rust/1_80.nix {
+    llvm_18 = llvmPackages_18.libllvm;
+  };
+  rust = rust_1_80;
+
+  rustPackages_1_80 = rust_1_80.packages.stable;
+  rustPackages = rustPackages_1_80;
+
+  inherit (rustPackages) cargo cargo-auditable cargo-auditable-cargo-wrapper clippy rustc rustPlatform;
+
+  makeRustPlatform = callPackage ./pkgs/rust/make-rust-platform.nix { };
+
+  wrapRustcWith = { rustc-unwrapped, ... } @ args: callPackage ./build-support/rust/rustc-wrapper args;
+  wrapRustc = rustc-unwrapped: wrapRustcWith { inherit rustc-unwrapped; };
 
   shortenPerlShebang = makeSetupHook {
     name = "shorten-perl-shebang-hook";
