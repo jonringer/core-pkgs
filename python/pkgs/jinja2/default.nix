@@ -10,13 +10,13 @@
   babel,
   markupsafe,
   pytestCheckHook,
-  sphinxHook,
-  pallets-sphinx-themes,
-  sphinxcontrib-log-cabinet,
-  sphinx-issues,
+#  sphinxHook,
+#  pallets-sphinx-themes,
+#  sphinxcontrib-log-cabinet,
+#  sphinx-issues,
 
   # Reverse dependency
-  sage,
+  sage ? null,
 }:
 
 buildPythonPackage rec {
@@ -53,32 +53,32 @@ buildPythonPackage rec {
     "test_package_zip_list"
   ];
 
-  passthru.doc = stdenv.mkDerivation {
-    # Forge look and feel of multi-output derivation as best as we can.
-    #
-    # Using 'outputs = [ "doc" ];' breaks a lot of assumptions.
-    name = "${pname}-${version}-doc";
-    inherit src pname version;
+  #passthru.doc = stdenv.mkDerivation {
+  #  # Forge look and feel of multi-output derivation as best as we can.
+  #  #
+  #  # Using 'outputs = [ "doc" ];' breaks a lot of assumptions.
+  #  name = "${pname}-${version}-doc";
+  #  inherit src pname version;
 
-    patches = [
-      # Fix import of "sphinxcontrib-log-cabinet"
-      ./patches/import-order.patch
-    ];
+  #  patches = [
+  #    # Fix import of "sphinxcontrib-log-cabinet"
+  #    ./patches/import-order.patch
+  #  ];
 
-    postInstallSphinx = ''
-      mv $out/share/doc/* $out/share/doc/python$pythonVersion-$pname-$version
-    '';
+  #  postInstallSphinx = ''
+  #    mv $out/share/doc/* $out/share/doc/python$pythonVersion-$pname-$version
+  #  '';
 
-    nativeBuildInputs = [
-      sphinxHook
-      sphinxcontrib-log-cabinet
-      pallets-sphinx-themes
-      sphinx-issues
-    ];
+  #  nativeBuildInputs = [
+  #    sphinxHook
+  #    sphinxcontrib-log-cabinet
+  #    pallets-sphinx-themes
+  #    sphinx-issues
+  #  ];
 
-    inherit (python) pythonVersion;
-    inherit meta;
-  };
+  #  inherit (python) pythonVersion;
+  #  inherit meta;
+  #};
 
   passthru.tests = {
     inherit sage;

@@ -129,6 +129,8 @@ final: prev: with final; {
 
   fetchFromGitLab = callPackage ./build-support/fetchgitlab { };
 
+  fetchFromRepoOrCz = callPackage ./build-support/fetchrepoorcz { };
+
   fetchpatch = callPackage ./build-support/fetchpatch {
     # 0.3.4 would change hashes: https://github.com/NixOS/nixpkgs/issues/25154
     patchutils = __splicedPackages.patchutils_0_3_3;

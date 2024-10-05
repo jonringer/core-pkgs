@@ -10,7 +10,7 @@
   zipp,
 
   # Reverse dependency
-  sage,
+  sage ? null,
 }:
 
 buildPythonPackage rec {

@@ -4,7 +4,7 @@
 , openssh, pcre2, bash
 # TODO: core: re-enable
 , asciidoc
-#, docbook2x
+, docbook2x ? null
 , texinfo
 , xmlto
 , docbook_xsl
@@ -36,10 +36,7 @@ assert osxkeychainSupport -> stdenv.isDarwin;
 assert sendEmailSupport -> perlSupport;
 assert svnSupport -> perlSupport;
 assert svnSupport -> subversionClient != null;
-assert withManual -> asciidoc != null;
 assert withManual -> texinfo != null;
-assert withManual -> xmlto != null;
-assert withManual -> docbook2x != null;
 
 let
   version = "2.45.2";

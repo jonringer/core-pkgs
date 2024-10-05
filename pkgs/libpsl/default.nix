@@ -3,7 +3,7 @@
 , autoreconfHook
 , docbook_xsl
 , docbook_xml_dtd_43
-, gtk-doc ? null
+, gtk-doc
 , lzip
 , libidn2
 , libunistring
@@ -13,8 +13,6 @@
 , buildPackages
 , publicsuffix-list ? null
 }:
-
-assert withManual -> gtk-doc != null;
 
 stdenv.mkDerivation rec {
   pname = "libpsl";
@@ -32,7 +30,6 @@ stdenv.mkDerivation rec {
     autoreconfHook
     lzip
     pkg-config
-  ] ++ lib.optionals withManual [
     docbook_xsl
     docbook_xml_dtd_43
     gtk-doc
@@ -53,7 +50,7 @@ stdenv.mkDerivation rec {
     patchShebangs src/psl-make-dafsa
   '';
 
-  preAutoreconf = lib.optionalString withManual ''
+  preAutoreconf = ''
     gtkdocize
   '';
 
@@ -64,7 +61,6 @@ stdenv.mkDerivation rec {
     # "--with-psl-file=${publicsuffix-list}/share/publicsuffix/public_suffix_list.dat"
     # "--with-psl-testfile=${publicsuffix-list}/share/publicsuffix/test_psl.txt"
     "PYTHON=${lib.getExe buildPackages.python3}"
-  ] ++ lib.optionals withManual [
     "--enable-gtk-doc"
     "--enable-man"
   ];
