@@ -3,7 +3,7 @@
 , autoreconfHook
 , docbook_xsl
 , docbook_xml_dtd_43
-, gtk-doc
+, gtk-doc ? null
 , lzip
 , libidn2
 , libunistring
@@ -11,7 +11,7 @@
 , pkg-config
 , python3
 , buildPackages
-, publicsuffix-list
+, publicsuffix-list ? null
 }:
 
 stdenv.mkDerivation rec {
@@ -55,11 +55,11 @@ stdenv.mkDerivation rec {
   '';
 
   configureFlags = [
-    # "--enable-gtk-doc"
-    "--enable-man"
-    "--with-psl-distfile=${publicsuffix-list}/share/publicsuffix/public_suffix_list.dat"
-    "--with-psl-file=${publicsuffix-list}/share/publicsuffix/public_suffix_list.dat"
-    "--with-psl-testfile=${publicsuffix-list}/share/publicsuffix/test_psl.txt"
+    "--disable-gtk-doc"
+    # "--enable-man"
+    # "--with-psl-distfile=${publicsuffix-list}/share/publicsuffix/public_suffix_list.dat"
+    # "--with-psl-file=${publicsuffix-list}/share/publicsuffix/public_suffix_list.dat"
+    # "--with-psl-testfile=${publicsuffix-list}/share/publicsuffix/test_psl.txt"
     "PYTHON=${lib.getExe buildPackages.python3}"
   ];
 

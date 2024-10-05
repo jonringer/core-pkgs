@@ -2,9 +2,16 @@
 , curl, openssl, zlib, expat, perlPackages, python3, gettext, cpio
 , gnugrep, gnused, gawk, coreutils # needed at runtime by git-filter-branch etc
 , openssh, pcre2, bash
-, asciidoc, texinfo, xmlto, docbook2x, docbook_xsl, docbook_xml_dtd_45
-, libxslt, tcl, tk, makeWrapper, libiconv, libiconvReal
-, svnSupport ? false, subversionClient, perlLibs, smtpPerlLibs
+# TODO: core: re-enable
+, asciidoc
+#, docbook2x
+, texinfo
+, xmlto
+, docbook_xsl
+, docbook_xml_dtd_45 ? null
+, libxslt ? null
+, tcl, tk, makeWrapper, libiconv, libiconvReal
+, svnSupport ? false, subversionClient ? null, perlLibs ? null, smtpPerlLibs ? null
 , perlSupport ? stdenv.buildPlatform == stdenv.hostPlatform
 , nlsSupport ? true
 , osxkeychainSupport ? stdenv.isDarwin
@@ -16,7 +23,7 @@
 , darwin
 , nixosTests
 , withLibsecret ? false
-, pkg-config, glib, libsecret
+, pkg-config, glib, libsecret ? null
 , gzip # needed at runtime by gitweb.cgi
 , withSsh ? false
 , sysctl
@@ -85,7 +92,7 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   nativeBuildInputs = [ gettext perlPackages.perl makeWrapper pkg-config ]
-    ++ lib.optionals withManual [ asciidoc texinfo xmlto docbook2x
+    ++ lib.optionals withManual [ asciidoc texinfo xmlto /* docbook2x */
          docbook_xsl docbook_xml_dtd_45 libxslt ];
   buildInputs = [ curl openssl zlib expat cpio (if stdenv.isFreeBSD then libiconvReal else libiconv) bash ]
     ++ lib.optionals perlSupport [ perlPackages.perl ]

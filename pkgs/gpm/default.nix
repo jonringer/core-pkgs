@@ -1,13 +1,5 @@
-{ lib, stdenv, fetchFromGitHub
-, automake
-, autoconf
-, libtool
-, flex
-, bison
-, texinfoVersions
-, fetchpatch
-, pkgsStatic
-, withNcurses ? false, ncurses
+{ lib, stdenv, fetchFromGitHub, automake, autoconf, libtool, flex, bison, texinfo, fetchpatch, pkgsStatic
+, withNcurses ? true, ncurses
 }:
 
 stdenv.mkDerivation rec {
@@ -25,7 +17,7 @@ stdenv.mkDerivation rec {
     substituteInPlace src/prog/gpm-root.y --replace __sigemptyset sigemptyset
   '';
 
-  nativeBuildInputs = [ automake autoconf libtool flex bison texinfoVersions.texinfo6_7 ];
+  nativeBuildInputs = [ automake autoconf libtool flex bison texinfo ];
   buildInputs = [ ncurses ];
 
   hardeningDisable = [ "format" ];
