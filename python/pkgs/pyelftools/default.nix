@@ -47,9 +47,6 @@ buildPythonPackage rec {
       mit
     ];
     maintainers = [ ];
-      igsha
-      pamplemousse
-    ];
     mainProgram = "readelf.py";
   };
 }

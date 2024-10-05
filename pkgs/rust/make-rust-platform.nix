@@ -14,7 +14,7 @@ rec {
   };
 
   fetchCargoTarball = buildPackages.callPackage ../../build-support/rust/fetch-cargo-tarball {
-    git = buildPackages.gitMinimal;
+    git = buildPackages.git;
     inherit cargo;
   };
 

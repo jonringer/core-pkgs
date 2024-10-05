@@ -77,6 +77,16 @@ final: prev: with final; {
 
   cmakeMinimal = prev.cmake.override { isMinimalBuild = true; };
 
+  clang = llvmPackages.clang;
+  clang_12 = llvmPackages_12.clang;
+  clang_13 = llvmPackages_13.clang;
+  clang_14 = llvmPackages_14.clang;
+  clang_15 = llvmPackages_15.clang;
+  clang_16 = llvmPackages_16.clang;
+  clang_17 = llvmPackages_17.clang;
+
+  clang-tools = llvmPackages.clang-tools;
+
   copyPkgconfigItems = makeSetupHook {
     name = "copy-pkg-config-items-hook";
   } ./build-support/setup-hooks/copy-pkgconfig-items.sh;
@@ -244,6 +254,9 @@ final: prev: with final; {
 
   # TODO: core-pkgs: darwin support
   fixDarwinDylibNames = null;
+
+  # TODO: core-pkgs: freebsd support
+  freebsd = { };
 
   # TODO: core-pkgs: make less ugly
   fusePackages = prev.fuse;
