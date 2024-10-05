@@ -32,7 +32,7 @@ buildPythonPackage rec {
     mainProgram = "aafigure";
     homepage = "https://launchpad.net/aafigure/";
     license = licenses.bsd2;
-    maintainers = with maintainers; [ bjornfor ];
+    maintainers = [ ];
     platforms = platforms.unix;
   };
 }

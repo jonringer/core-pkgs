@@ -181,7 +181,7 @@ let
   meta = {
     description = "TeX Live environment";
     platforms = lib.platforms.all;
-    maintainers = with lib.maintainers;  [ veprbl ];
+    maintainers = [ ];
     license = licenses.scheme-infraonly;
   };
 

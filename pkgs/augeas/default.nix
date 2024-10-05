@@ -60,7 +60,7 @@ stdenv.mkDerivation rec {
     homepage = "https://augeas.net/";
     changelog = "https://github.com/hercules-team/augeas/releases/tag/release-${version}";
     mainProgram = "augtool";
-    maintainers = with maintainers; [ offline ];
+    maintainers = [ ];
     platforms = platforms.unix;
   };
 }

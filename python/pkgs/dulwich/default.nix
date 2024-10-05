@@ -97,6 +97,6 @@ buildPythonPackage rec {
       asl20
       gpl2Plus
     ];
-    maintainers = with maintainers; [ koral ];
+    maintainers = [ ];
   };
 }

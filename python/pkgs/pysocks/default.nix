@@ -20,6 +20,6 @@ buildPythonPackage rec {
   meta = with lib; {
     description = "SOCKS module for Python";
     license = licenses.bsd3;
-    maintainers = with maintainers; [ thoughtpolice ];
+    maintainers = [ ];
   };
 }

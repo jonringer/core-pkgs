@@ -197,7 +197,7 @@ core = stdenv.mkDerivation rec {
     description = "Basic binaries for TeX Live";
     homepage    = "http://www.tug.org/texlive";
     license     = lib.licenses.gpl2Plus;
-    maintainers = with maintainers; [ veprbl lovek323 raskin jwiegley ];
+    maintainers = [ ];
     platforms   = platforms.all;
   };
 };
@@ -335,7 +335,7 @@ context = stdenv.mkDerivation rec {
     description = "LUAMETATEX engine is a follow up on LUATEX and is again part of CONTEXT development";
     homepage = "https://www.pragma-ade.nl/luametatex-1.htm";
     license = licenses.gpl2Plus;
-    maintainers = with lib.maintainers; [ apfelkuchen6 xworld21 ];
+    maintainers = [ ];
   };
 };
 
@@ -420,7 +420,7 @@ pygmentex = python3Packages.buildPythonApplication rec {
       prettify source code.
     '';
     license = licenses.lppl13c;
-    maintainers = with maintainers; [ romildo ];
+    maintainers = [ ];
   };
 };
 

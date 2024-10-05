@@ -158,6 +158,6 @@ stdenv.mkDerivation rec {
     # upstream does not support targeting aarch64-darwin;
     # see https://inbox.sourceware.org/gdb/3185c3b8-8a91-4beb-a5d5-9db6afb93713@Spark/
     badPlatforms = lib.optionals (stdenv.targetPlatform.system == "aarch64-darwin") meta.platforms;
-    maintainers = with lib.maintainers; [ pierron globin lsix ];
+    maintainers = [ ];
   };
 }

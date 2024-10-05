@@ -43,6 +43,6 @@ buildPythonPackage rec {
     homepage = "https://charset-normalizer.readthedocs.io/";
     changelog = "https://github.com/Ousret/charset_normalizer/blob/${version}/CHANGELOG.md";
     license = licenses.mit;
-    maintainers = with maintainers; [ fab ];
+    maintainers = [ ];
   };
 }

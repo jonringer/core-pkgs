@@ -110,6 +110,6 @@ jdk.overrideAttrs (finalAttrs: oldAttrs: {
     homepage = "https://aws.amazon.com/corretto";
     license = licenses.gpl2Only;
     description = "Amazon's distribution of OpenJDK";
-    maintainers = with maintainers; [ rollf ];
+    maintainers = [ ];
   };
 })

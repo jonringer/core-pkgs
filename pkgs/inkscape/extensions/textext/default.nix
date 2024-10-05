@@ -119,7 +119,7 @@ python3.pkgs.buildPythonApplication rec {
     description = "Re-editable LaTeX graphics for Inkscape";
     homepage = "https://textext.github.io/textext/";
     license = licenses.bsd3;
-    maintainers = [ maintainers.raboof ];
+    maintainers = [ ];
     platforms = platforms.all;
   };
 }

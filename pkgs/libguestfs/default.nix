@@ -160,7 +160,7 @@ stdenv.mkDerivation rec {
     description = "Tools for accessing and modifying virtual machine disk images";
     license = with licenses; [ gpl2Plus lgpl21Plus ];
     homepage = "https://libguestfs.org/";
-    maintainers = with maintainers; [ offline ];
+    maintainers = [ ];
     platforms = platforms.linux;
     # this is to avoid "output size exceeded"
     hydraPlatforms = if appliance != null then appliance.meta.hydraPlatforms else platforms.linux;

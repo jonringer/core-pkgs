@@ -49,7 +49,7 @@ buildPythonPackage rec {
     description = "Read metadata from Python packages";
     homepage = "https://importlib-metadata.readthedocs.io/";
     license = licenses.asl20;
-    maintainers = with maintainers; [
+    maintainers = [ ];
       fab
       AndersonTorres
     ];

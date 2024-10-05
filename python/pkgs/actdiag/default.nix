@@ -45,7 +45,7 @@ buildPythonPackage rec {
     homepage = "http://blockdiag.com/";
     changelog = "https://github.com/blockdiag/actdiag/blob/${version}/CHANGES.rst";
     license = licenses.asl20;
-    maintainers = with maintainers; [ bjornfor ];
+    maintainers = [ ];
     mainProgram = "actdiag";
     platforms = platforms.unix;
   };

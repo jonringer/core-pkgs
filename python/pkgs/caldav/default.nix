@@ -55,7 +55,7 @@ buildPythonPackage rec {
     homepage = "https://github.com/python-caldav/caldav";
     changelog = "https://github.com/python-caldav/caldav/blob/v${version}/CHANGELOG.md";
     license = licenses.asl20;
-    maintainers = with maintainers; [
+    maintainers = [ ];
       marenz
       dotlambda
     ];

@@ -39,6 +39,6 @@ stdenv.mkDerivation rec {
     homepage = "https://rubygems.org/";
     license = with licenses; [ mit /* or */ ruby ];
     mainProgram = "gem";
-    maintainers = with maintainers; [ zimbatm ];
+    maintainers = [ ];
   };
 }

@@ -42,7 +42,7 @@ stdenv.mkDerivation rec {
     description = "Windows registry hive extraction library";
     license = licenses.lgpl2Only;
     homepage = "https://github.com/libguestfs/hivex";
-    maintainers = with maintainers; [offline];
+    maintainers = [ ];
     platforms = platforms.unix;
   };
 }
