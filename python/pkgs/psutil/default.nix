@@ -2,12 +2,14 @@
   lib,
   stdenv,
   buildPythonPackage,
-  CoreFoundation,
   fetchPypi,
-  IOKit,
   pytestCheckHook,
   python,
   pythonOlder,
+
+  # Darwin
+  CoreFoundation ? null,
+  IOKit ? null,
 }:
 
 buildPythonPackage rec {
