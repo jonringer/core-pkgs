@@ -293,7 +293,7 @@ final: prev: with final; {
     withLibsecret = !stdenv.isDarwin;
   };
 
-    glib = callPackage ../development/libraries/glib (let
+  glib = callPackage ./pkgs/glib (let
     glib-untested = glib.overrideAttrs { doCheck = false; };
   in {
     # break dependency cycles
