@@ -1,7 +1,7 @@
 { lib
 , stdenv
 , fetchFromGitHub
-, Security
+, Security ? null
 , autoreconfHook
 , util-linux
 , openssl

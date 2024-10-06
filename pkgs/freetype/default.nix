@@ -19,19 +19,19 @@
   useEncumberedCode ? true
 
   # for passthru.tests
-, cairo
-, fontforge
-, ghostscript
-, graphicsmagick
-, gtk3
-, harfbuzz
-, imagemagick
-, pango
-, poppler
-, python3
-, qt5
-, texmacs
-, ttfautohint
+, cairo ? null
+, fontforge ? null
+, ghostscript ? null
+, graphicsmagick ? null
+, gtk3 ? null
+, harfbuzz ? null
+, imagemagick ? null
+, pango ? null
+, poppler ? null
+, python3 ? null
+, qt5 ? null
+, texmacs ? null
+, ttfautohint ? null
 , testers
 }:
 

@@ -293,7 +293,7 @@ final: prev: with final; {
     withLibsecret = !stdenv.isDarwin;
   };
 
-    glib = callPackage ../development/libraries/glib (let
+  glib = callPackage ./pkgs/glib (let
     glib-untested = glib.overrideAttrs { doCheck = false; };
   in {
     # break dependency cycles
@@ -308,6 +308,8 @@ final: prev: with final; {
   # TODO: core-pkgs: determine if gnome pkgset should go in core or "pkgs"
   # If it shouldn't be in core, move gnome.update-script to this repo
   gnome = { };
+
+  gobject-introspection-unwrapped = callPackage ./pkgs/gobject-introspection/unwrapped.nix { };
 
   gpm_ncurses = gpm.override { withNcurses = true; };
 

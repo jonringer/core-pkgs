@@ -58,7 +58,7 @@ let
         psfl
         gpl3Plus
       ];
-      maintainers = with maintainers; [ ];
+      maintainers = [ ];
     };
   };
 in
