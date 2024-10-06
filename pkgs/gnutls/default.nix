@@ -10,7 +10,7 @@
 , lzip
 , perl
 , gmp
-, autoconf
+, autoconf269
 , automake
 , libidn2
 , libiconv
@@ -18,7 +18,7 @@
 , unbound
 , dns-root-data
 , gettext
-, util-linux
+, util-linuxMinimal
 , cxxBindings ? !stdenv.hostPlatform.isStatic # tries to link libstdc++.so
 , tpmSupport ? false
 , trousers
@@ -27,23 +27,23 @@
 , libunistring
 , withP11-kit ? !stdenv.hostPlatform.isStatic
 , p11-kit
-, Security  # darwin Security.framework
+, Security ? null # darwin Security.framework
   # certificate compression - only zlib now, more possible: zstd, brotli
 
   # for passthru.tests
-, curlWithGnuTls
-, emacs
-, ffmpeg
-, haskellPackages
-, knot-resolver
-, ngtcp2-gnutls
-, ocamlPackages
-, pkgsStatic
+, curlWithGnuTls ? null
+, emacs ? null
+, ffmpeg ? null
+, haskellPackages ? { }
+, knot-resolver ? null
+, ngtcp2-gnutls ? null
+, ocamlPackages ? null
+, pkgsStatic ? null
 , python3Packages
-, qemu
-, rsyslog
-, openconnect
-, samba
+, qemu ? null
+, rsyslog ? null
+, openconnect ? null
+, samba ? null
 
 , gitUpdater
 }:
@@ -124,8 +124,8 @@ stdenv.mkDerivation rec {
     ++ lib.optional (withP11-kit) p11-kit
     ++ lib.optional (tpmSupport && stdenv.isLinux) trousers;
 
-  nativeBuildInputs = [ perl pkg-config texinfo ] ++ [ autoconf automake ]
-    ++ lib.optionals doCheck [ which nettools util-linux ];
+  nativeBuildInputs = [ perl pkg-config texinfo ] ++ [ autoconf269 automake ]
+    ++ lib.optionals doCheck [ which nettools util-linuxMinimal ];
 
   propagatedBuildInputs = [ nettle ]
     # Builds dynamically linking against gnutls seem to need the framework now.

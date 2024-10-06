@@ -5,13 +5,15 @@
   setuptools-scm,
   setuptools,
   python,
-  jaraco-envs,
-  jaraco-path,
-  jaraco-text,
-  more-itertools,
-  path,
-  pyfakefs,
-  pytestCheckHook,
+
+# Packaging jaraco packages isn't worth it
+#  jaraco-envs,
+#  jaraco-path,
+#  jaraco-text,
+#  more-itertools,
+#  path,
+#  pyfakefs,
+#  pytestCheckHook,
 }:
 
 buildPythonPackage rec {
@@ -35,15 +37,16 @@ buildPythonPackage rec {
 
   pythonImportsCheck = [ "distutils" ];
 
-  nativeCheckInputs = [
-    jaraco-envs
-    jaraco-path
-    jaraco-text
-    more-itertools
-    path
-    pyfakefs
-    pytestCheckHook
-  ];
+  # Packaging the jaraco packages isn't worth it
+  # nativeCheckInputs = [
+  #   jaraco-envs
+  #   jaraco-path
+  #   jaraco-text
+  #   more-itertools
+  #   path
+  #   pyfakefs
+  #   pytestCheckHook
+  # ];
 
   meta = {
     description = "Distutils as found in cpython";

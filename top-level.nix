@@ -156,7 +156,7 @@ final: prev: with final; {
   docbook_xsl_ns = docbook-xsl-ns;
 
   fetchgit = (callPackage ./build-support/fetchgit {
-    git = buildPackages.gitMinimal;
+    git = buildPackages.git;
     cacert = buildPackages.cacert;
     git-lfs = buildPackages.git-lfs;
   }) // { # fetchgit is a function, so we use // instead of passthru.
@@ -599,6 +599,14 @@ final: prev: with final; {
 
   wrapRustcWith = { rustc-unwrapped, ... } @ args: callPackage ./build-support/rust/rustc-wrapper args;
   wrapRustc = rustc-unwrapped: wrapRustcWith { inherit rustc-unwrapped; };
+
+  separateDebugInfo = makeSetupHook {
+    name = "separate-debug-info-hook";
+  } ./build-support/setup-hooks/separate-debug-info.sh;
+
+  setupDebugInfoDirs = makeSetupHook {
+    name = "setup-debug-info-dirs-hook";
+  } ./build-support/setup-hooks/setup-debug-info-dirs.sh;
 
   shortenPerlShebang = makeSetupHook {
     name = "shorten-perl-shebang-hook";
