@@ -43,6 +43,6 @@ buildPythonPackage rec {
     homepage = "https://github.com/pexpect/ptyprocess";
     changelog = "https://github.com/pexpect/ptyprocess/releases/tag/${version}";
     license = lib.licenses.isc;
-    maintainers = with lib.maintainers; [ getchoo ];
+    maintainers = [ ];
   };
 }

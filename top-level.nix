@@ -309,6 +309,8 @@ final: prev: with final; {
   # If it shouldn't be in core, move gnome.update-script to this repo
   gnome = { };
 
+  gobject-introspection-unwrapped = callPackage ./pkgs/gobject-introspection/unwrapped.nix { };
+
   gpm_ncurses = gpm.override { withNcurses = true; };
 
   grpc = null;

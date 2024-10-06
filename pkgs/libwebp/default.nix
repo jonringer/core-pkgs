@@ -13,15 +13,15 @@
 , libwebpdecoderSupport ? true # Build libwebpdecoder
 
 # for passthru.tests
-, gd
-, graphicsmagick
-, haskellPackages
-, imagemagick
-, imlib2
-, libjxl
-, opencv
+, gd ? null
+, graphicsmagick ? null
+, haskellPackages ? { }
+, imagemagick ? null
+, imlib2 ? null
+, libjxl ? null
+, opencv ? null
 , python3
-, vips
+, vips ? null
 }:
 
 stdenv.mkDerivation rec {

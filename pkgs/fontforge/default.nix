@@ -2,15 +2,18 @@
 , cmake, uthash, pkg-config
 , python, freetype, zlib, glib, giflib, libpng, libjpeg, libtiff, libxml2, cairo, pango
 , readline, woff2, zeromq
-, withSpiro ? false, libspiro
+, withSpiro ? false, libspiro ? null
 , withGTK ? false, gtk3
 , withGUI ? withGTK
 , withPython ? true
 , withExtras ? true
-, Carbon, Cocoa
+# Darwin
+, Carbon ? null
+, Cocoa ? null
 }:
 
 assert withGTK -> withGUI;
+assert withSpiro -> libspiro != null;
 
 stdenv.mkDerivation rec {
   pname = "fontforge";
