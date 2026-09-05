@@ -9,7 +9,7 @@
 
 stdenv.mkDerivation rec {
   pname = "aws-checksums";
-  version = "0.2.10";
+  version = "1.0.0";
 
   outputs = [
     "out"
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
     owner = "awslabs";
     repo = "aws-checksums";
     rev = "v${version}";
-    sha256 = "sha256-oXH2okNrWm19i0zfE9w5/kCkzkd8RPXZk5P5Q8HCnRM=";
+    sha256 = "sha256-Yvv4NT90715zMBqBeJz7o2WTDRSjszPpBsFGMVTMc4I=";
   };
 
   nativeBuildInputs = [
