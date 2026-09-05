@@ -4,27 +4,19 @@
   lib,
   cmake,
   fetchFromGitHub,
-  fetchpatch,
   gtest,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "jsonnet";
-  version = "0.21.0";
+  version = "0.22.0";
 
   src = fetchFromGitHub {
     rev = "v${finalAttrs.version}";
     owner = "google";
     repo = "jsonnet";
-    sha256 = "sha256-QHp0DOu/pqcgN7di219cHzfFb7fWtdGGE6J1ZXgbOGQ=";
+    sha256 = "sha256-3J1Rm5nDgE0casINMoEU7anuuoNmTYmuRorZwKefYSY=";
   };
-
-  patches = [
-    (fetchpatch {
-      url = "https://github.com/google/jsonnet/commit/6c87c1b0e1e18d25898be071c1b231e264f05a8c.patch";
-      hash = "sha256-KprhMKwUCpvLiMT/grfqZ8Vt9rbosIizQgNMStuV8/U=";
-    })
-  ];
 
   nativeBuildInputs = [
     cmake
