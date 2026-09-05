@@ -14,7 +14,7 @@
 
 stdenv.mkDerivation rec {
   pname = "aws-c-event-stream";
-  version = "0.7.1";
+  version = "1.0.0";
 
   outputs = [
     "out"
@@ -26,7 +26,7 @@ stdenv.mkDerivation rec {
     owner = "awslabs";
     repo = "aws-c-event-stream";
     rev = "v${version}";
-    hash = "sha256-l0e3KoYk/4nX0QlZ2PlCBzBMXmNrM8x23D5NvEz4SBY=";
+    hash = "sha256-J8bcDIK6rEM2AyhTiRvPA2ikbv8gfDxEY8izuKLBNac=";
   };
 
   nativeBuildInputs = [
