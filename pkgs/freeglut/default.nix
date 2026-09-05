@@ -14,11 +14,11 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "freeglut";
-  version = "3.6.0";
+  version = "3.8.0";
 
   src = fetchurl {
     url = "https://github.com/freeglut/freeglut/releases/download/v${finalAttrs.version}/freeglut-${finalAttrs.version}.tar.gz";
-    hash = "sha256-nD1NZRb7+gKA7ck8d2mPtzA+RDwaqvN9Jp4yiKbD6lI=";
+    hash = "sha256-Z03K/yUBDgnkUK7EWLiHDZ6YxG+ZU420V6tlmzIdmYk=";
   };
 
   outputs = [
