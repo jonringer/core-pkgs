@@ -26,7 +26,7 @@
 
 stdenv.mkDerivation rec {
   pname = "gtest";
-  version = "1.17.0";
+  version = "1.18.0";
 
   outputs = [
     "out"
@@ -37,12 +37,8 @@ stdenv.mkDerivation rec {
     owner = "google";
     repo = "googletest";
     rev = "v${version}";
-    hash = "sha256-HIHMxAUR4bjmFLoltJeIAVSulVQ6kVuIT2Ku+lwAx/4=";
+    hash = "sha256-rXsn2L0xeWvfxTjMAoWEu0UFZ7xOSfYmhbKgRF5J9co=";
   };
-
-  patches = [
-    ./fix-cmake-config-includedir.patch
-  ];
 
   nativeBuildInputs = [
     cmake.minimal
