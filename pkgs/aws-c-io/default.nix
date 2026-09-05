@@ -12,7 +12,7 @@
 stdenv.mkDerivation rec {
   pname = "aws-c-io";
   # nixpkgs-update: no auto update
-  version = "0.27.5";
+  version = "1.0.0";
 
   outputs = [
     "out"
@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
     owner = "awslabs";
     repo = "aws-c-io";
     rev = "v${version}";
-    hash = "sha256-baeoEZMiEdchgOgCeVjSAbh6XfOVwDNPanDFMXKemQY=";
+    hash = "sha256-gdu1v6ui9y5Y+tp0K0fpbE2e2O4Ky/WPEekphWbhUDQ=";
   };
 
   nativeBuildInputs = [
