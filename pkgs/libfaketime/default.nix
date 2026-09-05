@@ -7,13 +7,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "libfaketime";
-  version = "0.9.12";
+  version = "0.9.13";
 
   src = fetchFromGitHub {
     owner = "wolfcw";
     repo = "libfaketime";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-Hd59b7pc6GIDvRR6EEosr/f8sKuV2q7RU7gDSaGFp3Y=";
+    hash = "sha256-BL3Hv3uh+uSluG7IC1SWwt8DAcxXVEdG2OyHqACCquw=";
   };
 
   postPatch = ''
