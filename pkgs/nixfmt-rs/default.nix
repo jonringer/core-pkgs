@@ -6,16 +6,16 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "nixfmt-rs";
-  version = "0.5.1";
+  version = "0.5.3";
 
   src = fetchFromGitHub {
     owner = "Mic92";
     repo = pname;
     rev = version;
-    sha256 = "sha256-Gapz+ra0dyGHfY028QTbVVoGwu0yXaQOgKcarzX1nYo=";
+    sha256 = "sha256-ELXgj/ij6m5aipXVb7vdzD/+77YHTyytVv900Bcp1yU=";
   };
 
-  cargoHash = "sha256-SN/IXbJpAW9kLVn7y4K4oI3DcTX8ekwWWJVTn+7oNhY=";
+  cargoHash = "sha256-LVn9QxJU2r6urD6MA7Z52ajXcgE2Q6dmjirgA/jBKUw=";
 
   doCheck = false;
 
