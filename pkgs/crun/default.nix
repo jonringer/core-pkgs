@@ -10,7 +10,6 @@
   python3,
   systemdMinimal,
   json_c,
-  criu,
   testers,
 }:
 
@@ -40,13 +39,13 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "crun";
-  version = "1.29";
+  version = "1.29.1";
 
   src = fetchFromGitHub {
     owner = "containers";
     repo = "crun";
     tag = finalAttrs.version;
-    hash = "sha256-wSxA1Ji1NnBgczkdQjc+qwH3IuoEKJjj/nEMDSuFDfY=";
+    hash = "sha256-KmwkiExekHozW84dmkcC8OW8AP11Fsqj2t/n+ZGXpB4=";
     fetchSubmodules = true;
     leaveDotGit = true;
     postFetch = ''
@@ -64,16 +63,14 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   buildInputs = [
-    criu
     libcap
     libseccomp
     systemdMinimal
     json_c
   ];
 
-  env = {
-    NIX_LDFLAGS = "-lcriu";
-  };
+  enableParallelBuilding = true;
+  strictDeps = true;
 
   # we need this before autoreconfHook does its thing in order to initialize
   # config.h with the correct values
