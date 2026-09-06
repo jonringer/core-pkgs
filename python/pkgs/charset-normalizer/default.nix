@@ -18,14 +18,14 @@
 
 buildPythonPackage rec {
   pname = "charset-normalizer";
-  version = "3.4.9";
+  version = "3.5.1";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jawah";
     repo = "charset_normalizer";
     tag = version;
-    hash = "sha256-YOskF90ach/qEwnMeYDEEO2H4DOoz/LZApXDRU9mvnM=";
+    hash = "sha256-zIN1y9HVwaCqixjRFLn6g/tz95E41m7t7j4eY5jNZMs=";
   };
 
   build-system = [
