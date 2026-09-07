@@ -28,7 +28,7 @@
     hash = "sha256-wfu1MyCycGpxFB++eicA0F41j886/Y52I/4+ciRUg2o=";
   };
   v33 = {
-    version = "36.1";
-    hash = "sha256-SB17YwMdkCp4jPcX5Csf13IUGVNLaqwH5YJXugAeqMY=";
+    version = "33.2";
+    hash = "sha256-SguWBa9VlE15C+eLzcqqusVLgx9kDyPXwYImSE75HCM=";
   };
 }

@@ -8,18 +8,19 @@
 
 buildPythonPackage rec {
   pname = "lit";
-  version = "23.1.0";
+  version = "18.1.8";
   pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-b9UODKb6xh9KZy6fMBVO3Ks9F8mK64ICrHCbw1P+Mx8=";
+    hash = "sha256-R8F0oYaUGugw8E3tdqNERgC+Z9Xl+4KCw3g/umccTts=";
   };
 
   nativeBuildInputs = [ setuptools ];
 
   passthru = {
     inherit python;
+    ekapkgs-update.semver-strategy = "minor";
   };
 
   # Non-standard test suite. Needs custom checkPhase.
