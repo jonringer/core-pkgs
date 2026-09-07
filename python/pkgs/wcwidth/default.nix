@@ -9,14 +9,14 @@
 
 buildPythonPackage rec {
   pname = "wcwidth";
-  version = "0.8.2";
+  version = "0.8.3";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "jquast";
     repo = "wcwidth";
     tag = version;
-    hash = "sha256-PMYGLqxbTYIE+2vn0wmaBB/y8lRs9AXX+rOPpYYXHSw=";
+    hash = "sha256-4GzYqoXdYqZjyB/iIsuOnwSjJGSKY9LitVKVDT2aUCo=";
   };
 
   build-system = [ hatchling ];
