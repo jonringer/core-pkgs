@@ -47,4 +47,8 @@
     version = "20250814.2";
     src-hash = "sha256-PCospVD/hnbT/87tRtvick+RIuwAv7DDPGnLG3ZMb3g=";
   };
+  v20260107 = {
+    version = "20260107.1";
+    src-hash = "sha256-TJT2Kzc64zI42FAbbGWP3Sshh1dU/D/AtEpgZrrhebg=";
+  };
 }
