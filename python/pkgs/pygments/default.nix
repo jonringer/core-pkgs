@@ -14,12 +14,12 @@
 let
   pygments = buildPythonPackage rec {
     pname = "pygments";
-    version = "2.20.0";
+    version = "2.21.0";
     pyproject = true;
 
     src = fetchPypi {
       inherit pname version;
-      hash = "sha256-Z1fNA3aAU/+Z8wOcGjbWwKoLJjQ4/KsXUgswowOoK18=";
+      hash = "sha256-YQynUcm8JJKzjrmjin+8k+27stcYLtrzTmauST3uXIw=";
     };
 
     nativeBuildInputs = [ hatchling ];
