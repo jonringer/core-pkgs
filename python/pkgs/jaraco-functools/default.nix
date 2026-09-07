@@ -12,13 +12,13 @@
 
 buildPythonPackage (finalAttrs: {
   pname = "jaraco-functools";
-  version = "4.5.0";
+  version = "4.6.0";
   pyproject = true;
 
   src = fetchPypi {
     pname = "jaraco_functools";
     inherit (finalAttrs) version;
-    hash = "sha256-O7VmXqSgIM94pwQOiRVMd+2ts8p082ZHlmnFmZqnCwM=";
+    hash = "sha256-iAxXfslyCzoFLVvGEfufImmz2HkC70JEDfRDuI5EMoA=";
   };
 
   postPatch = ''
