@@ -8,7 +8,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "srt";
-  version = "1.5.5";
+  version = "1.5.7";
 
   outputs = [
     "out"
@@ -20,7 +20,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "Haivision";
     repo = "srt";
     rev = "v${finalAttrs.version}";
-    sha256 = "sha256-hOkLlmtF9dKqXZTjAeBntkkg5WsmsZN6DKhyakoIF1k=";
+    sha256 = "sha256-PMSwAfAafOd3UAfpVb6HD9VJgRtErUxElNPu7rkBC50=";
   };
 
   nativeBuildInputs = [
