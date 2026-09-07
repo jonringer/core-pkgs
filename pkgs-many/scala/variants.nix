@@ -1,8 +1,8 @@
 {
   v2_13 = {
-    version = "2.13.15";
+    version = "2.13.18";
     # Scala 2.13 (Stable, widely used)
-    src-hash = "sha256-jXIZ0q2IHIHPdwmp5JU05s4S0Bft4Uc+r9Hpuyh8ObE=";
+    src-hash = "sha256-GDTQn9XHjsd+mpM6t2xyQoCo7JWVozKmESgjeHqaw+Y=";
   };
 
   v3_6 = {
