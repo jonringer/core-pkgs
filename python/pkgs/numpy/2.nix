@@ -60,7 +60,7 @@ let
 in
 buildPythonPackage rec {
   pname = "numpy";
-  version = "2.3.4";
+  version = "2.5.3";
   pyproject = true;
 
   disabled = pythonOlder "3.11";
@@ -70,7 +70,7 @@ buildPythonPackage rec {
     repo = "numpy";
     tag = "v${version}";
     fetchSubmodules = true;
-    hash = "sha256-MfL7UQeSuxJIEQzY/0LIuScyBCilINt8e+zAeUNPmH0=";
+    hash = "sha256-gahiYESYSgq4MEn6w/J1Mo2CD+QC2lcjzFsw+gAquOg=";
   };
 
   patches = lib.optionals python.hasDistutilsCxxPatch [
@@ -103,7 +103,6 @@ buildPythonPackage rec {
   # if a machine has more than 64 threads, it will segfault
   # see https://github.com/OpenMathLib/OpenBLAS/issues/2993
   preConfigure = ''
-    sed -i 's/-faltivec//' numpy/distutils/system_info.py
     export OMP_NUM_THREADS=$((NIX_BUILD_CORES > 64 ? 64 : NIX_BUILD_CORES))
   '';
 
