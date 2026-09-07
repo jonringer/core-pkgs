@@ -52,7 +52,8 @@ stdenv.mkDerivation (finalAttrs: {
       substituteInPlace libtoolize.in       --replace '#! /usr/bin/env sh' '#!${runtimeShell}'
       # avoid help2man run after 'libtoolize.in' update
       touch doc/libtoolize.1
-    '');
+    ''
+  );
 
   # As libtool is an early bootstrap dependency try hard not to
   # add autoconf and automake or help2man dependencies here. That way we can

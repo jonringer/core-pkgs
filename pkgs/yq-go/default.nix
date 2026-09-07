@@ -13,16 +13,23 @@
 
 buildGoModule (finalAttrs: {
   pname = "yq-go";
-  version = "4.53.3";
+  version = "4.53.6";
 
   src = fetchFromGitHub {
     owner = "mikefarah";
     repo = "yq";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-e4/Tu40Fe2DKzP7+ZLqkWty+VJ5eWGyKAwH0U07gQeg=";
+    hash = "sha256-BLd6NaYBEuTYSCe0mTX2FYER+ybT4KqGsHw86re7wiU=";
   };
 
-  vendorHash = "sha256-B+FGknoNYfWXT8nx0teSCdT9i18VJMv8L1dv1w8gcF8=";
+  vendorHash = "sha256-q/khSpZgo8D3K8adjI56Xj943vdWbGgnzG619NWrLY0=";
+
+  # TestFormatStringFromFilename expects "unknown" for unrecognized extensions,
+  # but upstream changed the default to "yaml"
+  checkFlags = [
+    "-run"
+    "^(?!TestFormatStringFromFilename$)"
+  ];
 
   nativeBuildInputs = lib.optionals (stdenv.buildPlatform.canExecute stdenv.hostPlatform) [
     installShellFiles
