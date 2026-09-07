@@ -35,4 +35,8 @@
     version = "34.2";
     hash = "sha256-5YZ8Q9uy7MDnLRmLkkEuqp0k6eJRvs/nPfyo33cJLgs=";
   };
+  v35 = {
+    version = "35.1";
+    hash = "sha256-nif9xjd+3ASR2pvvSXkzTEWoKi2oKLzV9gMQ3EevBVk=";
+  };
 }
