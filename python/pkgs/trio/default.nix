@@ -17,14 +17,14 @@
 
 buildPythonPackage rec {
   pname = "trio";
-  version = "0.33.0";
+  version = "0.34.0";
   pyproject = true;
 
   src = fetchFromGitHub {
     owner = "python-trio";
     repo = "trio";
     tag = "v${version}";
-    hash = "sha256-juqlTJPcXpLdzO5OBCcwVR7rckABza9TAhPs9ta5c8U=";
+    hash = "sha256-5ooFU1TP9CU0+dpIWs8cw+gHvBzntCnxejpBQn/QffE=";
   };
 
   build-system = [ setuptools ];
