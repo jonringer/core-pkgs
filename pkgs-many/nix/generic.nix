@@ -145,5 +145,6 @@ basePackage.overrideAttrs (oldAttrs: {
       # Individual component packages are accessible via nixVersions.nixComponents_2_X
       # (not via passthru.pkgs) to avoid infinite recursion with the splice infrastructure.
       ekapkgs-update.skip = false;
+      ekapkgs-update.semver-strategy = "patch";
     };
 })
