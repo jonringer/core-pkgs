@@ -129,6 +129,8 @@ matchedTcl.mkTclDerivation {
     libdir = "lib/${libPrefix}";
   };
 
+  passthru.ekapkgs-update.semver-strategy = "patch";
+
   meta = {
     description = "Widget toolkit that provides a library of basic elements for building a GUI in many different programming languages";
     homepage = "https://www.tcl.tk/";
