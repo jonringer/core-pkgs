@@ -98,6 +98,7 @@ stdenv'.mkDerivation rec {
   passthru.tests = {
     inherit elfutils libpcap iproute2;
   };
+  passthru.ekapkgs-update.semver-strategy = "patch";
 
   meta = {
     homepage = "https://github.com/westes/flex";
