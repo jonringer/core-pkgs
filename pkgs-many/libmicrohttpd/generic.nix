@@ -48,6 +48,10 @@ stdenv.mkDerivation (finalAttrs: {
   # Disabled because the tests can time-out.
   doCheck = false;
 
+  passthru = {
+    ekapkgs-update.semver-strategy = "patch";
+  };
+
   meta = {
     description = "Embeddable HTTP server library";
 
