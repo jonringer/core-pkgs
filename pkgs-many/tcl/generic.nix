@@ -124,6 +124,7 @@ stdenv.mkDerivation (finalAttrs: rec {
   };
 
   passthru = rec {
+    ekapkgs-update.semver-strategy = "patch";
     inherit release version;
     libPrefix = "tcl${release}";
     libdir = "lib/${libPrefix}";
