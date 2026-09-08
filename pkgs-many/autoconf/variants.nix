@@ -1,7 +1,7 @@
 {
   v2_69 = {
-    version = "2.73";
-    src-hash = "sha256-n9ZyschCX6wvpn+gR3uZCYcmi5D/NtXwFtrle+DWtS4=";
+    version = "2.69";
+    src-hash = "sha256-ZOvOyfisWySHElqGp3YNJZGsnh09vVlIljP53mKldoQ=";
   };
   v2_71 = {
     version = "2.71";
