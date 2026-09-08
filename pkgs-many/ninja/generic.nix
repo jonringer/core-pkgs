@@ -116,6 +116,7 @@ stdenv.mkDerivation (finalAttrs: {
   setupHook = ./setup-hook.sh;
 
   passthru = {
+    ekapkgs-update.semver-strategy = "patch";
     updateScript = nix-update-script { };
     tests = {
       inherit mesa glib harfbuzz;
