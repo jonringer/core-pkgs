@@ -165,8 +165,6 @@
   ./services/hardware/fprintd.nix
   ./services/hardware/udev.nix
 
-  ./services/security/vault.nix
-
   # Service management
   ./services.nix # Cross-platform service definitions
   # Service manager implementations (opt-in via enable options)
