@@ -82,6 +82,7 @@ stdenv.mkDerivation (finalAttrs: {
   dontDisableStatic = withStatic;
 
   passthru.tests.unittests = runUnitTests finalAttrs.finalPackage;
+  passthru.ekapkgs-update.semver-strategy = "patch";
 
   meta = {
     homepage = "https://gmplib.org/";
