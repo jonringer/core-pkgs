@@ -79,6 +79,7 @@ stdenv.mkDerivation (finalAttrs: {
   TZDIR = "${tzdata}/share/zoneinfo";
 
   passthru = {
+    ekapkgs-update.semver-strategy = "patch";
     majorVersion = lib.versions.major version;
     minorVersion = lib.versions.majorMinor version;
     buildRPackage = callPackage ./build-r-package.nix {
