@@ -166,5 +166,7 @@ mainRustc.overrideAttrs (oldAttrs: {
       toRustTargetForUseInEnvVars
       envVars
       ;
+
+    ekapkgs-update.semver-strategy = "patch";
   };
 })
