@@ -17,7 +17,7 @@
   fetchFromGitHub,
   rustPlatform,
   cmake,
-  yq,
+  yq-go,
   protobuf,
   installShellFiles,
   makeBinaryWrapper,
@@ -64,7 +64,9 @@ rustPlatform.buildRustPackage {
   ];
   postPatch = ''
     # Use patched nixpkgs libffi in order to fix https://github.com/libffi/libffi/pull/857
-    tomlq -ti '.workspace.dependencies.libffi = { "version": .workspace.dependencies.libffi, "features": ["system"] }' Cargo.toml
+    yq --inplace --input-format toml --output-format toml \
+      '.workspace.dependencies.libffi = { "version": .workspace.dependencies.libffi, "features": ["system"] }' \
+      Cargo.toml
   '';
 
   buildInputs = [
@@ -74,7 +76,7 @@ rustPlatform.buildRustPackage {
 
   nativeBuildInputs = [
     rustPlatform.bindgenHook
-    yq
+    yq-go
     cmake
     protobuf
     installShellFiles

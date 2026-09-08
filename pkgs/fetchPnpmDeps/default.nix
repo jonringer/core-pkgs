@@ -13,7 +13,7 @@
   pnpm,
   pnpmFixupStateDb,
   writableTmpDirAsHomeHook,
-  yq,
+  yq-go,
   zstd,
 }:
 
@@ -92,7 +92,7 @@ lib.makeOverridable (
             pnpm # from args
             pnpmFixupStateDb'
             writableTmpDirAsHomeHook
-            yq
+            yq-go
             zstd
           ]
           ++ args.nativeBuildInputs or [ ];

@@ -315,8 +315,6 @@ with final;
   zmqpp = null;
   zvbi = null; # ffmpeg
 
-  yq = with python3Packages; toPythonApplication yq;
-
   # TODO(corepkgs): support darwin
   darwin = {
     autoSignDarwinBinariesHook = null;

@@ -9,6 +9,8 @@
   nix-update-script,
 }:
 
+# TODO: make it default implementataion of yq
+
 buildGoModule (finalAttrs: {
   pname = "yq-go";
   version = "4.53.3";
