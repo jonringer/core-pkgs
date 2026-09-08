@@ -43,6 +43,10 @@ stdenv.mkDerivation {
 
   inherit configureFlags;
 
+  passthru = {
+    ekapkgs-update.semver-strategy = "patch";
+  };
+
   meta = {
     homepage = "https://libisl.sourceforge.io/";
     license = lib.licenses.lgpl21;
