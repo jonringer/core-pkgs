@@ -179,6 +179,9 @@
   ./monitoring/prometheus-scrape.nix
   ./services/monitoring/prometheus.nix
 
+  # Installer
+  ./installer/iso-image.nix
+
   # Miscellaneous
   ./misc/assertions.nix # Assertion checking
   ./misc/defaults.nix # System defaults (including default service manager)
