@@ -357,6 +357,9 @@ let
             perl;
         in
         mkVariantPassthru variantArgs
+        // {
+          ekapkgs-update.semver-strategy = "patch";
+        }
         // passthruFun {
           inherit self;
           perlOnBuildForBuild = override pkgsBuildBuild.perl.${perlVariant};
