@@ -113,13 +113,15 @@ stdenv.mkDerivation (finalAttrs: {
     docbook-xml-dtd.v4_2
   ];
 
-  passthru = mkVariantPassthru {
-    tests.pkg-config = testers.hasPkgConfigModules {
-      package = finalAttrs.finalPackage;
+  passthru =
+    mkVariantPassthru {
+      tests.pkg-config = testers.hasPkgConfigModules {
+        package = finalAttrs.finalPackage;
+      };
+    }
+    // {
+      ekapkgs-update.semver-strategy = "patch";
     };
-  } // {
-    ekapkgs-update.semver-strategy = "patch";
-  };
 
   meta = {
     description = "Core Wayland window system code and protocol";
