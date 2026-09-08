@@ -84,6 +84,7 @@ stdenv.mkDerivation (finalAttrs: {
   doInstallCheck = false;
 
   passthru.tests = { inherit readline; };
+  passthru.ekapkgs-update.semver-strategy = "patch";
 
   meta = {
     description = "Generic library support script";
