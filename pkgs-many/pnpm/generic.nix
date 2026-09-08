@@ -91,6 +91,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
       pnpm' = buildPackages."pnpm_${lib.versions.major version}";
     in
     {
+      ekapkgs-update.semver-strategy = "patch";
       fetchDeps =
         lib.warn
           "pnpm.fetchDeps: The package attribute is deprecated. Use the top-level fetchPnpmDeps attribute instead"
