@@ -67,6 +67,7 @@ stdenv.mkDerivation (finalAttrs: {
   postInstall = lib.optionalString (packageOlder "1.6") ''mv "$out/bin" "$dev/bin"'';
 
   passthru = mkVariantPassthru variantArgs // {
+    ekapkgs-update.semver-strategy = "patch";
     inherit zlib;
 
     tests = {
