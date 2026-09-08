@@ -78,6 +78,7 @@ stdenvNoCC.mkDerivation {
   '';
 
   passthru = {
+    ekapkgs-update.semver-strategy = "patch";
     ekapkgs-update.platform-hashes = [
       "x86_64-linux"
       "aarch64-linux"
