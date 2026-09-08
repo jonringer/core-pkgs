@@ -273,6 +273,7 @@ builder (
     inherit setupHook;
 
     passthru = rec {
+      ekapkgs-update.semver-strategy = "patch";
       effectiveVersion = lib.versions.majorMinor version;
       siteCcacheDir =
         if packageOlder "2.0" then "lib/guile/site-ccache" else "lib/guile/${effectiveVersion}/site-ccache";
