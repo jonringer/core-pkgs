@@ -82,5 +82,6 @@ kernel.overrideAttrs (oldAttrs: {
     // {
       pkgs = kernelPackages;
       inherit variantArgs;
+      ekapkgs-update.semver-strategy = "patch";
     };
 })
