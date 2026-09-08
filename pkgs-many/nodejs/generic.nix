@@ -100,6 +100,7 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   passthru = {
+    ekapkgs-update.semver-strategy = "patch";
     python = python;
     inherit python3;
     majorVersion = majorVersion;
