@@ -122,6 +122,8 @@ stdenv.mkDerivation (finalAttrs: {
     tests.pkg-config = testers.hasPkgConfigModules {
       package = finalAttrs.finalPackage;
     };
+  } // {
+    ekapkgs-update.semver-strategy = "patch";
   };
 
   meta = {
