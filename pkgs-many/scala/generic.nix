@@ -81,6 +81,7 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   passthru = {
+    ekapkgs-update.semver-strategy = "patch";
     inherit java;
     majorVersion = majorVersion;
     minorVersion = lib.versions.majorMinor version;
