@@ -176,5 +176,6 @@ luaInterpreter.overrideAttrs (oldAttrs: {
     // mkVariantPassthru variantArgs
     // {
       inherit variantArgs;
+      ekapkgs-update.semver-strategy = "patch";
     };
 })
