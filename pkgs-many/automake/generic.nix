@@ -44,6 +44,10 @@ stdenv.mkDerivation (finalAttrs: {
   # 'fixed' path in generated files!
   dontPatchShebangs = true;
 
+  passthru = {
+    ekapkgs-update.semver-strategy = "patch";
+  };
+
   meta = {
     branch = lib.versions.majorMinor version;
     homepage = "https://www.gnu.org/software/automake/";
