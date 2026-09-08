@@ -6,7 +6,7 @@
 # Usage:
 #   nix-instantiate --eval --strict --json \
 #     --arg system '"x86_64-linux"' \
-#     --arg attrName '"fzf"' \
+#     --arg attrName '"coreutils"' \
 #     scripts/repology/packages-info.nix
 #
 # Returns: { "pname": "...", "version": "...", "meta": { ... } }
