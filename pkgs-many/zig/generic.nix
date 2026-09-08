@@ -79,6 +79,7 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   passthru = {
+    ekapkgs-update.semver-strategy = "patch";
     hook = callPackage ./setup-hook.nix { zig = finalAttrs.finalPackage; };
   };
 
