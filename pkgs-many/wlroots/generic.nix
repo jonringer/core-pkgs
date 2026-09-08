@@ -118,13 +118,15 @@ stdenv.mkDerivation (finalAttrs: {
     done
   '';
 
-  passthru = mkVariantPassthru {
-    tests.pkg-config = testers.hasPkgConfigModules {
-      package = finalAttrs.finalPackage;
+  passthru =
+    mkVariantPassthru {
+      tests.pkg-config = testers.hasPkgConfigModules {
+        package = finalAttrs.finalPackage;
+      };
+    }
+    // {
+      ekapkgs-update.semver-strategy = "patch";
     };
-  } // {
-    ekapkgs-update.semver-strategy = "patch";
-  };
 
   meta = {
     description = "Modular Wayland compositor library";
