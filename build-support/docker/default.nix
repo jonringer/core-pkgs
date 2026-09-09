@@ -1,24 +1,3 @@
-# dockerTools: Build and manipulate Docker/OCI container images
-#
-# MISSING DEPENDENCIES (blockers for full functionality):
-# The following packages need to be ported to core-pkgs for dockerTools to work:
-#
-# CRITICAL (required for basic functionality):
-# - jshon: JSON manipulation tool (pkgs/by-name/js/jshon)
-# - pigz: Parallel gzip (pkgs/by-name/pi/pigz) - needed for gz compression
-# - fakeroot: Tool for simulating root privileges (pkgs/by-name/fa/fakeroot) - needed for streamLayeredImage
-# - fakeNss: Fake NSS passwd/group files (pkgs/by-name/fa/fakeNss) - needed for streamNixShellImage
-#
-# OPTIONAL (required for specific features):
-# - proot: User-space chroot (needed for enableFakechroot in streamLayeredImage)
-# - fakechroot: Another fake chroot tool (currently unused)
-# - tarsum: Docker tarsum calculator (build-support/docker/tarsum.nix, requires docker.moby-src)
-# - devShellTools: Shell environment tools (build-support/dev-shell-tools) [PORTED]
-# - flatten-references-graph: Python tool for layering (pkgs/by-name/fl/flatten-references-graph)
-#
-# SIBLING PORTS (being ported separately):
-# - skopeo: Container image manipulation tool (referenced in pullImage)
-#
 {
   bash,
   buildPackages,
@@ -26,20 +5,28 @@
   callPackage,
   closureInfo,
   coreutils,
+  devShellTools,
   e2fsprogs,
+  fakeNss,
+  fakeroot,
   file,
   go,
   jq,
+  jshon,
   lib,
   makeWrapper,
   nix,
+  pigz,
+  pkgsBuildBuild,
   rsync,
   runCommand,
   runtimeShell,
   shadow,
+  skopeo,
   stdenv,
   storeDir ? builtins.storeDir,
   symlinkJoin,
+  tarsum,
   util-linux,
   vmTools,
   writeClosure,
@@ -47,20 +34,10 @@
   writeShellScriptBin,
   writeText,
   writeTextDir,
-  writePython3 ? buildPackages.writers.writePython3,
+  writePython3,
   zstd,
-  # Optional/missing dependencies - will fail with clear messages if used but not available
-  devShellTools,
-  dockerAutoLayer ? null,
-  dockerMakeLayers ? null,
-  fakeNss_ ? null,
-  fakeroot ? null,
-  fakechroot ? null,
-  jshon ? null,
-  pigz ? null,
+  # proot is only needed when enableFakechroot is set.
   proot ? null,
-  skopeo ? null,
-  tarsum ? null,
 }:
 
 let
@@ -117,16 +94,12 @@ let
       compress = "cat";
       decompress = "cat";
     };
-    gz =
-      if pigz != null then
-        {
-          ext = ".gz";
-          nativeInputs = [ pigz ];
-          compress = "pigz -p$NIX_BUILD_CORES -nTR";
-          decompress = "pigz -d -p$NIX_BUILD_CORES";
-        }
-      else
-        throw "dockerTools: pigz compressor requires pigz package (from pkgs/by-name/pi/pigz)";
+    gz = {
+      ext = ".gz";
+      nativeInputs = [ pigz ];
+      compress = "pigz -p$NIX_BUILD_CORES -nTR";
+      decompress = "pigz -d -p$NIX_BUILD_CORES";
+    };
     zstd = {
       ext = ".zst";
       nativeInputs = [ zstd ];
@@ -190,11 +163,7 @@ rec {
           inherit outputHash outputHashAlgo;
           outputHashMode = "flat";
 
-          nativeBuildInputs =
-            if skopeo != null then
-              [ skopeo ]
-            else
-              throw "dockerTools.pullImage: skopeo is required but not available (being ported by sibling agent)";
+          nativeBuildInputs = [ skopeo ];
           SSL_CERT_FILE = "${cacert.out}/etc/ssl/certs/ca-bundle.crt";
 
           sourceURL = "docker://${imageName}@${imageDigest}";
@@ -215,7 +184,6 @@ rec {
 
   # We need to sum layer.tar, not a directory, hence tarsum instead of nix-hash.
   # And we cannot untar it, because then we cannot preserve permissions etc.
-  # TODO: tarsum missing - needs docker.moby-src to build
   inherit tarsum; # pkgs.dockerTools.tarsum
 
   # buildEnv creates symlinks to dirs, which is hard to edit inside the overlay VM
@@ -304,8 +272,8 @@ rec {
             e2fsprogs
             rsync
             jq
-          ]
-          ++ optionals (jshon != null) [ jshon ];
+            jshon
+          ];
         }
         ''
           mkdir disk
@@ -452,6 +420,7 @@ rec {
       keepContentsDirlinks ? false,
       # Additional commands to run on the layer before it is tar'd up.
       extraCommands ? "",
+      nativeBuildInputs ? [ ],
       uid ? 0,
       gid ? 0,
     }:
@@ -460,10 +429,11 @@ rec {
         inherit baseJson extraCommands;
         contents = if copyToRoot == null then [ ] else toList copyToRoot;
         nativeBuildInputs = [
+          jshon
           rsync
+          tarsum
         ]
-        ++ optionals (jshon != null) [ jshon ]
-        ++ optionals (tarsum != null) [ tarsum ];
+        ++ nativeBuildInputs;
       }
       ''
         mkdir layer
@@ -748,8 +718,8 @@ rec {
           {
             nativeBuildInputs = [
               jq
+              jshon
             ]
-            ++ optionals (jshon != null) [ jshon ]
             ++ compress.nativeInputs;
             # Image name must be lowercase
             imageName = lib.toLower name;
@@ -925,7 +895,7 @@ rec {
           jq
         ]
         ++ compressors.none.nativeInputs
-        ++ (if pigz != null then compressors.gz.nativeInputs else [ ])
+        ++ compressors.gz.nativeInputs
         ++ compressors.zstd.nativeInputs;
       }
       ''
@@ -976,13 +946,7 @@ rec {
   # Useful when packaging binaries that insist on using nss to look up
   # username/groups (like nginx).
   # /bin/sh is fine to not exist, and provided by another shim.
-  # TODO: fakeNss missing - needs to be ported from pkgs/by-name/fa/fakeNss
-  # Re-export fakeNss if available, otherwise throw an error when accessed
-  fakeNss =
-    if fakeNss_ != null then
-      fakeNss_
-    else
-      throw "dockerTools.fakeNss: missing dependency fakeNss from pkgs/by-name/fa/fakeNss";
+  inherit fakeNss; # alias
 
   # This provides a /usr/bin/env, for shell scripts using the
   # "#!/usr/bin/env executable" shebang.
@@ -1065,11 +1029,6 @@ rec {
               Discussion: https://github.com/NixOS/nixpkgs/issues/327311''
     );
     assert (
-      lib.assertMsg (fakeroot != null) ''
-        dockerTools.streamLayeredImage: fakeroot is required but not available.
-        Missing dependency: fakeroot needs to be ported to core-pkgs (pkgs/by-name/fa/fakeroot).''
-    );
-    assert (
       lib.assertMsg (enableFakechroot -> proot != null) ''
         dockerTools.streamLayeredImage: proot is required when enableFakechroot=true but not available.
         Missing dependency: proot needs to be ported to core-pkgs.''
@@ -1105,9 +1064,7 @@ rec {
         paths = contentsList;
         extraCommands = (lib.optionalString includeNixDB (mkDbExtraCommand contents)) + extraCommands;
         inherit fakeRootCommands;
-        nativeBuildInputs =
-          (optionals (fakeroot != null) [ fakeroot ])
-          ++ optionals (enableFakechroot && proot != null) [ proot ];
+        nativeBuildInputs = [ fakeroot ] ++ optionals enableFakechroot [ proot ];
         postBuild = ''
           mv $out old_out
           (cd old_out; eval "$extraCommands" )
@@ -1163,33 +1120,22 @@ rec {
         customisationLayer
       ];
 
-      # TODO: dockerAutoLayer and dockerMakeLayers missing
       layersJsonFile =
         if layeringPipeline == null then
-          (
-            if dockerAutoLayer != null then
-              dockerAutoLayer {
-                inherit
-                  closureRoots
-                  debug
-                  excludePaths
-                  fromImage
-                  maxLayers
-                  ;
-              }
-            else
-              throw "dockerTools.streamLayeredImage: dockerAutoLayer is not available. Missing dependency: build-support/docker/auto-layer.nix"
-          )
+          buildPackages.dockerAutoLayer {
+            inherit
+              closureRoots
+              debug
+              excludePaths
+              fromImage
+              maxLayers
+              ;
+          }
         else
-          (
-            if dockerMakeLayers != null then
-              dockerMakeLayers {
-                inherit closureRoots debug excludePaths;
-                pipeline = layeringPipeline;
-              }
-            else
-              throw "dockerTools.streamLayeredImage: dockerMakeLayers is not available. Missing dependency: build-support/docker/make-layers.nix (requires flatten-references-graph)"
-          );
+          buildPackages.dockerMakeLayers {
+            inherit closureRoots debug excludePaths;
+            pipeline = layeringPipeline;
+          };
 
       conf =
         runCommand "${baseName}-conf.json"
@@ -1283,7 +1229,7 @@ rec {
               # take images can know in advance how the image is supposed to be used.
               isExe = true;
             };
-            nativeBuildInputs = [ makeWrapper ];
+            nativeBuildInputs = [ pkgsBuildBuild.makeWrapper ];
             inherit meta;
           }
           ''

@@ -1,10 +1,9 @@
 {
   coreutils,
+  flatten-references-graph,
   lib,
   jq,
   runCommand,
-  # TODO: Missing dependency - needs to be ported to core-pkgs
-  flatten-references-graph ? null,
 }:
 {
   closureRoots,
@@ -26,14 +25,9 @@ else
       inherit pipeline;
       nativeBuildInputs = [
         coreutils
+        flatten-references-graph
         jq
-      ]
-      ++ (
-        if flatten-references-graph != null then
-          [ flatten-references-graph ]
-        else
-          throw "dockerMakeLayers: flatten-references-graph is required but not available. Needs to be ported from pkgs/by-name/fl/flatten-references-graph"
-      );
+      ];
     }
     ''
       . .attrs.sh

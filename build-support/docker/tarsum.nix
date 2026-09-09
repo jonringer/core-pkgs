@@ -1,14 +1,22 @@
 {
+  fetchFromGitHub,
   stdenv,
   go,
-  # TODO: docker missing - needs docker.moby-src for tarsum implementation
-  docker ? null,
 }:
 
-assert docker != null -> docker ? moby-src;
+let
+  version = "29.8.0";
+  moby-src = fetchFromGitHub {
+    owner = "moby";
+    repo = "moby";
+    rev = "docker-v${version}";
+    hash = "sha256-V8p+MDEEMERGqQ9sWKPE/jkUw43UcO0x3Z1XZ8DWM2E=";
+  };
+in
 
 stdenv.mkDerivation {
-  name = "tarsum";
+  pname = "tarsum";
+  inherit version;
 
   nativeBuildInputs = [ go ];
   disallowedReferences = [ go ];
@@ -30,17 +38,7 @@ stdenv.mkDerivation {
     export GOCACHE="$TMPDIR/go-cache"
     mkdir -p src/github.com/docker/docker/daemon/builder/remotecontext
     # We need to drop the internal as otherwise go refuses to use it.
-    ${
-      if docker != null then
-        ''
-          ln -sT ${docker.moby-src}/daemon/builder/remotecontext/internal/tarsum src/github.com/docker/docker/daemon/builder/remotecontext/tarsum
-        ''
-      else
-        ''
-          echo "ERROR: docker.moby-src is required to build tarsum" >&2
-          exit 1
-        ''
-    }
+    ln -sT ${moby-src}/daemon/builder/remotecontext/internal/tarsum src/github.com/docker/docker/daemon/builder/remotecontext/tarsum
     go build
     runHook postBuild
   '';
@@ -52,9 +50,6 @@ stdenv.mkDerivation {
     runHook postInstall
   '';
 
-  meta = {
-    broken = docker == null;
-    platforms = go.meta.platforms;
-    mainProgram = "tarsum";
-  };
+  meta.platforms = go.meta.platforms;
+  meta.mainProgram = "tarsum";
 }
