@@ -46,6 +46,7 @@ mapAliases {
   buildGo125Module = go.v1_25.buildModule;
   buildGo126Module = go.v1_26.buildModule;
   buildGo127Module = go.v1_27.buildModule;
+  bzip2_1_1 = throw "'bzip2_1_1' has been removed as it was an unmaintained 2020 snapshot; use 'bzip2' instead";
   clang_18 = llvm.v18.pkgs.clang;
   clang_19 = llvm.v19.pkgs.clang;
   clang_20 = llvm.v20.pkgs.clang;
@@ -99,6 +100,7 @@ mapAliases {
   gradle_7 = gradle.v7;
   gradle_8 = gradle;
   gradle_9 = gradle.v9;
+  gtk2 = throw "gtk2 has reached end of life. All consumers should migrate to gtk3+";
   guile_1_8 = guile.v1_8;
   guile_2_0 = guile.v2_0;
   guile_2_2 = guile.v2_2;
@@ -162,6 +164,7 @@ mapAliases {
   luajit_2_1 = lua.luajit_2_1;
   luajit_openresty = lua.luajit_openresty;
   man = man-db;
+  mdbook-linkcheck = throw "'mdbook-linkcheck' has been removed and replaced by 'mdbook-linkcheck2' due to incompatibility with mdbook version 0.5.0+";
   mtdutils = mtd-utils;
   ncurses5 = ncurses.v5;
   ncurses6 = ncurses.v6;
