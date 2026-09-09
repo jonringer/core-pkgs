@@ -1,0 +1,73 @@
+{
+  lib,
+  cups,
+  bootstrapStdenv,
+  libresolv,
+  libsbuf,
+  libutil,
+  db,
+  libiconv,
+  ncurses,
+  stdenv,
+  stdenvNoCC,
+  xcbuild,
+}:
+
+let
+  # CUPS has too many dependencies to build as part of the Darwin bootstrap. It’s also typically taken as an explicit
+  # dependency by other packages, so building only the headers (to satisfy other SDK headers) should be okay.
+  cupsHeaders = bootstrapStdenv.mkDerivation {
+    pname = "${lib.getName cups}-headers";
+    version = lib.getVersion cups;
+
+    inherit (cups) src;
+
+    patches = cups.patches or [ ];
+
+    strictDeps = true;
+
+    dontBuild = true;
+
+    buildInputs = [ libresolv ]; # The `configure` script requires libresolv headers.
+
+    # CUPS’s configure script fails to find `ar` when cross-compiling.
+    configureFlags = [ "ac_cv_path_AR=${stdenv.cc.targetPrefix}ar" ];
+
+    installTargets = [ "install-headers" ];
+
+    __structuredAttrs = true;
+
+    meta = {
+      inherit (cups.meta)
+        homepage
+        description
+        license
+
+        platforms
+        ;
+    };
+  };
+in
+self: super: {
+  # These packages are propagated only because other platforms include them in their libc (or otherwise by default).
+  # Reducing the number of special cases required to support Darwin makes supporting it easier for package authors.
+  propagatedBuildInputs = super.propagatedBuildInputs or [ ] ++ [
+    libiconv
+    libresolv
+    libsbuf
+    # Shipped with the SDK only as a library with no headers
+    (lib.getLib libutil)
+  ];
+
+  # The Darwin module for Swift requires certain headers to be included in the SDK (and not just be propagated).
+  buildPhase = super.buildPhase or "" + ''
+    for header in '${lib.getDev libiconv}/include/'* '${lib.getDev ncurses}/include/'* '${cupsHeaders}/include/'*; do
+      ln -s "$header" "usr/include/$(basename "$header")"
+    done
+  '';
+
+  # Exported to allow the headers to pass the requisites check in the stdenv bootstrap.
+  passthru = (super.passthru or { }) // {
+    cups-headers = cupsHeaders;
+  };
+}

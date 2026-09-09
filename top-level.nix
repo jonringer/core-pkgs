@@ -115,7 +115,6 @@ with final;
   actdiag = null;
   amf = null; # ffmpeg
   amf-headers = null; # ffmpeg
-  apple-sdk_15 = null; # ffmpeg
   aria2 = null;
   aribb24 = null; # ffmpeg
   arrow-cpp = null;
@@ -302,7 +301,6 @@ with final;
   werkzeug = null;
   whisper-cpp = null; # ffmpeg
   wireshark = null;
-  xattr = null;
   xavs = null; # ffmpeg
   xavs2 = null; # ffmpeg
   xevd = null; # ffmpeg
@@ -321,12 +319,9 @@ with final;
     signingUtils = null;
     configd = null;
   };
-  apple-sdk = null;
   ocl-icd = null; # ffmpeg OpenCL ICD
   opencl-headers = null; # ffmpeg
-  xcodebuild = null;
-  xcbuild = null;
-  xcode = null; # ffmpeg metalcc/metallib, darwin only
+  xcodebuild = xcbuild;
 
   # Darwin packages use the ordinary package scope and shared package directories.
   bootstrapStdenv = stdenv.override (old: {
@@ -340,7 +335,85 @@ with final;
   });
 
   inherit (llvmPackages) clang-unwrapped;
+  inherit (file_cmds) xattr;
   xarMinimal = callPackage ./pkgs/xar { e2fsprogs = null; };
+
+  apple-sdk_14 = apple-sdk.override { darwinSdkMajorVersion = "14"; };
+  apple-sdk_15 = apple-sdk.override { darwinSdkMajorVersion = "15"; };
+  apple-sdk_26 = apple-sdk.override { darwinSdkMajorVersion = "26"; };
+  inherit (callPackage ./pkgs/xcode { })
+    requireXcode
+    xcode_8_1
+    xcode_8_2
+    xcode_9_1
+    xcode_9_2
+    xcode_9_3
+    xcode_9_4
+    xcode_9_4_1
+    xcode_10_1
+    xcode_10_2
+    xcode_10_2_1
+    xcode_10_3
+    xcode_11
+    xcode_11_1
+    xcode_11_2
+    xcode_11_3
+    xcode_11_3_1
+    xcode_11_4
+    xcode_11_5
+    xcode_11_6
+    xcode_11_7
+    xcode_12
+    xcode_12_0_1
+    xcode_12_1
+    xcode_12_2
+    xcode_12_3
+    xcode_12_4
+    xcode_12_5
+    xcode_12_5_1
+    xcode_13
+    xcode_13_1
+    xcode_13_2
+    xcode_13_2_1
+    xcode_13_3
+    xcode_13_3_1
+    xcode_13_4
+    xcode_13_4_1
+    xcode_14
+    xcode_14_1
+    xcode_15
+    xcode_15_0_1
+    xcode_15_1
+    xcode_15_2
+    xcode_15_3
+    xcode_15_4
+    xcode_16
+    xcode_16_1
+    xcode_16_2
+    xcode_16_3
+    xcode_16_4
+    xcode_26
+    xcode_26_Apple_silicon
+    xcode_26_0_1
+    xcode_26_0_1_Apple_silicon
+    xcode_26_1
+    xcode_26_1_Apple_silicon
+    xcode_26_1_1
+    xcode_26_1_1_Apple_silicon
+    xcode_26_2
+    xcode_26_2_Apple_silicon
+    xcode_26_3
+    xcode_26_3_Apple_silicon
+    xcode_26_4
+    xcode_26_4_Apple_silicon
+    xcode_26_4_1
+    xcode_26_4_1_Apple_silicon
+    xcode_26_5
+    xcode_26_5_Apple_silicon
+    xcode_26_6
+    xcode_26_6_Apple_silicon
+    xcode
+    ;
 
   # TODO(corepkgs): support windows
   windows = null;
