@@ -6,7 +6,7 @@
       lib,
       runCommandLocal,
       bash,
-      hello,
+      coreutils,
       ksh,
       patchRcPathBash,
       shellcheck,
@@ -58,25 +58,25 @@
         zsh ${./test-sourcing-bash} ./blank.bash ./blank_patched.bash
 
 
-        # Test patching silent_hello
+        # Test patching a silent command
 
-        echo "hello > /dev/null" > silent_hello.bash
+        echo "dirname / > /dev/null" > silent_command.bash
 
-        echo "Generating silent_hello_patched.bash from silent_hello.bash"
-        cp silent_hello.bash silent_hello_patched.bash
-        patchRcPathBash silent_hello_patched.bash "${hello}/bin"
+        echo "Generating silent_command_patched.bash from silent_command.bash"
+        cp silent_command.bash silent_command_patched.bash
+        patchRcPathBash silent_command_patched.bash "${coreutils}/bin"
 
-        echo "Running shellcheck against silent_hello_patched.bash"
-        shellcheck -s bash silent_hello_patched.bash
+        echo "Running shellcheck against silent_command_patched.bash"
+        shellcheck -s bash silent_command_patched.bash
 
-        echo "Testing in Bash if silent_hello_patched.bash get sourced without error"
-        bash -eu -o pipefail -c ". ./silent_hello_patched.bash"
+        echo "Testing in Bash if silent_command_patched.bash get sourced without error"
+        bash -eu -o pipefail -c ". ./silent_command_patched.bash"
 
-        echo "Testing in Ksh if silent_hello_patched.bash get sourced without error"
-        ksh -eu -o pipefail -c ". ./silent_hello_patched.bash"
+        echo "Testing in Ksh if silent_command_patched.bash get sourced without error"
+        ksh -eu -o pipefail -c ". ./silent_command_patched.bash"
 
-        echo "Testing in Zsh if silent_hello_patched.bash get sourced without error"
-        zsh -eu -o pipefail -c ". ./silent_hello_patched.bash"
+        echo "Testing in Zsh if silent_command_patched.bash get sourced without error"
+        zsh -eu -o pipefail -c ". ./silent_command_patched.bash"
 
 
         # Check the sample source
@@ -136,7 +136,7 @@
       lib,
       runCommandLocal,
       sed,
-      hello,
+      coreutils,
       patchRcPathCsh,
       tcsh,
     }:
@@ -166,16 +166,16 @@
         tcsh -e ${./test-sourcing-csh} blank.csh blank_patched.csh
 
 
-        # Test patching silent_hello file
+        # Test patching a silent command file
 
-        echo "hello > /dev/null" > silent_hello.csh
+        echo "dirname / > /dev/null" > silent_command.csh
 
-        echo "Generating silent_hello_patched.csh from silent_hello.csh"
-        cp silent_hello.csh silent_hello_patched.csh
-        patchRcPathCsh silent_hello_patched.csh "${hello}/bin"
+        echo "Generating silent_command_patched.csh from silent_command.csh"
+        cp silent_command.csh silent_command_patched.csh
+        patchRcPathCsh silent_command_patched.csh "${coreutils}/bin"
 
-        echo "Testing in Csh if silent_hello_patched.csh get sourced without errer"
-        tcsh -e -c "source silent_hello_patched.csh"
+        echo "Testing in Csh if silent_command_patched.csh get sourced without error"
+        tcsh -e -c "source silent_command_patched.csh"
 
 
         # Generate the sample source
@@ -214,7 +214,7 @@
       lib,
       runCommandLocal,
       fish,
-      hello,
+      coreutils,
       patchRcPathFish,
     }:
     runCommandLocal "patch-rc-path-fish-test"
@@ -245,17 +245,17 @@
         rm -r "$HOME_TEMP"
 
 
-        # Test patching silent_hello file
+        # Test patching a silent command file
 
-        echo "hello > /dev/null" > silent_hello.fish
+        echo "dirname / > /dev/null" > silent_command.fish
 
-        echo "Generating silent_hello_patched.fish from silent_hello.fish"
-        cp silent_hello.fish silent_hello_patched.fish
-        patchRcPathFish silent_hello_patched.fish "${hello}/bin"
+        echo "Generating silent_command_patched.fish from silent_command.fish"
+        cp silent_command.fish silent_command_patched.fish
+        patchRcPathFish silent_command_patched.fish "${coreutils}/bin"
 
-        echo "Testing in Fish if silent_hello_patched.fish get sourced without error"
+        echo "Testing in Fish if silent_command_patched.fish get sourced without error"
         HOME_TEMP="$(mktemp -d temporary_home_XXXXXX)"
-        HOME="$HOME_TEMP" fish -c "source silent_hello_patched.fish"
+        HOME="$HOME_TEMP" fish -c "source silent_command_patched.fish"
         rm -r "$HOME_TEMP"
 
 
@@ -295,7 +295,7 @@
       bash,
       dash,
       sed,
-      hello,
+      coreutils,
       ksh,
       patchRcPathPosix,
       shellcheck,
@@ -346,26 +346,26 @@
         ksh ${./test-sourcing-posix} "$PWD/blank.sh" "$PWD/blank_patched.sh"
 
 
-        # Test patching silent_hello file
+        # Test patching a silent command file
 
-        echo "hello > /dev/null" > silent_hello.sh
+        echo "dirname / > /dev/null" > silent_command.sh
 
-        echo "Generating silent_hello_patched.sh from silent_hello.sh"
-        cp silent_hello.sh silent_hello_patched.sh
-        patchRcPathPosix silent_hello_patched.sh "${hello}/bin"
+        echo "Generating silent_command_patched.sh from silent_command.sh"
+        cp silent_command.sh silent_command_patched.sh
+        patchRcPathPosix silent_command_patched.sh "${coreutils}/bin"
 
-        echo "Running shellcheck against silent_hello_patched.sh"
-        shellcheck -s sh silent_hello_patched.sh
-        shellcheck -s dash silent_hello_patched.sh
+        echo "Running shellcheck against silent_command_patched.sh"
+        shellcheck -s sh silent_command_patched.sh
+        shellcheck -s dash silent_command_patched.sh
 
-        echo "Testing in Bash if silent_hello_patched.sh get sourced without error"
-        bash --posix -eu -c ". ./silent_hello_patched.sh"
+        echo "Testing in Bash if silent_command_patched.sh get sourced without error"
+        bash --posix -eu -c ". ./silent_command_patched.sh"
 
-        echo "Testing in Dash if silent_hello_patched.sh get sourced without error"
-        dash -eu -c ". ./silent_hello_patched.sh"
+        echo "Testing in Dash if silent_command_patched.sh get sourced without error"
+        dash -eu -c ". ./silent_command_patched.sh"
 
-        echo "Testing in Ksh if silent_hello_patched.sh get sourced without error"
-        ksh -eu -c ". $PWD/silent_hello_patched.sh"
+        echo "Testing in Ksh if silent_command_patched.sh get sourced without error"
+        ksh -eu -c ". $PWD/silent_command_patched.sh"
 
 
         # Generate the sample source "$PWD/delta:$PWD/foxtrot" "$PWD/delta:$PWD/foxtrot"

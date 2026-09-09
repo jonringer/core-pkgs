@@ -29,7 +29,7 @@
   ## `pkgs.closureInfo` usage example
   ```
   pkgs.closureInfo {
-    rootPaths = [ pkgs.hello pkgs.bc pkgs.dwarf2json ];
+    rootPaths = [ pkgs.patch pkgs.bc pkgs.dwarf2json ];
   }
   =>
   «derivation /nix/store/...-closure-info.drv»

@@ -2,7 +2,7 @@
   testers,
   lib,
   pkgs,
-  hello,
+  patch,
   runCommand,
   emptyFile,
   emptyDirectory,
@@ -12,7 +12,7 @@
 let
   pkgs-with-overlay = pkgs.extend (
     final: prev: {
-      proof-of-overlay-hello = prev.hello;
+      proof-of-overlay-patch = prev.patch;
     }
   );
 
@@ -39,12 +39,11 @@ let
         {
           system.nixos = dummyVersioning;
           environment.systemPackages = [
-            pkgs.proof-of-overlay-hello
-            pkgs.figlet
+            pkgs.proof-of-overlay-patch
           ];
         };
       testScript = ''
-        machine.succeed("hello | figlet >/dev/console")
+        machine.succeed("patch --version >/dev/console")
       '';
     }
   );
@@ -117,12 +116,11 @@ lib.recurseIntoAttrs {
         {
           system.nixos = dummyVersioning;
           environment.systemPackages = [
-            pkgs.proof-of-overlay-hello
-            pkgs.figlet
+            pkgs.proof-of-overlay-patch
           ];
         };
       testScript = ''
-        machine.succeed("hello | figlet >/dev/console")
+        machine.succeed("patch --version >/dev/console")
       '';
     }
   );
@@ -159,14 +157,14 @@ lib.recurseIntoAttrs {
 
     happyStructuredAttrs = overrideStructuredAttrs true happy;
 
-    helloDoesNotFail =
-      runCommand "testBuildFailure-helloDoesNotFail"
+    patchDoesNotFail =
+      runCommand "testBuildFailure-patchDoesNotFail"
         {
-          failed = testers.testBuildFailure (testers.testBuildFailure hello);
+          failed = testers.testBuildFailure (testers.testBuildFailure patch);
 
-          # Add hello itself as a prerequisite, so we don't try to run this test if
-          # there's an actual failure in hello.
-          inherit hello;
+          # Add patch itself as a prerequisite, so we don't try to run this test if
+          # there's an actual failure in patch.
+          inherit patch;
         }
         ''
           echo "Checking $failed/testBuildFailure.log"

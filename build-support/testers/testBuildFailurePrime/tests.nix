@@ -1,6 +1,6 @@
 {
   emptyDirectory,
-  hello,
+  patch,
   lib,
   overrideStructuredAttrs,
   runCommand,
@@ -51,8 +51,8 @@ let
 
     happyStructuredAttrs = overrideStructuredAttrs true final.happy;
 
-    helloDoesNotFail = testers.testBuildFailure' {
-      drv = testers.testBuildFailure hello;
+    patchDoesNotFail = testers.testBuildFailure' {
+      drv = testers.testBuildFailure patch;
       expectedBuilderLogEntries = [
         "testBuildFailure: The builder did not fail, but a failure was expected"
       ];

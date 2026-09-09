@@ -1,6 +1,6 @@
 {
   lua,
-  hello,
+  patch,
   wrapLua,
   lib,
   pkgs,
@@ -22,7 +22,7 @@ let
         + "touch $out"
       );
 
-  wrappedHello = hello.overrideAttrs {
+  wrappedPatch = patch.overrideAttrs {
     propagatedBuildInputs = [
       wrapLua
       lua.pkgs.cjson
@@ -76,7 +76,7 @@ lib.recurseIntoAttrs {
     };
 
   checkWrapping = pkgs.runCommandLocal "test-${lua.name}-wrapping" { } ''
-    grep -- 'LUA_PATH=' ${wrappedHello}/bin/hello
+    grep -- 'LUA_PATH=' ${wrappedPatch}/bin/patch
     touch $out
   '';
 

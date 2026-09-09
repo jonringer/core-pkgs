@@ -2,7 +2,7 @@
 {
   emptyFile,
   getRunpathEntries,
-  hello,
+  patch,
   lib,
   pkgsStatic,
   stdenv,
@@ -74,7 +74,7 @@ recurseIntoAttrs {
     name = "staticElfFileFails";
     drv = check {
       name = "staticElfFile";
-      elfFile = lib.getExe pkgsStatic.hello;
+      elfFile = lib.getExe pkgsStatic.patch;
       runpathEntries = [ ];
     };
     expectedBuilderLogEntries = [
@@ -82,9 +82,9 @@ recurseIntoAttrs {
     ];
   };
 
-  hello = check {
-    name = "hello";
-    elfFile = lib.getExe hello;
+  patch = check {
+    name = "patch";
+    elfFile = lib.getExe patch;
     runpathEntries = [
       "${lib.getLib stdenv.cc.libc}/lib"
     ];

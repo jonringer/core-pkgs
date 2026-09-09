@@ -286,10 +286,10 @@ let
                   This is most likely not what you want. In order to properly change the version of a package, override
                   both the `version` and `src` attributes:
 
-                  hello.overrideAttrs (oldAttrs: rec {
+                  gzip.overrideAttrs (oldAttrs: rec {
                     version = "1.0.0";
                     src = pkgs.fetchurl {
-                      url = "mirror://gnu/hello/hello-''${version}.tar.gz";
+                      url = "mirror://gnu/gzip/gzip-''${version}.tar.gz";
                       hash = "...";
                     };
                   })

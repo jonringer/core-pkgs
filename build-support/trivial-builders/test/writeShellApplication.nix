@@ -7,7 +7,7 @@
   lib,
   linkFarm,
   diffutils,
-  hello,
+  patch,
 }:
 let
   checkShellApplication =
@@ -49,10 +49,11 @@ linkFarm "writeShellApplication-tests" {
   test-runtime-inputs = checkShellApplication {
     name = "test-runtime-inputs";
     text = ''
-      hello
+      patch --version >/dev/null
+      echo "patch found"
     '';
-    runtimeInputs = [ hello ];
-    expected = "Hello, world!\n";
+    runtimeInputs = [ patch ];
+    expected = "patch found\n";
   };
 
   test-runtime-env = checkShellApplication {

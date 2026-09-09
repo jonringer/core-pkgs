@@ -3,7 +3,7 @@
   stdenv,
   apple-sdk,
   bootstrapTools,
-  hello,
+  patch,
 }:
 
 derivation {
@@ -44,7 +44,7 @@ derivation {
     ld -v
     lipo -info true
     pbzx -v
-    # ranlib gets tested bulding hello
+    # ranlib gets tested building patch
     sigtool -h
     rm true
 
@@ -81,12 +81,11 @@ derivation {
     clang++ -Wl,-flat_namespace -resource-dir=$resource_dir -idirafter $SDKROOT/usr/include -isystem$tools/include/c++/v1 \
       --sysroot=$SDKROOT -L$SDKROOT/usr/lib  -L./libtest -L$PWD/libSystem-boot hello3.cc
 
-    tar xvf ${hello.src}
-    cd hello-*
-    # hello configure detects -liconv is needed but doesn't add to the link step
-    LDFLAGS=-liconv ./configure --prefix=$out
+    tar xvf ${patch.src}
+    cd patch-*
+    ./configure --prefix=$out --disable-nls
     make
     make install
-    $out/bin/hello
+    $out/bin/patch --version
   '';
 }

@@ -507,17 +507,17 @@ rec {
 
     Example:
 
-    # adds symlinks of hello to current build.
-    symlinkJoin { name = "myhello"; paths = [ pkgs.hello ]; }
+    # adds symlinks of patch to current build.
+    symlinkJoin { name = "mypatch"; paths = [ pkgs.patch ]; }
 
-    # adds symlinks of hello and stack to current build and prints "links added"
-    symlinkJoin { name = "myexample"; paths = [ pkgs.hello pkgs.stack ]; postBuild = "echo links added"; }
+    # adds symlinks of patch and stack to current build and prints "links added"
+    symlinkJoin { name = "myexample"; paths = [ pkgs.patch pkgs.stack ]; postBuild = "echo links added"; }
 
     This creates a derivation with a directory structure like the following:
 
     /nix/store/sglsr5g079a5235hy29da3mq3hv8sjmm-myexample
     |-- bin
-    |   |-- hello -> /nix/store/qy93dp4a3rqyn2mz63fbxjg228hffwyw-hello-2.10/bin/hello
+    |   |-- patch -> /nix/store/qy93dp4a3rqyn2mz63fbxjg228hffwyw-patch-2.8/bin/patch
     |   `-- stack -> /nix/store/6lzdpxshx78281vy056lbk553ijsdr44-stack-2.1.3.1/bin/stack
     `-- share
         |-- bash-completion
@@ -636,15 +636,15 @@ rec {
 
     Example:
 
-    # Symlinks hello and stack paths in store to current $out/hello-test and
+    # Symlinks patch and stack paths in store to current $out/patch-test and
     # $out/foobar.
-    linkFarm "myexample" [ { name = "hello-test"; path = pkgs.hello; } { name = "foobar"; path = pkgs.stack; } ]
+    linkFarm "myexample" [ { name = "patch-test"; path = pkgs.patch; } { name = "foobar"; path = pkgs.stack; } ]
 
     This creates a derivation with a directory structure like the following:
 
     /nix/store/qc5728m4sa344mbks99r3q05mymwm4rw-myexample
     |-- foobar -> /nix/store/6lzdpxshx78281vy056lbk553ijsdr44-stack-2.1.3.1
-    `-- hello-test -> /nix/store/qy93dp4a3rqyn2mz63fbxjg228hffwyw-hello-2.10
+    `-- patch-test -> /nix/store/qy93dp4a3rqyn2mz63fbxjg228hffwyw-patch-2.8
 
     See the note on symlinkJoin for the difference between linkFarm and symlinkJoin.
   */
@@ -687,15 +687,15 @@ rec {
 
     Example:
 
-    # Symlinks the hello, gcc, and ghc derivations in $out
-    linkFarmFromDrvs "myexample" [ pkgs.hello pkgs.gcc pkgs.ghc ]
+    # Symlinks the patch, gcc, and ghc derivations in $out
+    linkFarmFromDrvs "myexample" [ pkgs.patch pkgs.gcc pkgs.ghc ]
 
     This creates a derivation with a directory structure like the following:
 
     /nix/store/m3s6wkjy9c3wy830201bqsb91nk2yj8c-myexample
     |-- gcc-wrapper-9.2.0 -> /nix/store/fqhjxf9ii4w4gqcsx59fyw2vvj91486a-gcc-wrapper-9.2.0
     |-- ghc-8.6.5 -> /nix/store/gnf3s07bglhbbk4y6m76sbh42siym0s6-ghc-8.6.5
-    `-- hello-2.10 -> /nix/store/k0ll91c4npk4lg8lqhx00glg2m735g74-hello-2.10
+    `-- patch-2.8 -> /nix/store/k0ll91c4npk4lg8lqhx00glg2m735g74-patch-2.8
   */
   linkFarmFromDrvs =
     name: drvs:

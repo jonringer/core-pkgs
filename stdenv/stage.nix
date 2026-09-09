@@ -167,8 +167,8 @@ let
   otherPackageSets = self: _: {
     # This maps each entry in lib.systems.examples to its own package
     # set. Each of these will contain all packages cross compiled for
-    # that target system. For instance, pkgsCross.raspberryPi.hello,
-    # will refer to the "hello" package built for the ARM6-based
+    # that target system. For instance, pkgsCross.raspberryPi.patch,
+    # will refer to the "patch" package built for the ARM6-based
     # Raspberry Pi.
     pkgsCross = lib.mapAttrs (_: crossSystem: nixpkgsFun { inherit crossSystem; }) lib.systems.examples;
 

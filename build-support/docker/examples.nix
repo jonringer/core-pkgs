@@ -251,7 +251,7 @@ rec {
     copyToRoot = pkgs.buildEnv {
       name = "image-root";
       pathsToLink = [ "/bin" ];
-      paths = [ pkgs.hello ];
+      paths = [ pkgs.patch ];
     };
   };
 
@@ -290,9 +290,12 @@ rec {
     name = "layered-image";
     tag = "latest";
     extraCommands = ''echo "(extraCommand)" > extraCommands'';
-    config.Cmd = [ "${pkgs.hello}/bin/hello" ];
+    config.Cmd = [
+      "${pkgs.patch}/bin/patch"
+      "--version"
+    ];
     contents = [
-      pkgs.hello
+      pkgs.patch
       pkgs.bash
       pkgs.coreutils
     ];
@@ -439,42 +442,48 @@ rec {
   another-layered-image = pkgs.dockerTools.buildLayeredImage {
     name = "another-layered-image";
     tag = "latest";
-    config.Cmd = [ "${pkgs.hello}/bin/hello" ];
+    config.Cmd = [
+      "${pkgs.patch}/bin/patch"
+      "--version"
+    ];
   };
 
   # 17. Create a layered image with only 2 layers
   two-layered-image = pkgs.dockerTools.buildLayeredImage {
     name = "two-layered-image";
     tag = "latest";
-    config.Cmd = [ "${pkgs.hello}/bin/hello" ];
+    config.Cmd = [
+      "${pkgs.patch}/bin/patch"
+      "--version"
+    ];
     contents = [
       pkgs.bash
-      pkgs.hello
+      pkgs.patch
     ];
     maxLayers = 2;
   };
 
   # 18. Create a layered image with more packages than max layers.
-  # coreutils and hello are part of the same layer
+  # coreutils and patch are part of the same layer
   bulk-layer = pkgs.dockerTools.buildLayeredImage {
     name = "bulk-layer";
     tag = "latest";
     contents = with pkgs; [
       coreutils
-      hello
+      patch
     ];
     maxLayers = 2;
   };
 
   # 19. Create a layered image with a base image and more packages than max
-  # layers. coreutils and hello are part of the same layer
+  # layers. coreutils and patch are part of the same layer
   layered-bulk-layer = pkgs.dockerTools.buildLayeredImage {
     name = "layered-bulk-layer";
     tag = "latest";
     fromImage = two-layered-image;
     contents = with pkgs; [
       coreutils
-      hello
+      patch
     ];
     maxLayers = 4;
   };
@@ -490,7 +499,7 @@ rec {
       cp -r ${pkgs.pkgsStatic.busybox}/* .
 
       # This is a "build" dependency that will not appear in the image
-      ${pkgs.hello}/bin/hello
+      ${pkgs.patch}/bin/patch --version
     '';
   };
 
@@ -648,12 +657,12 @@ rec {
           pkgsCross.aarch64-multiplatform;
     in
     crossPkgs.dockerTools.buildImage {
-      name = "hello-cross";
+      name = "patch-cross";
       tag = "latest";
       copyToRoot = pkgs.buildEnv {
         name = "image-root";
         pathsToLink = [ "/bin" ];
-        paths = [ crossPkgs.hello ];
+        paths = [ crossPkgs.patch ];
       };
     };
 
@@ -679,14 +688,20 @@ rec {
   prefixedImage = pkgs.dockerTools.buildImage {
     name = "registry-1.docker.io/image";
     tag = "latest";
-    config.Cmd = [ "${pkgs.hello}/bin/hello" ];
+    config.Cmd = [
+      "${pkgs.patch}/bin/patch"
+      "--version"
+    ];
   };
 
   # layered image with registry/ prefix
   prefixedLayeredImage = pkgs.dockerTools.buildLayeredImage {
     name = "registry-1.docker.io/layered-image";
     tag = "latest";
-    config.Cmd = [ "${pkgs.hello}/bin/hello" ];
+    config.Cmd = [
+      "${pkgs.patch}/bin/patch"
+      "--version"
+    ];
   };
 
   # layered image with files owned by a user other than root
@@ -700,20 +715,20 @@ rec {
       mkdir -p ./home/alice
       chown 1000 ./home/alice
       ln -s ${
-        pkgs.hello.overrideAttrs (
+        pkgs.patch.overrideAttrs (
           finalAttrs: prevAttrs: {
-            # A unique `hello` to make sure that it isn't included via another mechanism by accident.
+            # A unique `patch` to make sure that it isn't included via another mechanism by accident.
             configureFlags = prevAttrs.configureFlags or [ ] ++ [
               "--program-prefix=layeredImageWithFakeRootCommands-"
             ];
             doCheck = false;
             versionCheckProgram = "${placeholder "out"}/bin/${finalAttrs.meta.mainProgram}";
             meta = prevAttrs.meta // {
-              mainProgram = "layeredImageWithFakeRootCommands-hello";
+              mainProgram = "layeredImageWithFakeRootCommands-patch";
             };
           }
         )
-      } ./hello
+      } ./patch
     '';
   };
 
@@ -742,41 +757,50 @@ rec {
     bashZstdCompressed
   ];
 
-  helloOnRoot = pkgs.dockerTools.streamLayeredImage {
-    name = "hello";
+  patchOnRoot = pkgs.dockerTools.streamLayeredImage {
+    name = "patch";
     tag = "latest";
     contents = [
       (pkgs.buildEnv {
-        name = "hello-root";
-        paths = [ pkgs.hello ];
+        name = "patch-root";
+        paths = [ pkgs.patch ];
       })
     ];
-    config.Cmd = [ "hello" ];
+    config.Cmd = [
+      "patch"
+      "--version"
+    ];
   };
 
-  helloOnRootNoStore = pkgs.dockerTools.streamLayeredImage {
-    name = "hello";
+  patchOnRootNoStore = pkgs.dockerTools.streamLayeredImage {
+    name = "patch";
     tag = "latest";
     contents = [
       (pkgs.buildEnv {
-        name = "hello-root";
-        paths = [ pkgs.hello ];
+        name = "patch-root";
+        paths = [ pkgs.patch ];
       })
     ];
-    config.Cmd = [ "hello" ];
+    config.Cmd = [
+      "patch"
+      "--version"
+    ];
     includeStorePaths = false;
   };
 
-  helloOnRootNoStoreFakechroot = pkgs.dockerTools.streamLayeredImage {
-    name = "hello";
+  patchOnRootNoStoreFakechroot = pkgs.dockerTools.streamLayeredImage {
+    name = "patch";
     tag = "latest";
     contents = [
       (pkgs.buildEnv {
-        name = "hello-root";
-        paths = [ pkgs.hello ];
+        name = "patch-root";
+        paths = [ pkgs.patch ];
       })
     ];
-    config.Cmd = [ "hello" ];
+    config.Cmd = [
+      "patch"
+      "--version"
+    ];
     includeStorePaths = false;
     enableFakechroot = true;
   };
@@ -825,14 +849,17 @@ rec {
   imageViaFakeChroot = pkgs.dockerTools.streamLayeredImage {
     name = "image-via-fake-chroot";
     tag = "latest";
-    config.Cmd = [ "hello" ];
+    config.Cmd = [
+      "patch"
+      "--version"
+    ];
     enableFakechroot = true;
     # Crucially, instead of a relative path, this creates /bin, which is
     # intercepted by fakechroot.
     # This functionality is not available on darwin as of 2021.
     fakeRootCommands = ''
       mkdir /bin
-      ln -s ${pkgs.hello}/bin/hello /bin/hello
+      ln -s ${pkgs.patch}/bin/patch /bin/patch
     '';
   };
 
@@ -896,7 +923,7 @@ rec {
   nix-shell-basic = streamNixShellImage {
     name = "nix-shell-basic";
     tag = "latest";
-    drv = pkgs.hello;
+    drv = pkgs.patch;
   };
 
   nix-shell-hook = streamNixShellImage {
@@ -915,11 +942,11 @@ rec {
     tag = "latest";
     drv = pkgs.mkShell {
       nativeBuildInputs = [
-        pkgs.hello
+        pkgs.patch
       ];
     };
     command = ''
-      hello
+      patch --version
     '';
   };
 
@@ -998,10 +1025,10 @@ rec {
   nix-shell-build-derivation = streamNixShellImage {
     name = "nix-shell-build-derivation";
     tag = "latest";
-    drv = pkgs.hello;
+    drv = pkgs.patch;
     run = ''
       buildDerivation
-      $out/bin/hello
+      $out/bin/patch --version
     '';
   };
 

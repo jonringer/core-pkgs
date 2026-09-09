@@ -1,6 +1,6 @@
 {
   linkFarm,
-  hello,
+  patch,
   writeTextFile,
   runCommand,
 }:
@@ -16,8 +16,8 @@ let
       path = foo;
     }
     {
-      name = "hello";
-      path = hello;
+      name = "patch";
+      path = patch;
     }
   ];
 
@@ -27,22 +27,22 @@ let
       path = foo;
     }
     {
-      name = "hello";
-      path = hello;
+      name = "patch";
+      path = patch;
     }
     {
       name = "foo";
-      path = hello;
+      path = patch;
     }
   ];
 
   linkFarmFromAttrs = linkFarm "linkFarmFromAttrs" {
-    inherit foo hello;
+    inherit foo patch;
   };
 
   linkFarmDelimitOptionList = linkFarm "linkFarmDelimitOptionList" {
     "-foo" = foo;
-    "-hello" = hello;
+    "-patch" = patch;
   };
 in
 runCommand "test-linkFarm" { } ''
@@ -59,16 +59,16 @@ runCommand "test-linkFarm" { } ''
   }
 
   assertPathEquals "${linkFarmFromList}/foo" "${foo}"
-  assertPathEquals "${linkFarmFromList}/hello" "${hello}"
+  assertPathEquals "${linkFarmFromList}/patch" "${patch}"
 
-  assertPathEquals "${linkFarmWithRepeats}/foo" "${hello}"
-  assertPathEquals "${linkFarmWithRepeats}/hello" "${hello}"
+  assertPathEquals "${linkFarmWithRepeats}/foo" "${patch}"
+  assertPathEquals "${linkFarmWithRepeats}/patch" "${patch}"
 
   assertPathEquals "${linkFarmFromAttrs}/foo" "${foo}"
-  assertPathEquals "${linkFarmFromAttrs}/hello" "${hello}"
+  assertPathEquals "${linkFarmFromAttrs}/patch" "${patch}"
 
   assertPathEquals "${linkFarmDelimitOptionList}/-foo" "${foo}"
-  assertPathEquals "${linkFarmDelimitOptionList}/-hello" "${hello}"
+  assertPathEquals "${linkFarmDelimitOptionList}/-patch" "${patch}"
 
   touch $out
 ''

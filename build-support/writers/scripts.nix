@@ -324,11 +324,11 @@ rec {
     writeBash "example"
     {
       makeWrapperArgs = [
-        "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.hello ]}"
+        "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.patch ]}"
       ];
     }
     ''
-      hello
+      patch --version
     ''
     ```
     :::
@@ -363,11 +363,11 @@ rec {
     writeBashBin "example"
     {
       makeWrapperArgs = [
-        "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.hello ]}"
+        "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.patch ]}"
       ];
     }
     ''
-      hello
+      patch --version
     ''
     ```
     :::
@@ -397,11 +397,11 @@ rec {
     writeDash "example"
     {
       makeWrapperArgs = [
-        "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.hello ]}"
+        "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.patch ]}"
       ];
     }
     ''
-      hello
+      patch --version
     ''
     ```
     :::
@@ -436,11 +436,11 @@ rec {
     writeDashBin "example"
     {
       makeWrapperArgs = [
-        "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.hello ]}"
+        "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.patch ]}"
       ];
     }
     ''
-      hello
+      patch --version
     ''
     ```
     :::
@@ -469,11 +469,11 @@ rec {
     writeFish "example"
     {
       makeWrapperArgs = [
-        "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.hello ]}"
+        "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.patch ]}"
       ];
     }
     ''
-      hello
+      patch --version
     ''
     ```
     :::
@@ -517,11 +517,11 @@ rec {
     writeFishBin "example"
     {
       makeWrapperArgs = [
-        "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.hello ]}"
+        "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.patch ]}"
       ];
     }
     ''
-      hello
+      patch --version
     ''
     ```
     :::
@@ -552,12 +552,12 @@ rec {
     writeBabashka "example"
     {
       makeWrapperArgs = [
-        "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.hello ]}"
+        "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.patch ]}"
       ];
     }
     ''
       (require '[babashka.tasks :as tasks])
-      (tasks/shell "hello" "-g" "Hello babashka!")
+      (tasks/shell "patch" "--version")
     ''
     ```
     :::
@@ -870,11 +870,11 @@ rec {
     writeNu "example"
       {
         makeWrapperArgs = [
-          "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.hello ]}"
+          "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.patch ]}"
         ];
       }
       ''
-        hello
+        patch --version
       ''
     ```
     :::
@@ -911,11 +911,11 @@ rec {
     writeNuBin "example"
       {
         makeWrapperArgs = [
-          "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.hello ]}"
+          "--prefix" "PATH" ":" "${lib.makeBinPath [ pkgs.patch ]}"
         ];
       }
       ''
-        hello
+        patch --version
       ''
     ```
     :::

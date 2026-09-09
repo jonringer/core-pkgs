@@ -2,13 +2,13 @@
   runCommand,
   concatText,
   writeText,
-  hello,
+  patch,
   emptyFile,
 }:
 let
   stri = writeText "pathToTest";
   txt1 = stri "abc";
-  txt2 = stri (toString hello);
+  txt2 = stri (toString patch);
   res = concatText "textToTest" [
     txt1
     txt2
