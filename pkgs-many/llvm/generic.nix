@@ -31,38 +31,9 @@
 }@packageSetArgs:
 
 let
-  inherit
-    (import ./common/common-let.nix {
-      inherit lib;
-      inherit gitRelease officialRelease version;
-    })
-    releaseInfo
-    ;
-  inherit (releaseInfo) release_version;
-
-  # Determine the attribute name for splicing (must match what's in top-level and aliases)
-  # Use the old naming convention: "18", "19", etc. for splicing to work
-  spliceAttrName = if (gitRelease != null) then "git" else lib.versions.major release_version;
-
-  # Generate the full package scope using the existing common/default.nix
-  llvmPackages = lib.recurseIntoAttrs (
-    callPackage ./common (
-      {
-        inherit (stdenvAdapters) overrideCC;
-        inherit
-          officialRelease
-          gitRelease
-          version
-          patchesFn
-          bootBintools
-          bootBintoolsNoLibc
-          ;
-
-        otherSplices = generateSplicesForMkScope "llvmPackages_${spliceAttrName}";
-      }
-      // packageSetArgs # Allow overrides.
-    )
-  );
+  # Keep scope construction independent of the LLVM derivation. Cross splicing
+  # needs to inspect the scope before it can choose LLVM's dependencies.
+  llvmPackages = callPackage (import ./scope.nix variantArgs) packageSetArgs;
 
   # The main LLVM library package from the scope
   llvmLib = llvmPackages.llvm;

@@ -14,7 +14,7 @@
   libclang,
   python3,
   version,
-  darwin,
+  bootstrap_cmds,
   lit,
   makeWrapper,
   lua,
@@ -101,7 +101,7 @@ stdenv.mkDerivation (
       (lib.getLib libclang)
     ]
     ++ lib.optionals stdenv.hostPlatform.isDarwin [
-      darwin.bootstrap_cmds
+      bootstrap_cmds
     ];
 
     hardeningDisable = [ "format" ];

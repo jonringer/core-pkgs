@@ -1887,21 +1887,85 @@ with final;
   libcxxStdenv =
     if stdenv.hostPlatform.isDarwin then stdenv else lib.lowPrio llvmPackages.libcxxStdenv;
 
+  # TODO: fix this properly
   # LLVM is auto-imported from pkgs-many/llvm via mkManyVariants
-  # llvm defaults to v21 (LLVM 21.1.2) as the LLVM library
+  # llvm defaults to v21 as the LLVM library
   # llvm.pkgs provides the full package scope (clang, lld, lldb, etc.)
   # Individual versions accessible as: llvm.v18, llvm.v19, etc.
   # Package scopes accessible as: llvm.v18.pkgs, llvm.v19.pkgs, etc.
   # Old names like llvmPackages_18, clang_18, etc. are available via stdenv/aliases.nix
 
-  llvmPackages = llvm.pkgs;
+  llvmPackages = if stdenv.hostPlatform.isDarwin then llvmPackages_21 else llvm.pkgs;
+  llvm =
+    if stdenv.hostPlatform.isDarwin then
+      lib.makeOverridable (lib.mirrorFunctionArgs prev.llvm.override (
+        args:
+        let
+          scope = if args == { } then llvmPackages else llvmPackages.override args;
+        in
+        lib.fix (
+          llvmPackage:
+          scope.llvm.overrideAttrs (old: {
+            passthru =
+              old.passthru or { }
+              // prev.llvm.variants
+              // {
+                inherit (prev.llvm) extendVariants variantArgs;
+                pkgs = scope;
+                v21 = llvmPackage;
+                variants = prev.llvm.variants // {
+                  v21 = llvmPackage;
+                };
+              };
+          })
+        )
+      )) { }
+    else
+      prev.llvm;
 
-  # Individual LLVM version package scopes (needed for splicing to work correctly)
-  llvmPackages_18 = llvm.v18.pkgs;
-  llvmPackages_19 = llvm.v19.pkgs;
-  llvmPackages_20 = llvm.v20.pkgs;
-  llvmPackages_21 = llvm.v21.pkgs;
-  llvmPackages_git = llvm.git.pkgs;
+  # Splicing needs the scopes before LLVM derivations can select their
+  # dependencies. Construct them directly for cross toolchains to avoid a cycle.
+  # Native scopes retain the variant package interface.
+  llvmPackages_18 =
+    if
+      stdenv.buildPlatform != stdenv.targetPlatform
+      && (stdenv.buildPlatform.isDarwin || stdenv.targetPlatform.isDarwin)
+    then
+      callPackage (import ./pkgs-many/llvm/scope.nix (import ./pkgs-many/llvm/variants.nix).v18) { }
+    else
+      prev.llvm.v18.pkgs;
+  llvmPackages_19 =
+    if
+      stdenv.buildPlatform != stdenv.targetPlatform
+      && (stdenv.buildPlatform.isDarwin || stdenv.targetPlatform.isDarwin)
+    then
+      callPackage (import ./pkgs-many/llvm/scope.nix (import ./pkgs-many/llvm/variants.nix).v19) { }
+    else
+      prev.llvm.v19.pkgs;
+  llvmPackages_20 =
+    if
+      stdenv.buildPlatform != stdenv.targetPlatform
+      && (stdenv.buildPlatform.isDarwin || stdenv.targetPlatform.isDarwin)
+    then
+      callPackage (import ./pkgs-many/llvm/scope.nix (import ./pkgs-many/llvm/variants.nix).v20) { }
+    else
+      prev.llvm.v20.pkgs;
+  llvmPackages_21 =
+    if
+      stdenv.buildPlatform != stdenv.targetPlatform
+      && (stdenv.buildPlatform.isDarwin || stdenv.targetPlatform.isDarwin)
+    then
+      callPackage (import ./pkgs-many/llvm/scope.nix (import ./pkgs-many/llvm/variants.nix).v21) { }
+    else
+      prev.llvm.v21.pkgs;
+  llvmPackages_git =
+    if
+      stdenv.buildPlatform != stdenv.targetPlatform
+      && (stdenv.buildPlatform.isDarwin || stdenv.targetPlatform.isDarwin)
+    then
+      callPackage (import ./pkgs-many/llvm/scope.nix (import ./pkgs-many/llvm/variants.nix).git) { }
+    else
+      prev.llvm.git.pkgs;
 
   # Common LLVM packages from the default version
   lld = llvmPackages.lld;

@@ -15,7 +15,8 @@
   # the `useLLVM` bootstrapping below.
   bootBintoolsNoLibc,
   bootBintools,
-  darwin,
+  bootstrapStdenv,
+  libcxx,
   gitRelease ? null,
   officialRelease ? null,
   monorepoSrc ? null,
@@ -37,6 +38,7 @@ assert lib.assertMsg (lib.xor (gitRelease != null) (officialRelease != null)) (
 
 let
   monorepoSrc' = monorepoSrc;
+  systemLibcxx = if stdenv.hostPlatform.isDarwin then libcxx else libcxx.apple;
 
   metadata = rec {
     # Import releaseInfo separately to avoid infinite recursion
@@ -237,7 +239,7 @@ makeScopeWithSplicing' {
       # continues to use the libc++ from LLVM.
       systemLibcxxClang = wrapCCWith rec {
         cc = self.clang-unwrapped;
-        libcxx = darwin.libcxx;
+        libcxx = systemLibcxx;
         extraPackages = [ targetLlvmPackages.compiler-rt ];
         extraBuildCommands = mkExtraBuildCommands cc;
       };
@@ -319,8 +321,8 @@ makeScopeWithSplicing' {
         # This is used to build compiler-rt. Make sure to use the system libc++ on Darwin.
         #
         # FIXME: This should almost certainly use
-        # `stdenv.targetPlatform` and `targetPackages.darwin.libcxx`.
-        libcxx = if stdenv.hostPlatform.isDarwin then darwin.libcxx else targetLlvmPackages.libcxx;
+        # `stdenv.targetPlatform` and `targetPackages.libcxx`.
+        libcxx = if stdenv.hostPlatform.isDarwin then systemLibcxx else targetLlvmPackages.libcxx;
         bintools = bintools';
         extraPackages = [
           targetLlvmPackages.compiler-rt-no-libc
@@ -412,7 +414,7 @@ makeScopeWithSplicing' {
           stdenv =
             # Darwin needs to use a bootstrap stdenv to avoid an infinite recursion when cross-compiling.
             if args.stdenv.hostPlatform.isDarwin then
-              overrideCC darwin.bootstrapStdenv buildLlvmPackages.clangWithLibcAndBasicRtAndLibcxx
+              overrideCC bootstrapStdenv buildLlvmPackages.clangWithLibcAndBasicRtAndLibcxx
             else if args.stdenv.hostPlatform.useLLVM or false then
               overrideCC args.stdenv buildLlvmPackages.clangWithLibcAndBasicRtAndLibcxx
             else
@@ -428,7 +430,7 @@ makeScopeWithSplicing' {
         stdenv =
           # Darwin needs to use a bootstrap stdenv to avoid an infinite recursion when cross-compiling.
           if stdenv.hostPlatform.isDarwin then
-            overrideCC darwin.bootstrapStdenv buildLlvmPackages.clangNoLibcNoRt
+            overrideCC bootstrapStdenv buildLlvmPackages.clangNoLibcNoRt
           else
             overrideCC stdenv buildLlvmPackages.clangNoLibcNoRt;
       };
@@ -456,7 +458,7 @@ makeScopeWithSplicing' {
       libcxx = callPackage ./libcxx {
         stdenv =
           if stdenv.hostPlatform.isDarwin then
-            overrideCC darwin.bootstrapStdenv buildLlvmPackages.clangWithLibcAndBasicRt
+            overrideCC bootstrapStdenv buildLlvmPackages.clangWithLibcAndBasicRt
           else
             overrideCC stdenv buildLlvmPackages.clangWithLibcAndBasicRt;
       };
