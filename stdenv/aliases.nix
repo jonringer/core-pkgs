@@ -39,6 +39,11 @@ mapAliases {
   automake118x = automake.v1_18;
   autoreconfHook269 = autoconf.v2_69.autoreconfHook;
   autoreconfHook271 = autoconf.v2_71.autoreconfHook;
+  binutils-unwrapped = binutils.unwrapped;
+  binutils-unwrapped-all-targets = binutils.unwrapped-all-targets;
+  binutils-unwrapped_2_38 = binutils.unwrapped.v2_38;
+  binutilsDualAs = throw "binutilsDualAs has been removed from Nixpkgs; use binutils";
+  binutilsNoLibc = binutils.noLibc;
   bolt_19 = llvm.v19.pkgs.bolt;
   bolt_20 = llvm.v20.pkgs.bolt;
   bolt_21 = llvm.v21.pkgs.bolt;
@@ -55,6 +60,7 @@ mapAliases {
   cmakeMinimal = cmake.minimal;
   curlMinimal = curl.minimal;
   curlWithGnuTls = curl.gnutls;
+  darwin = import ./darwin-aliases.nix pkgs;
   db4 = db.v4_8;
   db48 = db.v4_8;
   db5 = db.v5_3;
@@ -125,6 +131,11 @@ mapAliases {
   jdk17 = java.v17;
   jdk21 = java;
   kotlinc = kotlin;
+  libcIconv = libc: callPackage ../pkgs-many/libiconv/libc.nix { inherit libc; };
+  libffiReal = libffi.real;
+  libffi_3_3 = libffi.v3_3;
+  libiconv-darwin = libiconv.darwin;
+  libiconvReal = libiconv.real;
   libmysqlclient = mariadb-connector-c;
   libnghttp2 = nghttp2;
   libtool2 = libtool.v2_5;

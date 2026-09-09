@@ -70,7 +70,6 @@ in
             runCommand,
             jq,
             libiconv,
-            libiconvReal ? libiconv.real,
           }:
           runCommand name
             {
@@ -110,7 +109,7 @@ in
               value = builtins.toJSON value;
               nativeBuildInputs = [
                 jq
-                libiconvReal
+                libiconv.real
               ];
 
               jqCode =

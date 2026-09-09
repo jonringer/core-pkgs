@@ -1,7 +1,6 @@
 {
   version,
   hash,
-  enableDarwinABICompat ? false,
   mkVariantPassthru,
   ...
 }@variantArgs:
@@ -13,6 +12,7 @@
   updateAutotoolsGnuConfigScriptsHook,
   enableStatic ? stdenv.hostPlatform.isStatic,
   enableShared ? !stdenv.hostPlatform.isStatic,
+  enableDarwinABICompat ? variantArgs.enableDarwinABICompat or false,
 }:
 
 let

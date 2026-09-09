@@ -6,7 +6,6 @@
   gzip,
   lib,
   libiconv,
-  libiconvReal ? libiconv.real,
   libpipeline,
   makeWrapper,
   pkg-config,
@@ -17,7 +16,7 @@
 
 let
   libiconv' =
-    if stdenv.hostPlatform.isDarwin || stdenv.hostPlatform.isFreeBSD then libiconvReal else libiconv;
+    if stdenv.hostPlatform.isDarwin || stdenv.hostPlatform.isFreeBSD then libiconv.real else libiconv;
 in
 stdenv.mkDerivation rec {
   pname = "man-db";

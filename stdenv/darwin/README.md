@@ -14,6 +14,13 @@ Darwin bootstrap files.
 | `darwin.libpcap` | `libpcap.apple` |
 | `darwin.locale` (locale data) | `locale.data` |
 
+Nixpkgs compatibility names are provided by `stdenv/aliases.nix`, including
+`libffiReal`, `libiconvReal`, and the former flat binutils names. The `darwin`
+namespace is a compatibility view defined in `stdenv/darwin-aliases.nix`; its
+packages point to the implementations above. Set `config.allowAliases = false`
+to disable these names. Removed releases such as `libffi_3_3` still throw, as do
+legacy SDK stubs and unported packages in the compatibility namespace.
+
 `libffi.real` selects upstream and `libffi.darwin` selects Apple’s implementation. Use `libiconv.real` for upstream libiconv.
 `locale` remains the platform-selected command from `unixtools`, with data
 available as `locale.data`. Platform selection lives in a short `default.nix` within each family,

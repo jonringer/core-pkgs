@@ -4,7 +4,6 @@
   stdenv,
   fetchurl,
   libiconv,
-  libiconvReal ? libiconv.real,
   zlib,
   lz4,
   ncurses,
@@ -22,7 +21,7 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   buildInputs = [
-    libiconvReal
+    libiconv.real
     zlib
     lz4
     ncurses
