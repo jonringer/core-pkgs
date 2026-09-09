@@ -4,6 +4,8 @@
   cacert,
   config,
   fetchurl-bootstrap,
+  # Darwin bootstraps fetchers with the curl in its bootstrap tools.
+  bootstrapCurl ? null,
 }:
 
 let
@@ -22,34 +24,38 @@ let
     pkg-config = old.pkg-config.override { fetchurl = fetchurl-bootstrap; };
   });
 
-  curl = buildPackages.curl.minimal.override {
-    fetchurl = fetchurl-bootstrap;
-    perl = perl-bootstrap;
-    # Only the wrapped tool is in scope, so the rebuild has to reach through it
-    # to the unwrapped package that actually has a source.
-    pkg-config = pkg-config-bootstrap;
-    # Plain zlib, not zlib-ng: zlib-ng takes its source from
-    # `fetchFromGitHub`, which is built on the `fetchurl` being defined
-    # here, so a zlib-ng curl cannot exist before `fetchurl` does.
-    zlib-ng-compat = buildPackages.zlib;
-    # curl only needs libnghttp2; the app would drag in c-ares, libev and
-    # openssl, and the tests cunit and tzdata.
-    nghttp2 = buildPackages.nghttp2.override {
-      fetchurl = fetchurl-bootstrap;
-      enableApp = false;
-      enableTests = false;
-      pkg-config = pkg-config-bootstrap;
-    };
-    openssl = buildPackages.openssl.override {
-      fetchurl = fetchurl-bootstrap;
-      perl = perl-bootstrap;
-      # openssl reaches for `buildPackages.perl` directly, which would be the
-      # un-rebuilt one and so reintroduce the cycle.
-      buildPackages = buildPackages // {
+  curl =
+    if bootstrapCurl != null then
+      bootstrapCurl
+    else
+      buildPackages.curl.minimal.override {
+        fetchurl = fetchurl-bootstrap;
         perl = perl-bootstrap;
+        # Only the wrapped tool is in scope, so the rebuild has to reach through it
+        # to the unwrapped package that actually has a source.
+        pkg-config = pkg-config-bootstrap;
+        # Plain zlib, not zlib-ng: zlib-ng takes its source from
+        # `fetchFromGitHub`, which is built on the `fetchurl` being defined
+        # here, so a zlib-ng curl cannot exist before `fetchurl` does.
+        zlib-ng-compat = buildPackages.zlib;
+        # curl only needs libnghttp2; the app would drag in c-ares, libev and
+        # openssl, and the tests cunit and tzdata.
+        nghttp2 = buildPackages.nghttp2.override {
+          fetchurl = fetchurl-bootstrap;
+          enableApp = false;
+          enableTests = false;
+          pkg-config = pkg-config-bootstrap;
+        };
+        openssl = buildPackages.openssl.override {
+          fetchurl = fetchurl-bootstrap;
+          perl = perl-bootstrap;
+          # openssl reaches for `buildPackages.perl` directly, which would be the
+          # un-rebuilt one and so reintroduce the cycle.
+          buildPackages = buildPackages // {
+            perl = perl-bootstrap;
+          };
+        };
       };
-    };
-  };
 
   defaultNativeBuildInputs = [ curl ];
   inherit (lib)
