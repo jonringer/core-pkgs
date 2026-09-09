@@ -35,6 +35,8 @@ stdenv.mkDerivation rec {
     hash = "sha256-+MNIZQnecFGSE4sA7ywAu73Q6Eww1cB9I/xzqdxMycw=";
   };
 
+  patches = [ ./include-mach-o-dyld.patch ];
+
   # When we do build separate interactive version, it makes sense to always include man.
   outputs = [
     "out"
@@ -66,11 +68,6 @@ stdenv.mkDerivation rec {
   configureFlags = [
     (if interactive then "--with-readline=${readline.dev}" else "--without-readline")
   ];
-
-  env = lib.optionalAttrs stdenv.hostPlatform.isDarwin {
-    # TODO: figure out a better way to unbreak _NSGetExecutablePath invocations
-    NIX_CFLAGS_COMPILE = "-Wno-implicit-function-declaration";
-  };
 
   makeFlags = [
     "AR=${stdenv.cc.targetPrefix}ar"

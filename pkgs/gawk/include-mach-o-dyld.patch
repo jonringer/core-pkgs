@@ -1,0 +1,14 @@
+diff --git a/posix/gawkmisc.c b/posix/gawkmisc.c
+--- a/posix/gawkmisc.c
++++ b/posix/gawkmisc.c
+@@ -29,6 +29,10 @@
+ #include <sys/personality.h>
+ #endif
+ 
++#ifdef HAVE__NSGETEXECUTABLEPATH
++#include <mach-o/dyld.h>
++#endif
++
+ #ifdef HAVE_SPAWN_H
+ #include <spawn.h>	// for macos
+ #endif
