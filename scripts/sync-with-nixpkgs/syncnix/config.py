@@ -81,7 +81,6 @@ PATH_MAPPINGS = {
     "pkgs/javaPackages/openjdk": "pkgs/development/compilers/openjdk",
     "pkgs/julia": "pkgs/development/compilers/julia",
     "pkgs/kmod": "pkgs/os-specific/linux/kmod",
-    "pkgs/kustomize": "pkgs/development/tools/kustomize",
     "pkgs/libbpf": "pkgs/os-specific/linux/libbpf",
     "pkgs/libidn2": "pkgs/development/libraries/libidn2",
     "pkgs/libinput": "pkgs/development/libraries/libinput",
