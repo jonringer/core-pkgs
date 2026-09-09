@@ -104,9 +104,9 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     cmake
-    cmake.configurePhaseHook
     xcodeProjectCheckHook
     meson
+    meson.configurePhaseHook
     ninja
     openssl
     pkg-config
