@@ -4,7 +4,7 @@
   stdenv,
   callPackages,
   runCommand,
-  cctools ? null,
+  cctools,
 }:
 
 let
@@ -215,7 +215,7 @@ lib.fix (self: {
           nodejs.passthru.python
           hooks.npmConfigHook
         ]
-        ++ lib.optionals stdenv.hostPlatform.isDarwin (lib.optional (cctools != null) cctools)
+        ++ lib.optional stdenv.hostPlatform.isDarwin cctools
         ++ derivationArgs.nativeBuildInputs or [ ];
 
         postPatch = ''

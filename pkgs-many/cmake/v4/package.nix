@@ -15,6 +15,8 @@
   stdenv,
   fetchurl,
   replaceVars,
+  DarwinTools,
+  system_cmds,
   buildPackages,
   bzip2,
   curl,
@@ -67,13 +69,12 @@ stdenv.mkDerivation (finalAttrs: {
     # Add the libc paths from the compiler wrapper.
     ./add-nixpkgs-libc-paths.patch
   ]
-  # TODO: support darwin
-  # ++ lib.optionals stdenv.hostPlatform.isDarwin [
-  #   (replaceVars ./darwin-binary-paths.patch {
-  #     sw_vers = lib.getExe' darwin.DarwinTools "sw_vers";
-  #     vm_stat = lib.getExe' darwin.system_cmds "vm_stat";
-  #   })
-  # ]
+  ++ lib.optionals stdenv.hostPlatform.isDarwin [
+    (replaceVars ./darwin-binary-paths.patch {
+      sw_vers = lib.getExe' DarwinTools "sw_vers";
+      vm_stat = lib.getExe' system_cmds "vm_stat";
+    })
+  ]
   ++ lib.optionals (stdenv.hostPlatform.isDarwin || stdenv.hostPlatform.isFreeBSD) [
     (replaceVars ./darwin-bsd-binary-paths.patch {
       # `ps(1)` is theoretically used on Linux too, but only when

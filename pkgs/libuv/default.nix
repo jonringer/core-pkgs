@@ -4,7 +4,7 @@
   fetchFromGitHub,
   autoconf,
   automake,
-  darwin,
+  libutil,
   libtool,
   pkg-config,
   pkgsStatic,
@@ -157,7 +157,7 @@ stdenv.mkDerivation (finalAttrs: {
   # This is part of the Darwin bootstrap, so we don’t always get
   # `libutil.dylib` automatically propagated through the SDK.
   buildInputs = lib.optionals stdenv.hostPlatform.isDarwin [
-    (lib.getLib darwin.libutil)
+    (lib.getLib libutil)
   ];
 
   preConfigure = ''

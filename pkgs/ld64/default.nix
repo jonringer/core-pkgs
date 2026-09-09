@@ -1,7 +1,7 @@
 {
   lib,
   cmake,
-  darwin,
+  xcodeProjectCheckHook,
   fetchFromGitHub,
   libtapi,
   llvm,
@@ -105,7 +105,7 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     cmake
     cmake.configurePhaseHook
-    darwin.xcodeProjectCheckHook
+    xcodeProjectCheckHook
     meson
     ninja
     openssl

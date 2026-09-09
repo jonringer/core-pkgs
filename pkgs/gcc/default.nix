@@ -52,7 +52,7 @@
   callPackage,
   majorMinorVersion,
   apple-sdk,
-  darwin,
+
 }:
 
 let
@@ -134,7 +134,6 @@ let
       buildPackages
       cargo
       withoutTargetLibc
-      darwin
       disableBootstrap
       disableGdbPlugin
       enableDefaultPie

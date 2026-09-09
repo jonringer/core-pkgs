@@ -14,7 +14,6 @@
   systemdLibs,
   acl,
   gmp,
-  darwin,
   libusb1 ? null,
   gnutls ? null,
   avahi ? null,

@@ -100,7 +100,7 @@ lib.init bootStages
 
             cc =
               if crossSystem.useiOSPrebuilt or false then
-                buildPackages.darwin.iosSdkPkgs.clang
+                buildPackages.iosSdkPkgs.clang
               else if crossSystem.useAndroidPrebuilt or false then
                 buildPackages."androidndkPkgs_${crossSystem.androidNdkVersion}".clang
               else if

@@ -23,7 +23,7 @@
   opensbi,
   buildPackages,
   callPackages,
-  darwin,
+  DarwinTools,
 }@pkgs:
 
 let
@@ -96,7 +96,7 @@ let
           perl # for oid build (secureboot)
         ]
         ++ lib.optionals (!crossTools) toolsDeps
-        ++ lib.optionals stdenv.buildPlatform.isDarwin [ darwin.DarwinTools ]; # sw_vers command is needed on darwin
+        ++ lib.optionals stdenv.buildPlatform.isDarwin [ DarwinTools ]; # sw_vers command is needed on darwin
         depsBuildBuild = [ buildPackages.gccStdenv.cc ]; # gccStdenv is needed for Darwin buildPlatform
         buildInputs = lib.optionals crossTools toolsDeps;
 

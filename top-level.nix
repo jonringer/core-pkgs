@@ -312,13 +312,6 @@ with final;
   zmqpp = null;
   zvbi = null; # ffmpeg
 
-  # TODO(corepkgs): support darwin
-  darwin = {
-    autoSignDarwinBinariesHook = null;
-    bootstrap_cmds = null;
-    signingUtils = null;
-    configd = null;
-  };
   ocl-icd = null; # ffmpeg OpenCL ICD
   opencl-headers = null; # ffmpeg
   xcodebuild = xcbuild;
@@ -566,7 +559,7 @@ with final;
     else if libc == "ucrt" then
       windows.mingw_w64
     else if libc == "libSystem" then
-      if stdenv.hostPlatform.useiOSPrebuilt then darwin.iosSdkPkgs.libraries else darwin.libSystem
+      if stdenv.hostPlatform.useiOSPrebuilt then iosSdkPkgs.libraries else libSystem
     else if libc == "fblibc" then
       freebsd.libc
     else if libc == "oblibc" then
@@ -1431,7 +1424,7 @@ with final;
     else if stdenv.hostPlatform.isDarwin then
       prev.ncurses.override {
         # ncurses is included in the SDK. Avoid an infinite recursion by using a bootstrap stdenv.
-        stdenv = darwin.bootstrapStdenv;
+        stdenv = bootstrapStdenv;
       }
     else
       prev.ncurses;

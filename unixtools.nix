@@ -85,23 +85,23 @@ let
     # singular binaries
     arp = {
       linux = pkgs.net-tools;
-      darwin = pkgs.darwin.network_cmds;
+      darwin = pkgs.network_cmds;
       freebsd = pkgs.freebsd.arp;
     };
     col = {
       linux = pkgs.util-linux;
-      darwin = pkgs.darwin.text_cmds;
+      darwin = pkgs.text_cmds;
     };
     column = {
       linux = pkgs.util-linux;
-      darwin = pkgs.darwin.text_cmds;
+      darwin = pkgs.text_cmds;
     };
     eject = {
       linux = pkgs.util-linux;
     };
     getconf = {
       linux = if stdenv.hostPlatform.libc == "glibc" then pkgs.libc else pkgs.netbsd.getconf;
-      darwin = pkgs.darwin.system_cmds;
+      darwin = pkgs.system_cmds;
       # I don't see any obvious arg exec in the doc/manpage
       binlore = ''
         execer cannot bin/getconf
@@ -119,36 +119,36 @@ let
     };
     fdisk = {
       linux = pkgs.util-linux;
-      darwin = pkgs.darwin.diskdev_cmds;
+      darwin = pkgs.diskdev_cmds;
       freebsd = pkgs.freebsd.fdisk;
     };
     fsck = {
       linux = pkgs.util-linux;
-      darwin = pkgs.darwin.diskdev_cmds;
+      darwin = pkgs.diskdev_cmds;
     };
     hexdump = {
       linux = pkgs.util-linuxMinimal;
-      darwin = pkgs.darwin.shell_cmds;
+      darwin = pkgs.shell_cmds;
     };
     hostname = {
       linux = pkgs.hostname-debian;
-      darwin = pkgs.darwin.shell_cmds;
+      darwin = pkgs.shell_cmds;
       freebsd = pkgs.freebsd.bin;
       openbsd = pkgs.openbsd.hostname;
     };
     ifconfig = {
       linux = pkgs.net-tools;
-      darwin = pkgs.darwin.network_cmds;
+      darwin = pkgs.network_cmds;
       freebsd = pkgs.freebsd.ifconfig;
       openbsd = pkgs.openbsd.ifconfig;
     };
     killall = {
       linux = pkgs.psmisc;
-      darwin = pkgs.darwin.shell_cmds;
+      darwin = pkgs.shell_cmds;
     };
     locale = {
       linux = pkgs.glibc;
-      darwin = pkgs.darwin.adv_cmds;
+      darwin = pkgs.adv_cmds;
       freebsd = pkgs.freebsd.locale;
       # technically just targeting glibc version
       # no obvious exec in manpage
@@ -158,7 +158,7 @@ let
     };
     logger = {
       linux = pkgs.util-linux;
-      darwin = pkgs.darwin.remote_cmds;
+      darwin = pkgs.remote_cmds;
     };
     more = {
       linux = pkgs.util-linux;
@@ -166,7 +166,7 @@ let
     };
     mount = {
       linux = pkgs.util-linux;
-      darwin = pkgs.darwin.diskdev_cmds;
+      darwin = pkgs.diskdev_cmds;
       freebsd = freebsd.mount;
       openbsd = pkgs.openbsd.mount;
       # technically just targeting the darwin version; binlore already
@@ -179,17 +179,17 @@ let
     };
     netstat = {
       linux = pkgs.net-tools;
-      darwin = pkgs.darwin.network_cmds;
+      darwin = pkgs.network_cmds;
       freebsd = pkgs.freebsd.netstat;
     };
     ping = {
       linux = pkgs.iputils;
-      darwin = pkgs.darwin.network_cmds;
+      darwin = pkgs.network_cmds;
       freebsd = freebsd.ping;
     };
     ps = {
       linux = pkgs.procps;
-      darwin = pkgs.darwin.ps;
+      darwin = pkgs.adv_cmds.ps;
       freebsd = pkgs.freebsd.bin;
       openbsd = pkgs.openbsd.ps;
       # technically just targeting procps ps (which ids as can)
@@ -201,27 +201,27 @@ let
     };
     quota = {
       linux = pkgs.linuxquota;
-      darwin = pkgs.darwin.diskdev_cmds;
+      darwin = pkgs.diskdev_cmds;
     };
     route = {
       linux = pkgs.net-tools;
-      darwin = pkgs.darwin.network_cmds;
+      darwin = pkgs.network_cmds;
       freebsd = pkgs.freebsd.route;
       openbsd = pkgs.openbsd.route;
     };
     script = {
       linux = pkgs.util-linux;
-      darwin = pkgs.darwin.shell_cmds;
+      darwin = pkgs.shell_cmds;
     };
     sysctl = {
       linux = pkgs.procps;
-      darwin = pkgs.darwin.system_cmds;
+      darwin = pkgs.system_cmds;
       freebsd = pkgs.freebsd.sysctl;
       openbsd = pkgs.openbsd.sysctl;
     };
     top = {
       linux = pkgs.procps;
-      darwin = pkgs.darwin.top;
+      darwin = pkgs.top;
       freebsd = pkgs.freebsd.top;
       openbsd = pkgs.openbsd.top;
       # technically just targeting procps top; haven't needed this in
@@ -234,15 +234,15 @@ let
     };
     umount = {
       linux = pkgs.util-linux;
-      darwin = pkgs.darwin.diskdev_cmds;
+      darwin = pkgs.diskdev_cmds;
     };
     whereis = {
       linux = pkgs.util-linux;
-      darwin = pkgs.darwin.shell_cmds;
+      darwin = pkgs.shell_cmds;
     };
     wall = {
       linux = pkgs.util-linux;
-      darwin = pkgs.darwin.remote_cmds;
+      darwin = pkgs.remote_cmds;
     };
     watch = {
       linux = pkgs.procps;
@@ -255,7 +255,7 @@ let
     };
     write = {
       linux = pkgs.util-linux;
-      darwin = pkgs.darwin.basic_cmds;
+      darwin = pkgs.basic_cmds;
     };
     xxd = {
       linux = pkgs.tinyxxd;

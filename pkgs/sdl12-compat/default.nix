@@ -2,7 +2,7 @@
   lib,
   sdl2-compat,
   cmake,
-  darwin,
+  autoSignDarwinBinariesHook,
   fetchFromGitHub,
   libGLU,
   libiconv,
@@ -17,9 +17,6 @@
   openglSupport ? libGLSupported,
 }:
 
-let
-  inherit (darwin) autoSignDarwinBinariesHook;
-in
 stdenv.mkDerivation (finalAttrs: {
   pname = "sdl12-compat";
   version = "1.2.76";

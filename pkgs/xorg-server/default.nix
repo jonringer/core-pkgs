@@ -48,7 +48,7 @@
   zlib,
 
   # darwin specific deps
-  darwin,
+  bootstrap_cmds,
   util-macros,
   # TODO(corepkgs): port libapplewm; only used on Darwin, which is unsupported here
   libapplewm ? null,
@@ -87,7 +87,7 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
   ]
   ++ lib.optionals stdenv.hostPlatform.isDarwin [
-    darwin.bootstrap_cmds
+    bootstrap_cmds
     util-macros
   ];
 
@@ -119,7 +119,7 @@ stdenv.mkDerivation (finalAttrs: {
     libtirpc
   ]
   ++ lib.optionals stdenv.hostPlatform.isDarwin [
-    darwin.bootstrap_cmds
+    bootstrap_cmds
     mesa
   ];
 
