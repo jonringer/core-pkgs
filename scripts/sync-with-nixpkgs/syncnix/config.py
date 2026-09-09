@@ -107,7 +107,6 @@ PATH_MAPPINGS = {
     "pkgs/maturin": "pkgs/by-name/ma/maturin",
     "pkgs/mdadm/fix-hardcoded-mapdir.patch": "pkgs/by-name/md/mdadm4/fix-hardcoded-mapdir.patch",
     "pkgs/mesa": "pkgs/development/libraries/mesa",
-    "pkgs/moreutils": "pkgs/tools/misc/moreutils",
     "pkgs/net-tools": "pkgs/os-specific/linux/net-tools",
     "pkgs/nettle": "pkgs/development/libraries/nettle",
     "pkgs/nftables": "pkgs/os-specific/linux/nftables",

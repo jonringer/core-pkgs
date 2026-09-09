@@ -8,7 +8,6 @@
   stdenvNoCC,
   callPackage,
   jq,
-  moreutils,
   cacert,
   pnpm,
   pnpmFixupStateDb,
@@ -88,7 +87,6 @@ lib.makeOverridable (
           nativeBuildInputs = [
             cacert
             jq
-            moreutils
             pnpm # from args
             pnpmFixupStateDb'
             writableTmpDirAsHomeHook
@@ -171,7 +169,8 @@ lib.makeOverridable (
             # Remove timestamp and sort the json files
             rm -rf $storePath/{v3,v10,v11}/tmp
             for f in $(find $storePath -name "*.json"); do
-              jq --sort-keys "del(.. | .checkedAt?)" $f | sponge $f
+              jq --sort-keys "del(.. | .checkedAt?)" "$f" > "$f.tmp"
+              mv "$f.tmp" "$f"
             done
 
             if [ -f "$storePath/v11/index.db" ]; then

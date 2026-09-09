@@ -5,7 +5,6 @@
   writeShellScriptBin,
   writeText,
   jq,
-  moreutils,
   emptyFile,
   hello,
   ...
@@ -114,7 +113,8 @@ in
         "Hello: ${headerValue}"
       ];
       postFetch = ''
-        ${jq}/bin/jq -r '.headers.Hello' $out | ${moreutils}/bin/sponge $out
+        ${jq}/bin/jq -r '.headers.Hello' "$out" > "$out.tmp"
+        mv "$out.tmp" "$out"
       '';
     };
 

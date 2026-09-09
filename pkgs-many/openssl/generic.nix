@@ -269,9 +269,9 @@ stdenv.mkDerivation (finalAttrs: {
 
   makeFlags = [
     "MANDIR=$(man)/share/man"
-    # This avoids conflicts between man pages of openssl subcommands (for
-    # example 'ts' and 'err') man pages and their equivalent top-level
-    # command in other packages (respectively man-pages and moreutils).
+    # This avoids conflicts between man pages of openssl subcommands and
+    # equivalent top-level commands in other packages (for example 'err'
+    # from man-pages).
     # This is done in ubuntu and archlinux, and possibly many other distros.
     "MANSUFFIX=ssl"
   ];

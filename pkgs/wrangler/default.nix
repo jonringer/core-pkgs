@@ -13,7 +13,6 @@
   musl,
   libx11,
   jq,
-  moreutils,
   nix-update-script,
   versionCheckHook,
 }:
@@ -41,7 +40,8 @@ stdenv.mkDerivation (finalAttrs: {
   };
   # pnpm packageManager version in workers-sdk root package.json may not match nixpkgs
   postPatch = ''
-    jq 'del(.packageManager)' package.json | sponge package.json
+    jq 'del(.packageManager)' package.json > package.json.tmp
+    mv package.json.tmp package.json
   '';
 
   passthru.updateScript = nix-update-script {
@@ -65,7 +65,6 @@ stdenv.mkDerivation (finalAttrs: {
     pnpmConfigHook
     pnpm.v9
     jq
-    moreutils
   ]
   ++ lib.optionals (stdenv.hostPlatform.isLinux) [
     autoPatchelfHook

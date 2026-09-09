@@ -57,7 +57,6 @@
   fakeroot ? null,
   fakechroot ? null,
   jshon ? null,
-  moreutils,
   pigz ? null,
   proot ? null,
   skopeo ? null,
@@ -749,7 +748,6 @@ rec {
           {
             nativeBuildInputs = [
               jq
-              moreutils
             ]
             ++ optionals (jshon != null) [ jshon ]
             ++ compress.nativeInputs;
@@ -876,12 +874,7 @@ rec {
             mv temp image/$layerID
 
             # Add the new layer ID to the end of the layer list
-            (
-              cat layer-list
-              # originally this used `sed -i "1i$layerID" layer-list`, but
-              # would fail if layer-list was completely empty.
-              echo "$layerID/layer.tar"
-            ) | sponge layer-list
+            echo "$layerID/layer.tar" >> layer-list
 
             # Create image json and image manifest
             imageJson=$(cat ${baseJson} | jq '.config.Env = $baseenv + .config.Env' --argjson baseenv "$baseEnvs")
