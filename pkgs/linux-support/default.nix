@@ -162,7 +162,6 @@ lib.makeScope pkgs.newScope (
             "KBUILD_OUTPUT=${kernel.dev}/lib/modules/${kernel.modDirVersion}/build"
           ];
           # Obsolete aliases (these packages do not depend on the kernel).
-          inherit (pkgs) bcc bpftrace; # added 2021-12
           inherit (pkgs) oci-seccomp-bpf-hook; # added 2022-11
           inherit (pkgs) dpdk; # added 2024-03
 
