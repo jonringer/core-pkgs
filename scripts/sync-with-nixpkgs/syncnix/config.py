@@ -439,7 +439,6 @@ LOCAL_ONLY = [
     "pkgs/linux-support/pkgs/systemd/0019-install-unit_file_exists_full-follow-symlinks.patch",
     "pkgs/linux-support/pkgs/systemd/0020-timesyncd-disable-NSCD-when-DNSSEC-validation-is-dis.patch",
     "pkgs/linux-support/pkgs/systemd/musl",
-    "pkgs/linux-support/pkgs/trace-cmd",
     "pkgs/linux-support/pkgs/wireguard",
     "pkgs/linux-support/pkgs/wpa_supplicant/gui.nix",
     "pkgs/linux-support/pkgs/xp-pen-drivers",
