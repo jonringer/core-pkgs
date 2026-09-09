@@ -5,7 +5,6 @@
   buildPackages,
   curl,
   openssl,
-  zlib,
   zlib-ng,
   expat,
   perlPackages,
@@ -29,7 +28,6 @@
   tk,
   makeWrapper,
   libiconv,
-  libiconvReal ? libiconv.real,
   svnSupport ? false,
   subversionClient,
   perlLibs,
@@ -41,7 +39,6 @@
   withManual ? true,
   pythonSupport ? true,
   withpcre2 ? true,
-  withZlibNg ? true,
   sendEmailSupport ? perlSupport,
   withLibsecret ? false,
   pkg-config,
@@ -148,9 +145,9 @@ stdenv.mkDerivation (finalAttrs: {
   buildInputs = [
     curl
     openssl
-    (if withZlibNg then zlib-ng else zlib)
+    zlib-ng
     expat
-    (if stdenv.hostPlatform.isFreeBSD then libiconvReal else libiconv)
+    (if stdenv.hostPlatform.isFreeBSD then libiconv.real else libiconv)
     bash
   ]
   ++ lib.optionals perlSupport [ perlPackages.perl ]
@@ -184,8 +181,8 @@ stdenv.mkDerivation (finalAttrs: {
 
   makeFlags = [
     "prefix=\${out}"
+    "ZLIB_NG=1"
   ]
-  ++ lib.optional withZlibNg "ZLIB_NG=1"
   # Git does not allow setting a shell separately for building and run-time.
   # Therefore lets leave it at the default /bin/sh when cross-compiling
   ++ lib.optional (stdenv.buildPlatform == stdenv.hostPlatform) "SHELL_PATH=${stdenv.shell}"
