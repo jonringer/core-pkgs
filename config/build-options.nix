@@ -61,6 +61,13 @@ in
       internal = true;
     };
 
+    replaceBootstrapFiles = mkMassRebuild {
+      type = types.functionTo (types.attrsOf (types.either types.package types.path));
+      default = lib.id;
+      defaultText = lib.literalExpression "lib.id";
+      description = "Replace the bootstrap files used to construct the standard environment.";
+    };
+
     # Config options
 
     warnUndeclaredOptions = mkOption {

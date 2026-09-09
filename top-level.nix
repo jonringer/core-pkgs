@@ -36,7 +36,7 @@ with final;
   # The scope is built in `stdenv/linux/stage0.nix` and surfaced here, rather
   # than constructed a second time: on a system that bootstraps from source this
   # is the very toolchain `stdenv` was grown from, not a rebuild of it.
-  inherit (stdenv.stage0) minimal-bootstrap;
+  minimal-bootstrap = stdenv.stage0.minimal-bootstrap or null;
 
   minimal-bootstrap-sources =
     callPackage ./stdenv/minimal-bootstrap/stage0-posix/bootstrap-sources.nix
@@ -91,9 +91,14 @@ with final;
   # argument stays overridable for callers that need a different build.
   nix-prefetch-git = callPackage ./pkgs/nix-prefetch-git { git = gitMinimal; };
 
-  freshBootstrapTools = import ./stdenv/linux/make-bootstrap-tools.nix {
-    pkgs = final;
-  };
+  freshBootstrapTools =
+    if stdenv.hostPlatform.isDarwin then
+      import ./stdenv/darwin/make-bootstrap-tools.nix {
+        localSystem = stdenv.buildPlatform;
+        crossSystem = stdenv.hostPlatform;
+      }
+    else
+      import ./stdenv/linux/make-bootstrap-tools.nix { pkgs = final; };
 
   # igraph-c alias for C library (to avoid conflict with python3Packages.igraph)
   igraph-c = igraph;
