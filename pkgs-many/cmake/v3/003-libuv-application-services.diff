@@ -1,8 +1,7 @@
 diff --git a/Utilities/cmlibuv/CMakeLists.txt b/Utilities/cmlibuv/CMakeLists.txt
-index 7625cf65d9..167903e309 100644
 --- a/Utilities/cmlibuv/CMakeLists.txt
 +++ b/Utilities/cmlibuv/CMakeLists.txt
-@@ -193,6 +193,22 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+@@ -195,6 +195,22 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
      src/unix/kqueue.c
      src/unix/proctitle.c
      )
@@ -26,7 +25,6 @@ index 7625cf65d9..167903e309 100644
  
  if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
 diff --git a/Utilities/cmlibuv/src/unix/fsevents.c b/Utilities/cmlibuv/src/unix/fsevents.c
-index a51f29b3f6..3f6bf01968 100644
 --- a/Utilities/cmlibuv/src/unix/fsevents.c
 +++ b/Utilities/cmlibuv/src/unix/fsevents.c
 @@ -21,7 +21,7 @@
@@ -47,7 +45,7 @@ index a51f29b3f6..3f6bf01968 100644
  
  #include "darwin-stub.h"
  
-@@ -920,4 +920,4 @@ int uv__fsevents_close(uv_fs_event_t* handle) {
+@@ -913,4 +913,4 @@ int uv__fsevents_close(uv_fs_event_t* handle) {
    return 0;
  }
  

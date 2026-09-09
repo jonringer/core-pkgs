@@ -1,7 +1,7 @@
 diff --git a/Utilities/cmcurl/CMakeLists.txt b/Utilities/cmcurl/CMakeLists.txt
 --- a/Utilities/cmcurl/CMakeLists.txt
 +++ b/Utilities/cmcurl/CMakeLists.txt
-@@ -581,14 +581,6 @@ if(HAVE_SOCKADDR_IN6_STRUCT)
+@@ -581,14 +581,6 @@ if(ENABLE_IPV6 AND NOT WIN32)
  
    if(APPLE AND NOT ENABLE_ARES)
      set(_use_core_foundation_and_core_services ON)
