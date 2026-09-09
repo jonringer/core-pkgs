@@ -6,8 +6,7 @@ Gradle build scripts are written in a DSL; computing the list of Gradle
 dependencies is a Turing-complete task, not just in theory but also in
 practice. Fetching all of the dependencies often requires building some
 native code, running some commands to check the host platform, or just
-fetching some files using either JVM code or commands like `curl` or
-`wget`.
+fetching some files using either JVM code or commands like `curl`.
 
 This practice is widespread and isn't considered a bad practice in the
 Java world, so all we can do is run Gradle to check what dependencies

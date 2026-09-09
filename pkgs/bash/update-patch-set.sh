@@ -1,5 +1,5 @@
 #!/usr/bin/env nix-shell
-#!nix-shell --pure -i bash -p wget -p gnupg -p cacert -p nix
+#!nix-shell --pure -i bash -p curl -p gnupg -p cacert -p nix
 
 # Update patch set for GNU Bash or Readline.
 
@@ -24,7 +24,8 @@ rm -vf "$PATCH_LIST"
 
 # https://savannah.gnu.org/projects/bash/: Group Admins: Chet Ramey
 # https://savannah.gnu.org/users/chet: Download GPG Key
-wget "https://savannah.gnu.org/people/viewgpg.php?user_id=2590" -O gpgkey.asc
+curl --fail --location --remove-on-error --output gpgkey.asc \
+    "https://savannah.gnu.org/people/viewgpg.php?user_id=2590"
 echo "db4041b4d3896b9f21250e6c29861958bd5d4781f521f06beda849a9ed79fae8  gpgkey.asc" > gpgkey.asc.sha256
 sha256sum -c gpgkey.asc.sha256
 gpg --import ./gpgkey.asc
@@ -37,8 +38,11 @@ rm gpgkey.asc{,.sha256}
 
 for i in {001..100}
 do
-    wget -P "$DIR" "ftp.gnu.org/gnu/$PROJECT/$PROJECT-$VERSION-patches/$PROJECT$VERSION_CONDENSED-$i" || break
-    wget -P "$DIR" "ftp.gnu.org/gnu/$PROJECT/$PROJECT-$VERSION-patches/$PROJECT$VERSION_CONDENSED-$i.sig"
+    PATCH_FILE="$DIR/$PROJECT$VERSION_CONDENSED-$i"
+    curl --fail --location --remove-on-error --output "$PATCH_FILE" \
+        "https://ftp.gnu.org/gnu/$PROJECT/$PROJECT-$VERSION-patches/$PROJECT$VERSION_CONDENSED-$i" || break
+    curl --fail --location --remove-on-error --output "$PATCH_FILE.sig" \
+        "https://ftp.gnu.org/gnu/$PROJECT/$PROJECT-$VERSION-patches/$PROJECT$VERSION_CONDENSED-$i.sig"
     gpg --verify "$DIR/$PROJECT$VERSION_CONDENSED-$i.sig"
     hash=$(nix-hash --flat --type sha256 --base32 "$DIR/$PROJECT$VERSION_CONDENSED-$i")
     echo "  (patch \"$i\" \"$hash\")"	\

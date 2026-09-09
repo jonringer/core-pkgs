@@ -127,11 +127,11 @@ class TestBaselineWorkflow:
 
     def test_an_unaccepted_sibling_is_still_written(self, trees):
         self._diverge(trees)
-        trees.pair("a\n", "b\n", package="wget")
+        trees.pair("a\n", "b\n", package="jq")
         _accept(trees, "pkgs/curl.patch")
         _generate(trees)
         assert not (_patches(trees) / "pkgs" / "curl.patch").exists()
-        assert (_patches(trees) / "pkgs" / "wget.patch").is_file()
+        assert (_patches(trees) / "pkgs" / "jq.patch").is_file()
 
     def test_resolved_divergence_is_flagged_as_stale(self, trees, capsys):
         self._diverge(trees)
@@ -144,7 +144,7 @@ class TestBaselineWorkflow:
 
     def test_accept_can_target_one_patch(self, trees):
         self._diverge(trees)
-        trees.pair("a\n", "b\n", package="wget")
+        trees.pair("a\n", "b\n", package="jq")
         _accept(trees, "pkgs/curl.patch")
         assert _generate(trees, "--strict") == 1
 
