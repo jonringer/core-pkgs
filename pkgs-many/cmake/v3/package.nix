@@ -26,7 +26,6 @@
   pkg-config,
   rhash,
   sphinx,
-  sysctl,
   texinfo,
   xz,
   zlib,
@@ -81,7 +80,6 @@ stdenv.mkDerivation (finalAttrs: {
   ++ lib.optional (isDarwin || isFreeBSD) (
     replaceVars ./007-darwin-bsd-ps-abspath.diff {
       ps = lib.getExe ps;
-      sysctl = lib.getExe sysctl;
     }
   );
 
