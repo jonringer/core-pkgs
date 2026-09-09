@@ -332,6 +332,20 @@ with final;
   xcode = null; # ffmpeg metalcc/metallib, darwin only
   cctools = null;
 
+  # Darwin packages use the ordinary package scope and shared package directories.
+  bootstrapStdenv = stdenv.override (old: {
+    extraBuildInputs = map (
+      pkg:
+      if lib.isDerivation pkg && lib.getName pkg == "apple-sdk" then
+        pkg.override { enableBootstrap = true; }
+      else
+        pkg
+    ) (old.extraBuildInputs or [ ]);
+  });
+
+  inherit (llvmPackages) clang-unwrapped;
+  xarMinimal = callPackage ./pkgs/xar { e2fsprogs = null; };
+
   # TODO(corepkgs): support windows
   windows = null;
   libgnurx = null;
