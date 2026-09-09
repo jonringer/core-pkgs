@@ -22,7 +22,6 @@
   python3,
   util-linux,
   nftables,
-  strace,
   iana-etc,
   shadow,
   iproute2,
@@ -104,7 +103,6 @@ stdenv.mkDerivation (finalAttrs: {
           python3
           util-linux
           nftables
-          strace
           iana-etc
           shadow
           iproute2
