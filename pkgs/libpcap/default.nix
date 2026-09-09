@@ -1,4 +1,5 @@
 {
+  callPackage,
   lib,
   stdenv,
   fetchurl,
@@ -74,6 +75,8 @@ stdenv.mkDerivation rec {
     bash
     bashNonInteractive
   ];
+
+  passthru.apple = callPackage ./darwin.nix { };
 
   passthru.tests = {
     inherit

@@ -321,16 +321,12 @@ with final;
     signingUtils = null;
     configd = null;
   };
-  autoSignDarwinBinariesHook = null;
-  DarwinTools = null;
-  bootstrap_cmds = null;
   apple-sdk = null;
   ocl-icd = null; # ffmpeg OpenCL ICD
   opencl-headers = null; # ffmpeg
   xcodebuild = null;
   xcbuild = null;
   xcode = null; # ffmpeg metalcc/metallib, darwin only
-  cctools = null;
 
   # Darwin packages use the ordinary package scope and shared package directories.
   bootstrapStdenv = stdenv.override (old: {
@@ -707,17 +703,6 @@ with final;
   };
 
   wrapQemuBinfmtP = callPackage ./pkgs/qemu/binfmt-p-wrapper.nix { };
-
-  libunwind =
-    # Use the system unwinder in the SDK but provide a compatibility package to:
-    # 1. avoid evaluation errors with setting `unwind` to `null`; and
-    # 2. provide a `.pc` for compatibility with packages that expect to find libunwind that way.
-    if stdenv.hostPlatform.isDarwin then
-      darwin.libunwind
-    else if stdenv.hostPlatform.system == "riscv32-linux" then
-      llvmPackages.libunwind
-    else
-      callPackage ./pkgs/libunwind { };
 
   libxcrypt = callPackage ./pkgs/libxcrypt {
     fetchurl = fetchurl-bootstrap;
@@ -1681,7 +1666,6 @@ with final;
     sysctl
     getconf
     getent
-    locale
     killall
     xxd
     watch
