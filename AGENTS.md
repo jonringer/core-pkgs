@@ -44,6 +44,23 @@ libxslt = callPackage ./pkgs/libxslt {
 };
 ```
 
+### Alternative Implementations
+
+Keep alternative implementations in the same package directory, using multiple
+files: `default.nix` is a short selector, `generic.nix` contains the usual implementation,
+and `darwin.nix` contains Apple's implementation. Keep selection and implementation
+attributes inside the package folder, without entries in `top-level.nix`. Use
+ordinary `if` expressions and `callPackage`, forwarding explicit overrides.
+Keep implementation-specific patches and support files in a matching subdirectory.
+Avoid separate `apple-<package>` entries for an existing package family.
+
+Expose an explicit attribute such as `libpcap.apple` when callers need to choose
+an implementation themselves. Preserve `.override` and `.overrideAttrs` on each
+implementation. For `pkgs-many/` families, keep the existing variant structure
+and dispatch to separate implementation files from `generic.nix`. Use short
+variant names such as `real`, `darwin`, and `v3_3`; do not repeat the package name
+in package-local aliases.
+
 ### `pkgs-many/` Directory
 
 Packages that produce multiple variants should use the `mkManyVariants` paradigm and be placed in `pkgs-many/`.

@@ -8,15 +8,19 @@ The desire is for this to be the base on which larger nix package sets build upo
 ## Changes from upstream Nixpkgs
 
 - `stdenv.isCross` is now defined
-- `strictDeps`, `__structuredAttrs`, `enableParallelBuilding`, `enableParallelInstalling` and `enableParallelChecking` enabled by default
+- `strictDeps` is true by default
+- `__structuredAttrs` is true by default
+- `enableParallelBuilding` is true by default
+- `enableParallelChecking` is true by default
+- `enableParallelInstalling` is true by default
 
 ## Status
 
 Stdenv's supported:
 
 - [x] x86_64-linux
-- [ ] aarch64-linux
-- [ ] aarch64-darwin
+- [x] aarch64-linux
+- [x] aarch64-darwin
 
 ## Testing
 
