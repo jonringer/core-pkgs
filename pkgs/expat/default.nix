@@ -59,7 +59,6 @@ stdenv.mkDerivation (finalAttrs: {
   passthru.tests = {
     unittests = runUnitTests finalAttrs.finalPackage;
     inherit python3;
-    inherit (python3.pkgs) xmltodict;
     inherit (haskellPackages) hexpat;
     inherit (perlPackages) XMLSAXExpat XMLParser;
     inherit (luaPackages) luaexpat;

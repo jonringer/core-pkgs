@@ -1000,6 +1000,11 @@ optionalAttrs allowAliases aliases
         ) { };
     };
 
+  # The "badgerfish" name is retained for compatibility with nixpkgs and its
+  # consumers, but this is the historical xmltodict mapping rather than strict
+  # BadgerFish. Attributes use `@name`, while element text uses `#text` instead
+  # of BadgerFish's `$`; scalar values may also be used directly as element
+  # text. Lists repeat an element and null produces an empty element.
   xml =
     {
       format ? "badgerfish",
@@ -1019,36 +1024,22 @@ optionalAttrs allowAliases aliases
           name: value:
           pkgs.callPackage (
             {
+              json2x,
               runCommand,
-              libxml2Python,
-              python3Packages,
             }:
             runCommand name
               {
                 nativeBuildInputs = [
-                  python3Packages.xmltodict
-                  libxml2Python
+                  json2x
                 ];
                 inherit value;
-                pythonGen = pkgs.writeText "pythonGen" ''
-                  import json
-                  import os
-                  import xmltodict
-
-                  with open(os.environ["NIX_ATTRS_JSON_FILE"], "r") as f:
-                      value = json.load(f).get("value")
-                      assert type(value) is dict, "value must be an attrset"
-                      print(xmltodict.unparse(value, full_document=${
-                        if withHeader then "True" else "False"
-                      }, pretty=True, indent=" " * 2))
-                '';
                 preferLocalBuild = true;
               }
               ''
-                python3 "$pythonGen" > $out
-                xmllint $out > /dev/null
+                json2x xml --unwrap value ${optionalString (!withHeader) "--no-header"} \
+                  "$NIX_ATTRS_JSON_FILE" "$out"
               ''
-          ) { };
+          ) { inherit json2x; };
       }
     else
       throw "pkgs.formats.xml: Unknown format: ${format}";
