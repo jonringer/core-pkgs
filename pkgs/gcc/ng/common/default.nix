@@ -11,7 +11,6 @@
   version ? null,
   patchesFn ? lib.id,
   wrapCCWith,
-  binutilsNoLibc,
   binutils,
   buildGccPackages,
   targetGccPackages,
@@ -165,7 +164,7 @@ makeScopeWithSplicing' {
       gccNoLibgcc = wrapCCWith {
         cc = gccPackages.gcc-unwrapped;
         libcxx = null;
-        bintools = binutilsNoLibc;
+        bintools = binutils.noLibc;
         extraPackages = [ ];
         nixSupport.cc-cflags = [
           "-nostartfiles"

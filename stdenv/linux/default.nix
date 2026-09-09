@@ -215,7 +215,21 @@ let
                 }
               );
 
-        overrides = self: super: (overrides self super) // { fetchurl = super.fetchurl-bootstrap; };
+        overrides =
+          self: super:
+          let
+            stageOverrides = overrides self super;
+          in
+          stageOverrides
+          // {
+            # The stage may retain an older wrapper while rebuilding the raw tools.
+            binutils = (stageOverrides.binutils or super.binutils).overrideAttrs (old: {
+              passthru = old.passthru or { } // {
+                unwrapped = super.binutils.unwrapped;
+              };
+            });
+            fetchurl = super.fetchurl-bootstrap;
+          };
       };
 
     in
@@ -303,7 +317,7 @@ in
   # is not part of the final stdenv.
   (
     prevStage:
-    assert isBuiltByBootstrapFilesCompiler prevStage.binutils-unwrapped;
+    assert isBuiltByBootstrapFilesCompiler prevStage.binutils.unwrapped;
     assert isFromBootstrapFiles prevStage.libc;
     assert isFromBootstrapFiles prevStage.gcc-unwrapped;
     assert isFromBootstrapFiles prevStage.coreutils;
@@ -430,7 +444,7 @@ in
   (
     prevStage:
     # previous stage1 stdenv:
-    assert isBuiltByBootstrapFilesCompiler prevStage.binutils-unwrapped;
+    assert isBuiltByBootstrapFilesCompiler prevStage.binutils.unwrapped;
     assert isFromBootstrapFiles prevStage.libc;
     assert isBuiltByBootstrapFilesCompiler prevStage.gcc-unwrapped;
     assert isFromBootstrapFiles prevStage.coreutils;
@@ -504,7 +518,7 @@ in
   (
     prevStage:
     # previous stage2 stdenv:
-    assert isBuiltByNixpkgsCompiler prevStage.binutils-unwrapped;
+    assert isBuiltByNixpkgsCompiler prevStage.binutils.unwrapped;
     assert isBuiltByNixpkgsCompiler prevStage.libc;
     assert isBuiltByBootstrapFilesCompiler prevStage.gcc-unwrapped;
     assert isFromBootstrapFiles prevStage.coreutils;
@@ -565,7 +579,7 @@ in
   (
     prevStage:
     # previous stage3 stdenv:
-    assert isBuiltByNixpkgsCompiler prevStage.binutils-unwrapped;
+    assert isBuiltByNixpkgsCompiler prevStage.binutils.unwrapped;
     assert isBuiltByNixpkgsCompiler prevStage.libc;
     assert isBuiltByNixpkgsCompiler prevStage.gcc-unwrapped;
     assert isFromBootstrapFiles prevStage.coreutils;
@@ -633,7 +647,7 @@ in
     prevStage:
     # previous stage4 stdenv; see stage3 comment regarding gcc,
     # which applies here as well.
-    assert isBuiltByNixpkgsCompiler prevStage.binutils-unwrapped;
+    assert isBuiltByNixpkgsCompiler prevStage.binutils.unwrapped;
     assert isBuiltByNixpkgsCompiler prevStage.libc;
     assert isBuiltByNixpkgsCompiler prevStage.gcc-unwrapped;
     assert isBuiltByNixpkgsCompiler prevStage.coreutils;
@@ -766,7 +780,7 @@ in
           }
           // lib.optionalAttrs (super.stdenv.targetPlatform == localSystem) {
             # Need to get rid of these when cross-compiling.
-            inherit (prevStage) binutils binutils-unwrapped;
+            binutils = import ../../pkgs-many/binutils/bootstrap.nix prevStage.binutils super.binutils;
             gcc = cc;
           };
       };
@@ -778,7 +792,7 @@ in
     prevStage:
     # previous stage5 stdenv; see stage3 comment regarding gcc,
     # which applies here as well.
-    assert isBuiltByNixpkgsCompiler prevStage.binutils-unwrapped;
+    assert isBuiltByNixpkgsCompiler prevStage.binutils.unwrapped;
     assert isBuiltByNixpkgsCompiler prevStage.libc;
     assert isBuiltByNixpkgsCompiler prevStage.gcc-unwrapped;
     assert isBuiltByNixpkgsCompiler prevStage.coreutils;

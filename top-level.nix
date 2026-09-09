@@ -511,44 +511,21 @@ with final;
 
   lit = with python3Packages; toPythonApplication lit;
 
-  binutils-unwrapped = callPackage ./pkgs/binutils {
-    # FHS sys dirs presumably only have stuff for the build platform
-    noSysDirs = (stdenv.targetPlatform != stdenv.hostPlatform) || noSysDirs;
-  };
-  binutils-unwrapped-all-targets = callPackage ./pkgs/binutils {
-    # FHS sys dirs presumably only have stuff for the build platform
-    noSysDirs = (stdenv.targetPlatform != stdenv.hostPlatform) || noSysDirs;
-    withAllTargets = true;
-  };
-  binutils = wrapBintoolsWith {
-    bintools = binutils-unwrapped;
-  };
   binutils_nogold = lib.lowPrio (wrapBintoolsWith {
-    bintools = binutils-unwrapped.override {
+    bintools = binutils.unwrapped.real.override {
       enableGold = false;
     };
   });
-  binutilsNoLibc = wrapBintoolsWith {
-    bintools = binutils-unwrapped;
-    libc = targetPackages.preLibcHeaders or preLibcHeaders;
-  };
 
-  libbfd = callPackage ./pkgs/binutils/libbfd.nix { };
+  libbfd = callPackage ./pkgs-many/binutils/libbfd.nix { };
 
-  libopcodes = callPackage ./pkgs/binutils/libopcodes.nix { };
+  libopcodes = callPackage ./pkgs-many/binutils/libopcodes.nix { };
 
-  # Held back 2.38 release. Remove once all dependencies are ported to 2.39.
-  binutils-unwrapped_2_38 = callPackage ./pkgs/binutils/2.38 {
-    autoreconfHook = autoconf.v2_69.autoreconfHook;
-    # FHS sys dirs presumably only have stuff for the build platform
-    noSysDirs = (stdenv.targetPlatform != stdenv.hostPlatform) || noSysDirs;
-  };
-
-  libbfd_2_38 = callPackage ./pkgs/binutils/2.38/libbfd.nix {
+  libbfd_2_38 = callPackage ./pkgs-many/binutils/2.38/libbfd.nix {
     autoreconfHook = buildPackages.autoconf.v2_69.autoreconfHook;
   };
 
-  libopcodes_2_38 = callPackage ./pkgs/binutils/2.38/libopcodes.nix {
+  libopcodes_2_38 = callPackage ./pkgs-many/binutils/2.38/libopcodes.nix {
     autoreconfHook = buildPackages.autoconf.v2_69.autoreconfHook;
   };
 
@@ -575,11 +552,11 @@ with final;
     if linker == "lld" then
       llvmPackages.bintools-unwrapped
     else if linker == "cctools" then
-      darwin.binutils-unwrapped
+      binutils.unwrapped
     else if linker == "bfd" then
-      binutils-unwrapped
+      binutils.unwrapped
     else if linker == "gold" then
-      binutils-unwrapped.override { enableGoldDefault = true; }
+      binutils.unwrapped.override { enableGoldDefault = true; }
     else
       null;
   bintoolsNoLibc = wrapBintoolsWith {
@@ -919,7 +896,7 @@ with final;
   # built with, and use, that cross-compiled libc.
   gccWithoutTargetLibc =
     let
-      libc1 = binutilsNoLibc.libc;
+      libc1 = binutils.noLibc.libc;
     in
     (wrapCCWith {
       cc = gccFun {
@@ -935,7 +912,7 @@ with final;
         withoutTargetLibc = true;
         langCC = stdenv.targetPlatform.isCygwin; # can't compile libcygwin1.a without C++
         libcCross = libc1;
-        targetPackages.stdenv.cc.bintools = binutilsNoLibc;
+        targetPackages.stdenv.cc.bintools = binutils.noLibc;
         enableShared =
           stdenv.targetPlatform.hasSharedLibraries
 
@@ -945,7 +922,7 @@ with final;
           && !stdenv.targetPlatform.isCygwin
           && !(stdenv.targetPlatform.useLLVM or false);
       };
-      bintools = binutilsNoLibc;
+      bintools = binutils.noLibc;
       libc = libc1;
       extraPackages = [ ];
     }).overrideAttrs

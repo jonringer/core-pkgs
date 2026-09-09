@@ -62,8 +62,6 @@
 assert propagateDoc -> bintools ? man;
 assert nativeTools -> !propagateDoc && nativePrefix != "";
 assert !nativeTools -> bintools != null && coreutils != null && grep != null;
-assert !(nativeLibc && noLibc);
-assert (noLibc || nativeLibc) == (libc == null);
 
 let
   inherit (lib)
@@ -203,59 +201,63 @@ stdenvNoCC.mkDerivation {
     src=$PWD
   '';
 
-  installPhase = ''
-    mkdir -p $out/bin $out/nix-support
+  # Allow callers to inspect tool variants before libc is available during bootstrap.
+  installPhase =
+    assert !(nativeLibc && noLibc);
+    assert (noLibc || nativeLibc) == (libc == null);
+    ''
+      mkdir -p $out/bin $out/nix-support
 
-    wrap() {
-      local dst="$1"
-      local wrapper="$2"
-      export prog="$3"
-      export use_response_file_by_default=${if isCCTools then "1" else "0"}
-      substituteAll "$wrapper" "$out/bin/$dst"
-      chmod +x "$out/bin/$dst"
-    }
-  ''
+      wrap() {
+        local dst="$1"
+        local wrapper="$2"
+        export prog="$3"
+        export use_response_file_by_default=${if isCCTools then "1" else "0"}
+        substituteAll "$wrapper" "$out/bin/$dst"
+        chmod +x "$out/bin/$dst"
+      }
+    ''
 
-  + (
-    if nativeTools then
-      ''
-        echo ${nativePrefix} > $out/nix-support/orig-bintools
+    + (
+      if nativeTools then
+        ''
+          echo ${nativePrefix} > $out/nix-support/orig-bintools
 
-        ldPath="${nativePrefix}/bin"
-      ''
-    else
-      ''
-        echo $bintools_bin > $out/nix-support/orig-bintools
+          ldPath="${nativePrefix}/bin"
+        ''
+      else
+        ''
+          echo $bintools_bin > $out/nix-support/orig-bintools
 
-        ldPath="${bintools_bin}/bin"
-      ''
+          ldPath="${bintools_bin}/bin"
+        ''
 
-      # Solaris needs an additional ld wrapper.
-      + optionalString (targetPlatform.isSunOS && nativePrefix != "") ''
-        ldPath="${nativePrefix}/bin"
-        exec="$ldPath/${targetPrefix}ld"
-        wrap ld-solaris ${./ld-solaris-wrapper.sh}
-      ''
-  )
+        # Solaris needs an additional ld wrapper.
+        + optionalString (targetPlatform.isSunOS && nativePrefix != "") ''
+          ldPath="${nativePrefix}/bin"
+          exec="$ldPath/${targetPrefix}ld"
+          wrap ld-solaris ${./ld-solaris-wrapper.sh}
+        ''
+    )
 
-  # Create symlinks for rest of the binaries.
-  + ''
-    for binary in objdump objcopy size strings as ar nm gprof dwp c++filt addr2line \
-        ranlib readelf elfedit dlltool dllwrap windmc windres; do
-      if [ -e $ldPath/${targetPrefix}''${binary} ]; then
-        ln -s $ldPath/${targetPrefix}''${binary} $out/bin/${targetPrefix}''${binary}
+    # Create symlinks for rest of the binaries.
+    + ''
+      for binary in objdump objcopy size strings as ar nm gprof dwp c++filt addr2line \
+          ranlib readelf elfedit dlltool dllwrap windmc windres; do
+        if [ -e $ldPath/${targetPrefix}''${binary} ]; then
+          ln -s $ldPath/${targetPrefix}''${binary} $out/bin/${targetPrefix}''${binary}
+        fi
+      done
+
+      if [ -e ''${ld:-$ldPath/${targetPrefix}ld} ]; then
+        wrap ${targetPrefix}ld ${./ld-wrapper.sh} ''${ld:-$ldPath/${targetPrefix}ld}
       fi
-    done
 
-    if [ -e ''${ld:-$ldPath/${targetPrefix}ld} ]; then
-      wrap ${targetPrefix}ld ${./ld-wrapper.sh} ''${ld:-$ldPath/${targetPrefix}ld}
-    fi
-
-    for variant in $ldPath/${targetPrefix}ld.*; do
-      basename=$(basename "$variant")
-      wrap $basename ${./ld-wrapper.sh} $variant
-    done
-  '';
+      for variant in $ldPath/${targetPrefix}ld.*; do
+        basename=$(basename "$variant")
+        wrap $basename ${./ld-wrapper.sh} $variant
+      done
+    '';
 
   depsTargetTargetPropagated = extraPackages;
 

@@ -4,21 +4,21 @@
   buildPackages,
   autoreconfHook,
   bison,
-  binutils-unwrapped_2_38,
+  binutils,
   libiberty,
   libbfd_2_38,
 }:
 
 stdenv.mkDerivation {
   pname = "libopcodes";
-  inherit (binutils-unwrapped_2_38) version src;
+  inherit (binutils.unwrapped.v2_38) version src;
 
   outputs = [
     "out"
     "dev"
   ];
 
-  patches = binutils-unwrapped_2_38.patches ++ [
+  patches = binutils.unwrapped.v2_38.patches ++ [
     ./build-components-separately.patch
   ];
 

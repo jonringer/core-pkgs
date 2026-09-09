@@ -5,7 +5,7 @@
   gnu-config,
   autoreconfHook,
   bison,
-  binutils-unwrapped_2_38,
+  binutils,
   libiberty,
   libintl,
   zlib,
@@ -13,14 +13,14 @@
 
 stdenv.mkDerivation {
   pname = "libbfd";
-  inherit (binutils-unwrapped_2_38) version src;
+  inherit (binutils.unwrapped.v2_38) version src;
 
   outputs = [
     "out"
     "dev"
   ];
 
-  patches = binutils-unwrapped_2_38.patches ++ [
+  patches = binutils.unwrapped.v2_38.patches ++ [
     ./build-components-separately.patch
     (fetchpatch {
       url = "https://raw.githubusercontent.com/mxe/mxe/e1d4c144ee1994f70f86cf7fd8168fe69bd629c6/src/bfd-1-disable-subdir-doc.patch";

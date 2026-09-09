@@ -1,3 +1,4 @@
+{ version, hash, ... }@variantArgs:
 let
   withGold = platform: platform.isElf && !platform.isRiscV && !platform.isLoongArch64;
 in
@@ -21,7 +22,7 @@ in
   enableGoldDefault ? false,
   enableShared ? !stdenv.hostPlatform.isStatic,
   # WARN: Enabling all targets increases output size to a multiple.
-  withAllTargets ? false,
+  withAllTargets ? variantArgs.withAllTargets or false,
 }:
 
 # WARN: configure silently disables ld.gold if it's unsupported, so we need to
@@ -31,8 +32,6 @@ assert enableGoldDefault -> enableGold;
 
 let
   inherit (stdenv) buildPlatform hostPlatform targetPlatform;
-
-  version = "2.44";
 
   #INFO: The targetPrefix prepended to binary names to allow multiple binuntils
   # on the PATH to both be usable.
@@ -80,7 +79,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   src = fetchurl {
     url = "mirror://gnu/binutils/binutils-with-gold-${version}.tar.bz2";
-    hash = "sha256-NHM+pJXMDlDnDbTliQ3sKKxB8OFMShZeac8n+5moxMg=";
+    inherit hash;
   };
 
   # WARN: this package is used for bootstrapping fetchurl, and thus cannot use

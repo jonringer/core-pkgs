@@ -1,23 +1,28 @@
 {
   lib,
   stdenv,
-  binutils-unwrapped-all-targets,
+  callPackage,
+  callFromScope,
 }:
 
+# LLVM needs these headers before the Darwin cctools wrapper can be evaluated.
+let
+  unwrapped = callPackage (callFromScope ./default.nix { variant = "unwrapped-all-targets"; }) { };
+in
 stdenv.mkDerivation {
   pname = "libbfd";
-  inherit (binutils-unwrapped-all-targets) version;
+  inherit (unwrapped) version;
 
   dontUnpack = true;
   dontBuild = true;
   dontInstall = true;
   propagatedBuildInputs = [
-    binutils-unwrapped-all-targets.dev
-    binutils-unwrapped-all-targets.lib
+    unwrapped.dev
+    unwrapped.lib
   ];
 
   passthru = {
-    inherit (binutils-unwrapped-all-targets) src dev plugin-api-header;
+    inherit (unwrapped) src dev plugin-api-header;
   };
 
   meta = {

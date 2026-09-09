@@ -7,7 +7,6 @@
   patchesFn ? lib.id,
   buildPackages,
   targetPackages,
-  binutilsNoLibc,
   binutils,
   generateSplicesForMkScope,
   ...

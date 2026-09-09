@@ -1,7 +1,7 @@
 {
   lib,
   bash,
-  binutils-unwrapped,
+  binutils,
   coreutils,
   gawk,
   libarchive,
@@ -21,7 +21,7 @@ rec {
       inherit runtimeShell;
       path = lib.makeBinPath [
         bash
-        binutils-unwrapped
+        binutils.unwrapped
         coreutils
         gawk
         libarchive
