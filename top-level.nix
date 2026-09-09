@@ -100,9 +100,6 @@ with final;
     else
       import ./stdenv/linux/make-bootstrap-tools.nix { pkgs = final; };
 
-  # igraph-c alias for C library (to avoid conflict with python3Packages.igraph)
-  igraph-c = igraph;
-
   # nv-codec-headers version aliases for ffmpeg
   nv-codec-headers-12 = nv-codec-headers.override { majorVersion = "12"; };
 
@@ -312,7 +309,6 @@ with final;
   xeve = null; # ffmpeg
   xvidcore = null; # ffmpeg
   yallback = null;
-  yamllint = null;
   yara = null;
   zmqpp = null;
   zvbi = null; # ffmpeg

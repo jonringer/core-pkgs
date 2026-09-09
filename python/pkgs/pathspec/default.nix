@@ -9,7 +9,6 @@
   awsebcli,
   black,
   hatchling,
-  yamllint,
 }:
 
 buildPythonPackage rec {
@@ -33,7 +32,6 @@ buildPythonPackage rec {
       awsebcli
       black
       hatchling
-      yamllint
       ;
   };
 

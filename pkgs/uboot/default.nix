@@ -3,15 +3,12 @@
   lib,
   bc,
   bison,
-  dtc,
   fetchFromGitHub,
-  fetchpatch,
   fetchurl,
   flex,
   gnutls,
   installShellFiles,
   libuuid,
-  meson-tools,
   ncurses,
   openssl,
   rkbin,
@@ -22,7 +19,6 @@
   arm-trusted-firmware,
   opensbi,
   buildPackages,
-  callPackages,
   DarwinTools,
 }@pkgs:
 
@@ -207,11 +203,8 @@ rec {
     };
   };
 
-  pythonTools = lib.recurseIntoAttrs (callPackages ./python.nix { });
-
   # Backward-compatible aliases
   ubootTools = tools;
-  ubootPythonTools = pythonTools;
 
   ubootA20OlinuxinoLime = buildUBoot {
     defconfig = "A20-OLinuXino-Lime_defconfig";

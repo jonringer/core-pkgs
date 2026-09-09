@@ -5,7 +5,7 @@
   pkg-config,
   cmake,
   setuptools,
-  igraph-c,
+  pkgs,
   texttable,
   pytestCheckHook,
 }:
@@ -38,7 +38,7 @@ buildPythonPackage rec {
 
   build-system = [ setuptools ];
 
-  buildInputs = [ igraph-c ];
+  buildInputs = [ pkgs.igraph ];
 
   dependencies = [ texttable ];
 

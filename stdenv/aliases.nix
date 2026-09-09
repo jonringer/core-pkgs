@@ -126,6 +126,7 @@ mapAliases {
   icu76 = icu.v76;
   icu77 = icu.v77;
   icu78 = icu.v78;
+  igraph-c = igraph;
   jdk = java;
   jdk11 = java.v11;
   jdk17 = java.v17;
@@ -244,7 +245,6 @@ mapAliases {
   ubootPine64LTS = uboot.ubootPine64LTS;
   ubootPinebook = uboot.ubootPinebook;
   ubootPinebookPro = uboot.ubootPinebookPro;
-  ubootPythonTools = uboot.pythonTools;
   ubootQemuAarch64 = uboot.ubootQemuAarch64;
   ubootQemuArm = uboot.ubootQemuArm;
   ubootQemuRiscv64Smode = uboot.ubootQemuRiscv64Smode;
