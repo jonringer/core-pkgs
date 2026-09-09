@@ -1373,14 +1373,6 @@ with final;
   httpTwoLevelsUpdater = callPackage ./pkgs/common-updater-scripts/http-two-levels-updater.nix { };
   unstableGitUpdater = callPackage ./pkgs/common-updater-scripts/unstable-updater.nix { };
 
-  # Use Apple’s fork of libffi by default, which provides APIs and trampoline functionality that is not yet
-  # merged upstream. This is needed by some packages (such as cffi).
-  #
-  # `libffiReal` is provided in case the upstream libffi package is needed on Darwin instead of the fork.
-  libffiReal = callPackage ./pkgs/libffi { };
-  libffi = if stdenv.hostPlatform.isDarwin then darwin.libffi else libffiReal;
-  libffi_3_3 = callPackage ./pkgs/libffi/3.3.nix { };
-
   libuuid = if stdenv.hostPlatform.isLinux then util-linuxMinimal else null;
 
   ncurses =
