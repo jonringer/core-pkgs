@@ -35,6 +35,11 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-a5dX9ZK3UYtJAutq9+VFcL3Mujeocf3bLTCuOGNRHBM=";
   };
 
+  patches = [
+    # Fix C23-incompatible declarations in the bundled libgroff sources.
+    ./fix-underspecified-getenv-prototype.patch
+  ];
+
   outputs = [
     "out"
     "man"
