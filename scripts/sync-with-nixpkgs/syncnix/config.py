@@ -345,7 +345,6 @@ LOCAL_ONLY = [
     "pkgs/deno/tests/default.nix",
     "pkgs/deno/update",
     "pkgs/docbook-sgml-dtd",
-    "pkgs/esbuild/netlify.nix",
     "pkgs/expect/default.nix",
     "pkgs/fetchCrate",
     "pkgs/fetchFromBitbucket",
