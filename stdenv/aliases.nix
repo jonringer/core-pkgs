@@ -127,6 +127,7 @@ mapAliases {
   libnghttp2 = nghttp2;
   libtool2 = libtool.v2_5;
   libtool_1_5 = libtool.v1_5;
+  libxml2Python = throw "libxml2Python is deprecated, please migrate to libxml2 or something else";
   linuxPackages = linux.pkgs;
   linuxPackages_5_10 = linux.v5_10.pkgs;
   linuxPackages_5_15 = linux.v5_15.pkgs;
