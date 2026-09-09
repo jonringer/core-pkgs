@@ -1361,6 +1361,21 @@ with final;
     name = "separate-debug-info-hook";
   } ./build-support/setup-hooks/separate-debug-info.sh;
 
+  # Driver-wrapper: lets nix-built executables that need hardware
+  # acceleration run on non-NixOS hosts by exposing host-provided
+  # GL/Vulkan/CUDA/etc. libraries at runtime.
+  #
+  # Use as:
+  #   nativeBuildInputs = [ wrapDriverProgramHook ];
+  #   # autoWrapDriverPrograms is registered into postFixup automatically;
+  #   # alternatively call wrapDriverProgram $out/bin/foo manually.
+  #
+  # Or, externally, transform an existing derivation:
+  #   wrapDriverProgram { drv = somepkg; }
+  wrapDriverProgramHook = callPackage ./build-support/wrap-driver-program { };
+  wrapDriverProgram = wrapDriverProgramHook.wrapDriverProgram;
+  autoWrapDriverPrograms = wrapDriverProgramHook;
+
   setupDebugInfoDirs = makeSetupHook {
     name = "setup-debug-info-dirs-hook";
   } ./build-support/setup-hooks/setup-debug-info-dirs.sh;
