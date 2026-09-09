@@ -6,7 +6,7 @@
   gzip,
   lib,
   libiconv,
-  libiconvReal,
+  libiconvReal ? libiconv.real,
   libpipeline,
   makeWrapper,
   pkg-config,

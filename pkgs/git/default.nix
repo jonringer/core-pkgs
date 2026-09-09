@@ -29,7 +29,7 @@
   tk,
   makeWrapper,
   libiconv,
-  libiconvReal,
+  libiconvReal ? libiconv.real,
   svnSupport ? false,
   subversionClient,
   perlLibs,

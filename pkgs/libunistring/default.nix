@@ -3,9 +3,9 @@
   lib,
   stdenv,
   libiconv,
-  libiconvReal,
+  libiconvReal ? libiconv.real,
   updateAutotoolsGnuConfigScriptsHook,
-  darwin,
+
   libidn2,
 }@args:
 

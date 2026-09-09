@@ -454,7 +454,7 @@ in
           libxcrypt
           ;
         # Avoids infinite recursion, as this is in the build-time dependencies of libc.
-        libiconv = self.libcIconv prevStage.libc;
+        libiconv = super.libiconv.override { libc = prevStage.libc; };
 
         # This also contains the full, dynamically linked, final Glibc.
         binutils = prevStage.binutils.override {

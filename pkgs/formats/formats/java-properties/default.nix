@@ -69,7 +69,8 @@ in
           {
             runCommand,
             jq,
-            libiconvReal,
+            libiconv,
+            libiconvReal ? libiconv.real,
           }:
           runCommand name
             {

@@ -1240,50 +1240,6 @@ with final;
     singleBinary = false;
   };
 
-  # GNU libc provides libiconv so systems with glibc don't need to
-  # build libiconv separately. Additionally, Apple forked/repackaged
-  # libiconv, so build and use the upstream one with a compatible ABI,
-  # and BSDs include libiconv in libc.
-  #
-  # libiconv is auto-imported from pkgs-many/libiconv/ via mkManyVariants
-  # Variants: libiconv.real (standalone), libiconv.darwinABICompat (Darwin ABI-compatible)
-  # Use `libiconvReal` for the standalone build regardless of platform.
-  libiconv =
-    if
-      lib.elem stdenv.hostPlatform.libc [
-        "glibc"
-        "musl"
-        "nblibc"
-        "wasilibc"
-        "fblibc"
-      ]
-    then
-      libcIconv pkgs.libc
-    else if stdenv.hostPlatform.isDarwin then
-      prev.libiconv.darwinABICompat
-    else
-      libiconvReal;
-
-  # TODO: fix this mess
-  libcIconv =
-    libc:
-    let
-      inherit (libc) pname version;
-      libcDev = lib.getDev libc;
-    in
-    runCommand "${pname}-iconv-${version}"
-      {
-        passthru = {
-          inherit (prev.libiconv) variants;
-        };
-      }
-      ''
-        mkdir -p $out/include
-        ln -sv ${libcDev}/include/iconv.h $out/include
-      '';
-
-  libiconvReal = prev.libiconv;
-
   iconv =
     if
       lib.elem stdenv.hostPlatform.libc [
