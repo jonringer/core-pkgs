@@ -13,7 +13,14 @@ with lib;
     };
 
     meta = mkOption {
-      type = types.attrs;
+      type = types.submodule {
+        freeformType = types.attrsOf types.anything;
+        options.timeout = mkOption {
+          type = types.int;
+          default = config.globalTimeout;
+          description = "Maximum test duration in seconds.";
+        };
+      };
       default = { };
       description = ''
         Meta attributes for the test derivation.
@@ -57,11 +64,6 @@ with lib;
     passthru = {
       inherit (config) nodes;
       driver = config.driver;
-    };
-
-    # Set default timeout in meta if not specified
-    meta = {
-      timeout = mkDefault config.globalTimeout;
     };
   };
 }
