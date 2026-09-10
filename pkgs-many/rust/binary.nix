@@ -64,6 +64,19 @@ rec {
     + lib.optionalString stdenv.hostPlatform.isDarwin ''
       install_name_tool -change "/usr/lib/libcurl.4.dylib" \
       "${lib.getLib curl}/lib/libcurl.4.dylib" "$out/bin/cargo"
+      # Official dist rustc ships @rpath/libLLVM.dylib (LLVM 22 here).
+      # Clang 21 also ships libLLVM.dylib. If both directories are on the
+      # dyld search path, clang-21 binds LLVM symbols to the bootstrap copy
+      # and abort-traps (missing _LLVMInitializeLanaiAsmParser). Give the
+      # bootstrap LLVM a unique id so it cannot collide.
+      if [ -e "$out/lib/libLLVM.dylib" ]; then
+        mv "$out/lib/libLLVM.dylib" "$out/lib/libLLVM-rustc.dylib"
+        install_name_tool -id '@rpath/libLLVM-rustc.dylib' "$out/lib/libLLVM-rustc.dylib"
+        for f in "$out/bin/"* "$out/lib/"*.dylib; do
+          [ -f "$f" ] || continue
+          install_name_tool -change '@rpath/libLLVM.dylib' '@rpath/libLLVM-rustc.dylib' "$f" || true
+        done
+      fi
     '';
 
     # The strip tool in cctools 973.0.1 and up appears to break rlibs in the
