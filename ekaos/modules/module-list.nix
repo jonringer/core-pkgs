@@ -11,6 +11,8 @@
   ./boot/grow-partition.nix
   ./boot/swraid.nix
   ./boot/crash-dump.nix
+  ./boot/ab-boot.nix
+  ./boot/ab-slot-status.nix
   ./boot/bootspec.nix
   ./boot/containers.nix
   ./boot/kexec.nix

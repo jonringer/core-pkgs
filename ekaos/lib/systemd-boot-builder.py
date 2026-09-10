@@ -23,18 +23,17 @@ NIXOS_DIR = Path("@nixosDir@".strip("/")) # Path relative to the XBOOTLDR or ESP
 TIMEOUT = "@timeout@"
 EDITOR = "@editor@" == "1" # noqa: PLR0133
 CONSOLE_MODE = "@consoleMode@"
-BOOTSPEC_TOOLS = "@bootspecTools@"
 DISTRO_NAME = "@distroName@"
 NIX = "@nix@"
 SYSTEMD = "@systemd@"
 CONFIGURATION_LIMIT = int("@configurationLimit@")
-REBOOT_FOR_BITLOCKER = bool("@rebootForBitlocker@")
+REBOOT_FOR_BITLOCKER = "@rebootForBitlocker@" == "1"  # noqa: PLR0133
 CAN_TOUCH_EFI_VARIABLES = "@canTouchEfiVariables@"
 GRACEFUL = "@graceful@"
-COPY_EXTRA_FILES = "@copyExtraFiles@"
-CHECK_MOUNTPOINTS = "@checkMountpoints@"
 STORE_DIR = "@storeDir@"
 EFI_TYPE = json.loads("@efiType@")  # e.g. ["efi"] or ["uki"] or ["efi", "uki"]
+AB_ENABLED = "@abEnabled@" == "1"  # noqa: PLR0133
+AB_BOOT_COUNT_TRIES = int("@abBootCountTries@") if AB_ENABLED else 0
 
 @dataclass
 class BootSpec:
@@ -128,26 +127,15 @@ def write_loader_conf(profile: str | None, generation: int, specialisation: str 
 def get_bootspec(profile: str | None, generation: int) -> BootSpec:
     system_directory = system_dir(profile, generation, None)
     boot_json_path = (system_directory / "boot.json").resolve()
-    if boot_json_path.is_file():
-        with boot_json_path.open("r") as f:
-            # check if json is well-formed, else throw error with filepath
-            try:
-                bootspec_json = json.load(f)
-            except ValueError as e:
-                print(f"error: Malformed Json: {e}, in {boot_json_path}", file=sys.stderr)
-                sys.exit(1)
-    else:
-        boot_json_str = run(
-            [
-                f"{BOOTSPEC_TOOLS}/bin/synthesize",
-                "--version",
-                "1",
-                system_directory,
-                "/dev/stdout",
-            ],
-            stdout=subprocess.PIPE,
-        ).stdout
-        bootspec_json = json.loads(boot_json_str)
+    if not boot_json_path.is_file():
+        print(f"error: boot.json not found at {boot_json_path}", file=sys.stderr)
+        sys.exit(1)
+    with boot_json_path.open("r") as f:
+        try:
+            bootspec_json = json.load(f)
+        except ValueError as e:
+            print(f"error: Malformed Json: {e}, in {boot_json_path}", file=sys.stderr)
+            sys.exit(1)
     return bootspec_from_json(bootspec_json)
 
 def bootspec_from_json(bootspec_json: dict[str, Any]) -> BootSpec:
@@ -302,13 +290,21 @@ def remove_old_entries(gens: list[SystemIdentifier]) -> None:
 
     # Clean up old BLS Type #1 entries
     if "efi" in EFI_TYPE:
-        for path in (BOOT_MOUNT_POINT / "loader/entries").glob("nixos*-generation-[1-9]*.conf", case_sensitive=False):
-            if rex_profile.match(path.name):
-                prof = rex_profile.sub(r"\1", path.name)
+        # Match both regular entries and boot-counted entries (+N-M suffix)
+        rex_counted = re.compile(r"^(nixos.*-generation-[0-9]+(?:-specialisation-[^+]*)?)\+\d+-\d+\.conf$")
+        for path in (BOOT_MOUNT_POINT / "loader/entries").glob("nixos*-generation-[1-9]*", case_sensitive=False):
+            # Strip boot counting suffix for generation extraction
+            name = path.name
+            counted_match = rex_counted.match(name)
+            if counted_match:
+                name = counted_match.group(1) + ".conf"
+
+            if rex_profile.match(name):
+                prof = rex_profile.sub(r"\1", name)
             else:
                 prof = None
             try:
-                gen_number = int(rex_generation.sub(r"\1", path.name))
+                gen_number = int(rex_generation.sub(r"\1", name))
             except ValueError:
                 continue
             if (prof, gen_number, None) not in gens:
@@ -437,6 +433,7 @@ def install_bootloader(args: argparse.Namespace) -> None:
 
     remove_old_entries(gens)
 
+    default_gen = None
     for gen in gens:
         try:
             bootspec = get_bootspec(gen.profile, gen.generation)
@@ -451,6 +448,7 @@ def install_bootloader(args: argparse.Namespace) -> None:
                 write_uki_entry(*gen, bootspec)
 
             if is_default:
+                default_gen = gen
                 write_loader_conf(*gen)
         except OSError as e:
             # See https://github.com/NixOS/nixpkgs/issues/114552
@@ -460,37 +458,43 @@ def install_bootloader(args: argparse.Namespace) -> None:
             else:
                 raise e
 
+    # A/B boot counting: rename the default entry to add a boot counting suffix.
+    # If the boot fails N times, systemd-boot falls back to the previous entry.
+    if AB_ENABLED and default_gen is not None and "efi" in EFI_TYPE:
+        conf_name = generation_conf_filename(*default_gen)
+        conf_path = BOOT_MOUNT_POINT / "loader/entries" / conf_name
+        if conf_path.exists():
+            counted_name = conf_name.replace(".conf", f"+{AB_BOOT_COUNT_TRIES}-0.conf")
+            counted_path = conf_path.with_name(counted_name)
+            conf_path.rename(counted_path)
+            print(f"A/B boot counting: {conf_name} -> {counted_name}", file=sys.stderr)
+
+            # Update loader.conf to point to the renamed entry
+            LOADER_CONF.unlink(missing_ok=True)
+            tmp = LOADER_CONF.with_suffix(".tmp")
+            with tmp.open('x') as f:
+                f.write(f"timeout {TIMEOUT}\n")
+                f.write(f"default {counted_name}\n")
+                if not EDITOR:
+                    f.write("editor 0\n")
+                if REBOOT_FOR_BITLOCKER:
+                    f.write("reboot-for-bitlocker yes\n")
+                f.write(f"console-mode {CONSOLE_MODE}\n")
+                f.flush()
+                os.fsync(f.fileno())
+            os.rename(tmp, LOADER_CONF)
+
     if BOOT_MOUNT_POINT != EFI_SYS_MOUNT_POINT:
         # Cleanup any entries in ESP if xbootldrMountPoint is set.
         # If the user later unsets xbootldrMountPoint, entries in XBOOTLDR will not be cleaned up
         # automatically, as we don't have information about the mount point anymore.
         cleanup_esp()
 
-    extra_files_dir = BOOT_MOUNT_POINT / NIXOS_DIR / ".extra-files"
-    for root, _, files in extra_files_dir.walk(top_down=False):
-        relative_root = root.relative_to(extra_files_dir)
-        actual_root = BOOT_MOUNT_POINT / relative_root
-
-        for file in files:
-            actual_file = actual_root / file
-            actual_file.unlink(missing_ok=True)
-            (root / file).unlink()
-
-        if not list(actual_root.iterdir()):
-            actual_root.rmdir()
-        root.rmdir()
-
-    extra_files_dir.mkdir(parents=True, exist_ok=True)
-
-    run([COPY_EXTRA_FILES])
-
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=f"Update {DISTRO_NAME}-related systemd-boot files")
     parser.add_argument('default_config', metavar='DEFAULT-CONFIG', help=f"The default {DISTRO_NAME} config to boot")
     args = parser.parse_args()
-
-    run([CHECK_MOUNTPOINTS])
 
     try:
         install_bootloader(args)

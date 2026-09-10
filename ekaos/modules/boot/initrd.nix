@@ -202,6 +202,7 @@ in
           Includes modules for SATA, USB, NVMe, and common filesystems.
         '';
       };
+
     };
 
     system.build.initrd = mkOption {

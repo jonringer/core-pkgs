@@ -11,6 +11,8 @@ with lib;
 let
   cfg = config.boot.loader.systemd-boot;
 
+  abCfg = config.boot.ab;
+
   # Wrap the systemd-boot-builder.py script with substitutions
   systemdBootBuilder = pkgs.substituteAll {
     src = ../../lib/systemd-boot-builder.py;
@@ -24,16 +26,18 @@ let
     configurationLimit = cfg.configurationLimit;
     inherit (cfg) consoleMode graceful;
 
-    inherit (config.boot.loader) efi;
+    efiSysMountPoint = config.boot.loader.efi.efiSysMountPoint;
+    bootMountPoint = config.boot.loader.efi.efiSysMountPoint;
+    canTouchEfiVariables = if config.boot.loader.efi.canTouchEfiVariables then "1" else "0";
     efiType = builtins.toJSON config.boot.loader.efi.type;
+    nixosDir = "EFI/ekaos";
+    distroName = "ekaos";
+    rebootForBitlocker = "0";
+    storeDir = builtins.storeDir;
 
-    # bootspec tools (may need to be created or imported)
-    bootspecTools = pkgs.writeScriptBin "synthesize" ''
-      #!${pkgs.runtimeShell}
-      # Placeholder for bootspec synthesize tool
-      # For now, just pass through the boot.json
-      cat "$@"
-    '';
+    # A/B boot substitutions
+    abEnabled = if abCfg.enable then "1" else "0";
+    abBootCountTries = toString abCfg.bootCountTriesLeft;
   };
 
 in

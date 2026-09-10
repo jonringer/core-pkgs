@@ -5,6 +5,9 @@
 }:
 
 {
+  # A/B boot partition test
+  ab-boot = pkgs.ekaosTest ./ab-boot.nix;
+
   # Basic boot test
   simple = pkgs.ekaosTest ./simple.nix;
 
