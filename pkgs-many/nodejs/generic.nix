@@ -20,6 +20,8 @@
   brotli,
   pkg-config,
   callPackage,
+  unixtools,
+  cctools ? null,
 }:
 
 let
@@ -48,6 +50,14 @@ stdenv.mkDerivation (finalAttrs: {
     python
     which
     pkg-config
+  ]
+  ++ lib.optionals stdenv.buildPlatform.isDarwin [
+    # gyp checks `sysctl -n hw.memsize` if `sys.platform == "darwin"`.
+    unixtools.sysctl
+  ]
+  ++ lib.optionals stdenv.hostPlatform.isDarwin [
+    # gyp-mac-tool ExecFilterLibtool runs `libtool` (Apple's, from cctools).
+    cctools.libtool
   ];
 
   buildInputs = [
