@@ -37,6 +37,13 @@ stdenv.mkDerivation (finalAttrs: {
     hash = src-hash;
   };
 
+  # Sandboxed Darwin (and CLT-less builders) have no Xcode/CLT receipts.
+  # Hardcode Catalina's CLT version so gyp's XcodeVersion() does not call
+  # xcodebuild/pkgutil. Same fallback nixpkgs uses.
+  patches = lib.optionals stdenv.buildPlatform.isDarwin [
+    ./gyp-patches-set-fallback-value-for-CLT-darwin.patch
+  ];
+
   nativeBuildInputs = [
     python
     which
