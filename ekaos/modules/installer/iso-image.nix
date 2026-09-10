@@ -178,6 +178,12 @@ in
     };
   };
 
+  options.system.build.isoImage = mkOption {
+    type = types.package;
+    internal = true;
+    description = "The ISO image for the system.";
+  };
+
   config = mkIf cfg.enable {
     assertions = [
       {
