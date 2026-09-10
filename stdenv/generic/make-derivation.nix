@@ -1041,6 +1041,20 @@ let
           }
         );
 
+        # Convert this derivation to a development shell, preserving its
+        # build environment and gaining mkDevShell features (services,
+        # language modules, process-compose).
+        #   myPkg.toDevShell { }
+        #   myPkg.toDevShell { modules = [ ... ]; packages = [ ... ]; }
+        # Accepts either an attrset or a function (stdenv -> attrset).
+        toDevShell =
+          let
+            originalArgs = removeAttrs derivationArg attrsToRemoveLast;
+            toShell = import ./to-dev-shell.nix lib originalArgs;
+            shellFunc = f: if builtins.isFunction f then f stdenv else f;
+          in
+          f: config.mkDevShell (toShell (shellFunc f));
+
         inherit passthru overrideAttrs;
         inherit meta;
       }

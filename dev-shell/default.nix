@@ -102,9 +102,16 @@ let
         name = "dev-shell";
         phases = [ "buildPhase" ];
         buildPhase = ''
-          echo "This derivation is not meant to be built, only to be used with nix-shell"
-          touch $out
+          { echo "------------------------------------------------------------";
+            echo " WARNING: the existence of this path is not guaranteed.";
+            echo " It is an internal implementation detail for mkDevShell.";
+            echo "------------------------------------------------------------";
+            echo;
+            # Record all build inputs as runtime dependencies
+            export;
+          } >> "$out"
         '';
+        preferLocalBuild = true;
         shellHook = "";
       }
       // attrs
@@ -116,6 +123,9 @@ in
   # Main function: Create a development shell with services
   mkDevShell =
     {
+      # Shell name
+      name ? "dev-shell",
+
       # Service and language configuration via modules
       modules ? [ ],
 
@@ -123,6 +133,15 @@ in
       packages ? [ ],
       shellHook ? "",
       buildInputs ? [ ],
+      nativeBuildInputs ? [ ],
+      propagatedBuildInputs ? [ ],
+      propagatedNativeBuildInputs ? [ ],
+
+      # Propagate all inputs from the given derivations
+      inputsFrom ? [ ],
+
+      # Environment variables to set in the shell (attrset of strings)
+      env ? { },
 
       # process-compose specific options
       processCompose ? {
@@ -189,9 +208,39 @@ in
         ) langVariables
       );
 
+      # Merge inputs from inputsFrom derivations (same logic as mkShell/to-dev-shell)
+      mergeInputs =
+        attr:
+        (args.${attr} or [ ])
+        ++ (lib.subtractLists inputsFrom (lib.flatten (lib.catAttrs attr inputsFrom)));
+
+      mergedBuildInputs = mergeInputs "buildInputs";
+      mergedNativeBuildInputs = mergeInputs "nativeBuildInputs";
+      mergedPropagatedBuildInputs = mergeInputs "propagatedBuildInputs";
+      mergedPropagatedNativeBuildInputs = mergeInputs "propagatedNativeBuildInputs";
+
+      # Merge shellHooks from inputsFrom
+      inputsFromShellHook = lib.concatStringsSep "\n" (
+        lib.catAttrs "shellHook" (lib.reverseList inputsFrom)
+      );
+
+      # Generate export statements for env variables
+      envExports = lib.concatStringsSep "\n" (
+        lib.mapAttrsToList (n: v: "export ${n}=${lib.escapeShellArg (toString v)}") env
+      );
+
       # Extract non-service options for mkShell
       shellArgs = builtins.removeAttrs args [
+        "name"
         "modules"
+        "packages"
+        "buildInputs"
+        "nativeBuildInputs"
+        "propagatedBuildInputs"
+        "propagatedNativeBuildInputs"
+        "inputsFrom"
+        "env"
+        "shellHook"
         "processCompose"
       ];
 
@@ -201,6 +250,11 @@ in
         mkdir -p ${processCompose.logDir}
         mkdir -p ${processCompose.dataDir}
 
+        ${lib.optionalString (env != { }) ''
+          # Derivation environment variables
+          ${envExports}
+        ''}
+
         ${lib.optionalString (langVariables != { }) ''
           # Language environment variables
           ${langExports}
@@ -208,13 +262,13 @@ in
 
         # Display service information
         echo "================================================"
-        echo "Development Shell with Services"
+        echo "Development Shell: ${name}"
         echo "================================================"
         ${lib.optionalString (enabledServices != { }) ''
           echo ""
           echo "Available services:"
           ${lib.concatStringsSep "\n" (
-            lib.mapAttrsToList (name: _: "  echo \"  - ${name}\"") enabledServices
+            lib.mapAttrsToList (svcName: _: "  echo \"  - ${svcName}\"") enabledServices
           )}
           echo ""
           echo "Service management commands:"
@@ -248,6 +302,9 @@ in
           trap _pc_cleanup EXIT
         ''}
 
+        # Shell hooks from inputsFrom derivations
+        ${inputsFromShellHook}
+
         # User's custom shellHook
         ${shellHook}
       '';
@@ -256,8 +313,18 @@ in
     mkShell (
       shellArgs
       // {
+        inherit name;
+
         buildInputs =
-          buildInputs ++ packages ++ langPackages ++ [ processComposePackage ] ++ (lib.attrValues utilities);
+          mergedBuildInputs
+          ++ packages
+          ++ langPackages
+          ++ [ processComposePackage ]
+          ++ (lib.attrValues utilities);
+
+        nativeBuildInputs = mergedNativeBuildInputs;
+        propagatedBuildInputs = mergedPropagatedBuildInputs;
+        propagatedNativeBuildInputs = mergedPropagatedNativeBuildInputs;
 
         shellHook = enhancedShellHook;
 

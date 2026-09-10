@@ -145,7 +145,12 @@ let
 
   config =
     lib.asserts.checkAssertWarn configEval.config.assertions configEval.config.warnings
-      configEval.config;
+      configEval.config
+    // {
+      # Injected lazily for toDevShell passthru — only forced when a user
+      # actually calls drv.toDevShell, at which point pkgs is fully resolved.
+      mkDevShell = pkgs.mkDevShell;
+    };
 
   # A few packages make a new package set to draw their dependencies from.
   # (Currently to get a cross tool chain, or forced-i686 package.) Rather than

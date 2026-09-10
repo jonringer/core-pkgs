@@ -51,3 +51,27 @@ changes differ significantly from whath one would expct with Nixpkgs.
     run its tests.
   - This decouples test execution from the main build, allowing test failures
     or test-only dependency churn to avoid invalidating downstream consumers.
+
+## Development shells
+
+- Every `mkDerivation` output exposes a `toDevShell` passthru attribute that
+  converts the derivation into a development shell via `mkDevShell`.
+  - `toDevShell` preserves the original derivation's build environment
+    (dependencies, compiler, flags, environment variables) and forwards them
+    to `mkDevShell`, so the resulting shell automatically gains ekaos service
+    modules, language modules, and process-compose integration.
+  - Usage: `myPkg.toDevShell { }` returns a shell derivation directly.
+    Additional `mkDevShell` options (`modules`, `packages`, `shellHook`, etc.)
+    can be passed in the attrset argument.
+  - Accepts a function form for conditional inputs:
+    `myPkg.toDevShell (stdenv: { packages = lib.optionals stdenv.isLinux [ pkgs.strace ]; })`.
+- `mkDevShell` replaces `mkShell` as the primary shell builder.
+  - Accepts `modules` for ekaos service and language configuration, with
+    automatic process-compose integration for running services in the
+    background.
+  - Supports `inputsFrom` for propagating inputs from other derivations,
+    `env` for arbitrary environment variables, and the full set of dependency
+    list parameters (`nativeBuildInputs`, `propagatedBuildInputs`,
+    `propagatedNativeBuildInputs`).
+  - Nixpkgs has no equivalent; `mkShell` there is a thin wrapper around
+    `mkDerivation` with no service or module integration.
