@@ -267,6 +267,7 @@ let
   makeCompat =
     pname: paths:
     buildEnv {
+      name = "${pname}-${version}";
       inherit paths pname version;
     };
 
