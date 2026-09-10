@@ -10,6 +10,7 @@
   lzo,
   openssl,
   pkg-config,
+  libiconv,
   xz,
   zlib,
   zstd,
@@ -93,6 +94,11 @@ stdenv.mkDerivation (finalAttrs: {
   ++ lib.optionals stdenv.hostPlatform.isLinux [
     acl
     attr
+  ]
+  ++ lib.optionals stdenv.hostPlatform.isDarwin [
+    # GNU libiconv: Darwin's libc iconv does not export __libiconv_version,
+    # which libarchive records when it sees GNU iconv headers (via libxml2).
+    libiconv.real
   ]
   ++ lib.optional xarSupport libxml2;
 
