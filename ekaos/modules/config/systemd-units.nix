@@ -230,9 +230,7 @@ let
       ${concatMapStringsSep "\n" (d: "Conflicts=${d}") svc.conflicts}
 
       [Service]
-      ${optionalString (
-        svc.script != null
-      ) "ExecStart=${execStart}"}
+      ${optionalString (svc.script != null) "ExecStart=${execStart}"}
       ${concatStringsSep "\n" (
         mapAttrsToList (k: v: "${k}=${toString v}") (
           removeAttrs svc.serviceConfig [ "ExecStart" ]
@@ -250,7 +248,8 @@ let
     '';
 
   # Generate a systemd socket unit file
-  mkSocketUnit = name: sock:
+  mkSocketUnit =
+    name: sock:
     pkgs.writeText "${name}.socket" ''
       [Unit]
       ${optionalString (sock.description != "") "Description=${sock.description}"}
@@ -264,7 +263,8 @@ let
     '';
 
   # Generate a systemd target drop-in for wants/requires
-  mkTargetDropIn = name: tgt:
+  mkTargetDropIn =
+    name: tgt:
     pkgs.writeText "${name}.conf" ''
       [Unit]
       ${optionalString (tgt.description != "") "Description=${tgt.description}"}
@@ -274,7 +274,8 @@ let
     '';
 
   # Generate a systemd timer unit file
-  mkTimerUnit = name: tmr:
+  mkTimerUnit =
+    name: tmr:
     pkgs.writeText "${name}.timer" ''
       [Unit]
       ${optionalString (tmr.description != "") "Description=${tmr.description}"}
