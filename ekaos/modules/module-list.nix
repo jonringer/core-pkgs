@@ -160,7 +160,6 @@
   ./services/networking/nginx.nix
   ./services/databases/postgresql.nix
   ./services/databases/redis.nix
-  ./services/jigd.nix
 
   ./services/hardware/thermald.nix
   ./services/hardware/fwupd.nix
