@@ -1978,6 +1978,12 @@ with final;
 
   luaPackages = lua.pkgs;
   luajitPackages = lua.luajit_2_1.pkgs;
+  luarocks = luaPackages.luarocks_bootstrap;
+
+  poppler-utils = poppler.override {
+    suffix = "utils";
+    utils = true;
+  };
 
   asciidoc = callPackage ./pkgs/asciidoc {
     inherit (python3.pkgs)
