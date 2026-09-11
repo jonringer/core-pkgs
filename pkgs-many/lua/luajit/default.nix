@@ -150,10 +150,10 @@ stdenv.mkDerivation (finalAttrs: {
       inherit self packageOverrides luaAttr;
       inherit (finalAttrs) luaversion;
       executable = "lua";
-      luaOnBuildForBuild = override pkgsBuildBuild.${luaAttr};
-      luaOnBuildForHost = override pkgsBuildHost.${luaAttr};
-      luaOnBuildForTarget = override pkgsBuildTarget.${luaAttr};
-      luaOnHostForHost = override pkgsHostHost.${luaAttr};
+      luaOnBuildForBuild = override (pkgsBuildBuild.${luaAttr} or self);
+      luaOnBuildForHost = override (pkgsBuildHost.${luaAttr} or self);
+      luaOnBuildForTarget = override (pkgsBuildTarget.${luaAttr} or self);
+      luaOnHostForHost = override (pkgsHostHost.${luaAttr} or self);
       luaOnTargetForTarget = lib.optionalAttrs (lib.hasAttr luaAttr pkgsTargetTarget) (
         override pkgsTargetTarget.${luaAttr}
       );
