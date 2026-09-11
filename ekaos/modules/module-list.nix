@@ -52,6 +52,7 @@
   ./config/xdg/portal.nix
   ./config/xdg/terminal-exec.nix
   ./config/shell-environment.nix
+  ./config/systemd-units.nix
   ./config/sysctl.nix
   ./config/nsswitch.nix
   ./config/coredump.nix
@@ -159,6 +160,7 @@
   ./services/networking/nginx.nix
   ./services/databases/postgresql.nix
   ./services/databases/redis.nix
+  ./services/jigd.nix
 
   ./services/hardware/thermald.nix
   ./services/hardware/fwupd.nix
