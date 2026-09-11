@@ -193,8 +193,9 @@ let
     exec switch_root /mnt-root /init
   '';
 
-  # Kernel modules directory
-  modulesTree = pkgs.aggregateModules kernelPackages.kernel allModules;
+  # Kernel modules directory — aggregateModules takes a list of module
+  # packages (kernel, out-of-tree drivers, etc.) and runs depmod.
+  modulesTree = pkgs.aggregateModules [ kernelPackages.kernel ];
 
 in
 
