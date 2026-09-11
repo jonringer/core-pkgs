@@ -163,6 +163,7 @@ mapAliases {
   llvm_19 = llvm.v19.pkgs.llvm;
   llvm_20 = llvm.v20.pkgs.llvm;
   llvm_21 = llvm.v21.pkgs.llvm;
+  lttng-ust_2_12 = lttng-ust.v2_12;
   lua5_1 = lua.v5_1;
   lua5_2 = lua.v5_2;
   lua5_2_compat = lua.v5_2_compat;
