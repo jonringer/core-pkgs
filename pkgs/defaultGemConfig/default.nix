@@ -77,17 +77,17 @@
   gobject-introspection,
   gdk-pixbuf,
   zeromq,
-  czmq,
-  graphicsmagick,
+  czmq ? null,
+  graphicsmagick ? null,
   libcxx ? null,
   file,
-  libvirt,
+  libvirt ? null,
   glib,
-  vips,
+  vips ? null,
   taglib ? null,
   libopus ? null,
   linux-pam,
-  libidn,
+  libidn ? null,
   protobuf,
   fribidi ? null,
   harfbuzz,
@@ -121,7 +121,7 @@
   cargo,
   rustc,
   rustPlatform,
-  libsysprof-capture,
+  libsysprof-capture ? null,
   imlib2 ? null,
   autoSignDarwinBinariesHook,
 }@args:
@@ -179,11 +179,11 @@ in
       cairo
       expat
       glib
-      libsysprof-capture
       pcre2
       libpthread-stubs
       libxdmcp
-    ];
+    ]
+    ++ lib.optional (libsysprof-capture != null) libsysprof-capture;
   };
 
   cairo-gobject = attrs: {
@@ -191,11 +191,11 @@ in
     buildInputs = [
       cairo
       expat
-      libsysprof-capture
       pcre2
       libpthread-stubs
       libxdmcp
-    ];
+    ]
+    ++ lib.optional (libsysprof-capture != null) libsysprof-capture;
   };
 
   charlock_holmes = attrs: {
@@ -328,12 +328,14 @@ in
     FREEDESKTOP_MIME_TYPES_PATH = "${shared-mime-info}/share/mime/packages/freedesktop.org.xml";
   };
 
-  mini_magick = attrs: {
-    postInstall = ''
-      installPath=$(cat $out/nix-support/gem-meta/install-path)
-      echo -e "\nENV['PATH'] += ':${graphicsmagick}/bin'\n" >> $installPath/lib/mini_magick/configuration.rb
-    '';
-  };
+  mini_magick =
+    attrs:
+    lib.optionalAttrs (graphicsmagick != null) {
+      postInstall = ''
+        installPath=$(cat $out/nix-support/gem-meta/install-path)
+        echo -e "\nENV['PATH'] += ':${graphicsmagick}/bin'\n" >> $installPath/lib/mini_magick/configuration.rb
+      '';
+    };
 
   mini_racer = attrs: {
     buildFlags = [
@@ -416,9 +418,9 @@ in
     ++ lib.optionals stdenv.hostPlatform.isDarwin [ DarwinTools ];
     buildInputs = [
       glib
-      libsysprof-capture
       pcre2
     ]
+    ++ lib.optional (libsysprof-capture != null) libsysprof-capture
     ++ lib.optionals stdenv.hostPlatform.isLinux [
       util-linux
       libselinux
@@ -531,9 +533,9 @@ in
     nativeBuildInputs = [ pkg-config ] ++ lib.optionals stdenv.hostPlatform.isDarwin [ DarwinTools ];
     buildInputs = [
       glib
-      libsysprof-capture
       pcre2
-    ];
+    ]
+    ++ lib.optional (libsysprof-capture != null) libsysprof-capture;
   };
 
   gtk3 = attrs: {
@@ -561,7 +563,6 @@ in
       harfbuzz
       lerc
       libdatrie
-      libsysprof-capture
       libthai
       pcre2
       libpthread-stubs
@@ -569,7 +570,8 @@ in
       libxtst
       libxkbcommon
       libepoxy
-    ];
+    ]
+    ++ lib.optional (libsysprof-capture != null) libsysprof-capture;
     dontStrip = stdenv.hostPlatform.isDarwin;
   };
 
@@ -580,8 +582,8 @@ in
       wrapGAppsHook3
       glib
       pcre2
-      libsysprof-capture
-    ];
+    ]
+    ++ lib.optional (libsysprof-capture != null) libsysprof-capture;
   };
 
   gollum = attrs: {
@@ -662,7 +664,7 @@ in
   };
 
   idn-ruby = attrs: {
-    buildInputs = [ libidn ];
+    buildInputs = lib.optional (libidn != null) libidn;
   };
 
   # disable bundle install as it can't install anything in addition to what is
@@ -865,11 +867,11 @@ in
       libthai
       fribidi
       harfbuzz
-      libsysprof-capture
       pcre2
       libpthread-stubs
       libxdmcp
     ]
+    ++ lib.optional (libsysprof-capture != null) libsysprof-capture
     ++ lib.optionals stdenv.hostPlatform.isLinux [
       libselinux
       libsepol
@@ -937,8 +939,8 @@ in
     {
       buildInputs = [
         zeromq
-        czmq
-      ];
+      ]
+      ++ lib.optional (czmq != null) czmq;
       buildFlags = [ "--with-system-libs" ];
     };
 
@@ -995,8 +997,8 @@ in
 
   ruby-libvirt = attrs: {
     nativeBuildInputs = [ pkg-config ];
-    buildInputs = [ libvirt ];
-    buildFlags = [
+    buildInputs = lib.optional (libvirt != null) libvirt;
+    buildFlags = lib.optionals (libvirt != null) [
       "--with-libvirt-include=${libvirt}/include"
       "--with-libvirt-lib=${libvirt}/lib"
     ];
@@ -1021,19 +1023,21 @@ in
     '';
   };
 
-  ruby-vips = attrs: {
-    postInstall = ''
-      cd "$(cat $out/nix-support/gem-meta/install-path)"
+  ruby-vips =
+    attrs:
+    lib.optionalAttrs (vips != null) {
+      postInstall = ''
+        cd "$(cat $out/nix-support/gem-meta/install-path)"
 
-      substituteInPlace lib/vips.rb \
-        --replace 'FFI.library_name("vips", 42)' '"${lib.getLib vips}/lib/libvips${stdenv.hostPlatform.extensions.sharedLibrary}"' \
-        --replace 'FFI.library_name("glib-2.0", 0)' '"${glib.out}/lib/libglib-2.0${stdenv.hostPlatform.extensions.sharedLibrary}"' \
-        --replace 'FFI.library_name("gobject-2.0", 0)' '"${glib.out}/lib/libgobject-2.0${stdenv.hostPlatform.extensions.sharedLibrary}"' \
-        --replace 'library_name("vips", 42)' '"${lib.getLib vips}/lib/libvips${stdenv.hostPlatform.extensions.sharedLibrary}"' \
-        --replace 'library_name("glib-2.0", 0)' '"${glib.out}/lib/libglib-2.0${stdenv.hostPlatform.extensions.sharedLibrary}"' \
-        --replace 'library_name("gobject-2.0", 0)' '"${glib.out}/lib/libgobject-2.0${stdenv.hostPlatform.extensions.sharedLibrary}"'
-    '';
-  };
+        substituteInPlace lib/vips.rb \
+          --replace 'FFI.library_name("vips", 42)' '"${lib.getLib vips}/lib/libvips${stdenv.hostPlatform.extensions.sharedLibrary}"' \
+          --replace 'FFI.library_name("glib-2.0", 0)' '"${glib.out}/lib/libglib-2.0${stdenv.hostPlatform.extensions.sharedLibrary}"' \
+          --replace 'FFI.library_name("gobject-2.0", 0)' '"${glib.out}/lib/libgobject-2.0${stdenv.hostPlatform.extensions.sharedLibrary}"' \
+          --replace 'library_name("vips", 42)' '"${lib.getLib vips}/lib/libvips${stdenv.hostPlatform.extensions.sharedLibrary}"' \
+          --replace 'library_name("glib-2.0", 0)' '"${glib.out}/lib/libglib-2.0${stdenv.hostPlatform.extensions.sharedLibrary}"' \
+          --replace 'library_name("gobject-2.0", 0)' '"${glib.out}/lib/libgobject-2.0${stdenv.hostPlatform.extensions.sharedLibrary}"'
+      '';
+    };
 
   rugged = attrs: {
     nativeBuildInputs = [
