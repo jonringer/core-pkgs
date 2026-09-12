@@ -12,8 +12,8 @@
   markupsafe,
 
   # optional-dependencies
-  babel,
-  lingua,
+  babel ? null,
+  lingua ? null,
 
   # tests
   mock,
@@ -39,8 +39,8 @@ buildPythonPackage (finalAttrs: {
   dependencies = [ markupsafe ];
 
   optional-dependencies = {
-    babel = [ babel ];
-    lingua = [ lingua ];
+    babel = lib.optional (babel != null) babel;
+    lingua = lib.optional (lingua != null) lingua;
   };
 
   nativeCheckInputs = [
