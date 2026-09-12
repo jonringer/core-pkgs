@@ -12,7 +12,7 @@
   sqldiff,
   sqlite-analyzer,
   sqlite-rsync,
-  tinysparql,
+  tinysparql ? null,
 
   # uses readline & ncurses for a better interactive experience if set to true
   interactive ? false,
@@ -132,9 +132,9 @@ stdenv.mkDerivation rec {
         sqldiff
         sqlite-analyzer
         sqlite-rsync
-        tinysparql
         ;
-    };
+    }
+    // lib.optionalAttrs (tinysparql != null) { inherit tinysparql; };
 
     updateScript = gitUpdater {
       # No nicer place to look for latest version.
