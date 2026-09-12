@@ -26,12 +26,12 @@
   withLerc ? !stdenv.hostPlatform.isStatic,
 
   # for passthru.tests
-  libgeotiff,
+  libgeotiff ? null,
   python3Packages,
   imagemagick,
-  graphicsmagick,
-  gdal,
-  openimageio,
+  graphicsmagick ? null,
+  gdal ? null,
+  openimageio ? null,
   testers,
   runUnitTests,
 }:
@@ -105,11 +105,7 @@ stdenv.mkDerivation (finalAttrs: {
   passthru = {
     tests = {
       inherit
-        libgeotiff
         imagemagick
-        graphicsmagick
-        gdal
-        openimageio
         ;
 
       inherit (python3Packages) pillow imread;
@@ -118,7 +114,11 @@ stdenv.mkDerivation (finalAttrs: {
         package = finalAttrs.finalPackage;
       };
       unittests = runUnitTests finalAttrs.finalPackage;
-    };
+    }
+    // lib.optionalAttrs (libgeotiff != null) { inherit libgeotiff; }
+    // lib.optionalAttrs (graphicsmagick != null) { inherit graphicsmagick; }
+    // lib.optionalAttrs (gdal != null) { inherit gdal; }
+    // lib.optionalAttrs (openimageio != null) { inherit openimageio; };
     updateScript = nix-update-script { };
   };
 
