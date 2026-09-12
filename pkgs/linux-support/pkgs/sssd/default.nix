@@ -16,7 +16,7 @@
   libnl,
   libunistring,
   nss,
-  samba,
+  samba ? null,
   nfs-utils,
   doxygen,
   python3,
@@ -140,9 +140,13 @@ stdenv.mkDerivation (finalAttrs: {
     libnl
     libunistring
     nss
-    samba
     nfs-utils
     p11-kit
+  ]
+  ++ lib.optionals (samba != null) [
+    samba
+  ]
+  ++ [
     (python3.withPackages (
       p: with p; [
         setuptools
