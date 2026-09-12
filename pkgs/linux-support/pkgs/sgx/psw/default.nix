@@ -12,7 +12,7 @@
   protobuf,
   python3,
   ocaml,
-  ocamlPackages,
+  ocamlPackages ? null,
   which,
   debug ? false,
 }:
@@ -135,9 +135,11 @@ stdenv.mkDerivation rec {
     git
     makeWrapper
     ocaml
-    ocamlPackages.ocamlbuild
     python3
     which
+  ]
+  ++ lib.optionals (ocamlPackages != null) [
+    ocamlPackages.ocamlbuild
   ];
 
   buildInputs = [
