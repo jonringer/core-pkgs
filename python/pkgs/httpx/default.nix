@@ -15,7 +15,7 @@
   isPyPy,
   pygments,
   python,
-  rich,
+  rich ? null,
   # socksio,
   zstandard,
 }:
@@ -48,9 +48,9 @@ buildPythonPackage rec {
     brotli = if isPyPy then [ brotlicffi ] else [ brotli ];
     cli = [
       click
-      rich
       pygments
-    ];
+    ]
+    ++ lib.optional (rich != null) rich;
     http2 = [ h2 ];
     # socks = [ socksio ];
     zstd = [ zstandard ];
