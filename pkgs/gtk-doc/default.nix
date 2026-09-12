@@ -11,7 +11,7 @@
   gettext,
   gnome,
   withDblatex ? false,
-  dblatex,
+  dblatex ? null,
 }:
 
 python3.pkgs.buildPythonApplication rec {
