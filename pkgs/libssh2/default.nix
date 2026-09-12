@@ -7,10 +7,10 @@
   windows,
 
   # for passthru.tests
-  aria2,
+  aria2 ? null,
   curl,
   libgit2,
-  mc,
+  mc ? null,
 }:
 
 stdenv.mkDerivation rec {
@@ -38,13 +38,11 @@ stdenv.mkDerivation rec {
   buildInputs = [ zlib ] ++ lib.optional stdenv.hostPlatform.isMinGW windows.mingw_w64;
 
   passthru.tests = {
-    inherit
-      aria2
-      libgit2
-      mc
-      ;
+    inherit libgit2;
     curl = curl.tests.withCheck;
-  };
+  }
+  // lib.optionalAttrs (aria2 != null) { inherit aria2; }
+  // lib.optionalAttrs (mc != null) { inherit mc; };
 
   meta = {
     description = "Client-side C library implementing the SSH2 protocol";
