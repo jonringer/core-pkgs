@@ -19,7 +19,7 @@
   # for passthru.tests
   libarchive,
   rocksdb,
-  arrow-cpp,
+  arrow-cpp ? null,
   libzip,
   curl,
   python3Packages,
@@ -125,7 +125,7 @@ stdenv.mkDerivation (finalAttrs: {
 
       # Reverse dependencies
 
-      inherit libarchive rocksdb arrow-cpp;
+      inherit libarchive rocksdb;
       libzip = libzip.override { withZstd = true; };
       curl = curl.override { zstdSupport = true; };
       python-zstd = python3Packages.zstd;
@@ -135,7 +135,8 @@ stdenv.mkDerivation (finalAttrs: {
       # Package tests (coherent with overrides)
 
       pkg-config = testers.hasPkgConfigModules { package = finalAttrs.finalPackage; };
-    };
+    }
+    // lib.optionalAttrs (arrow-cpp != null) { inherit arrow-cpp; };
   };
 
   meta = {
