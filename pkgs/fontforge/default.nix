@@ -22,7 +22,7 @@
   libspiro,
   withGTK ? false,
   gtk3,
-  gtkmm3,
+  gtkmm3 ? null,
   withGUI ? withGTK,
   cairo,
   pango,
@@ -86,12 +86,14 @@ stdenv.mkDerivation (finalAttrs: {
   ]
   ++ lib.optionals withPython [ py ]
   ++ lib.optionals withSpiro [ libspiro ]
-  ++ lib.optionals withGUI [
-    gtk3
-    gtkmm3
-    cairo
-    pango
-  ];
+  ++ lib.optionals withGUI (
+    [
+      gtk3
+      cairo
+      pango
+    ]
+    ++ lib.optional (gtkmm3 != null) gtkmm3
+  );
 
   cmakeFlags = [
     "-DCMAKE_BUILD_WITH_INSTALL_RPATH=ON"
