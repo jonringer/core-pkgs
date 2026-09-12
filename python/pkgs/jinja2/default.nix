@@ -5,12 +5,12 @@
   pythonOlder,
   fetchPypi,
   flit-core,
-  babel,
+  babel ? null,
   markupsafe,
   pytestCheckHook,
 
   # Reverse dependency
-  sage,
+  sage ? null,
 }:
 
 buildPythonPackage rec {
@@ -40,7 +40,7 @@ buildPythonPackage rec {
   dependencies = [ markupsafe ];
 
   optional-dependencies = {
-    i18n = [ babel ];
+    i18n = lib.optional (babel != null) babel;
   };
 
   # Multiple tests run out of stack space on 32bit systems with python2.
@@ -49,9 +49,7 @@ buildPythonPackage rec {
 
   nativeCheckInputs = [ pytestCheckHook ] ++ optional-dependencies.i18n;
 
-  passthru.tests = {
-    inherit sage;
-  };
+  passthru.tests = { } // lib.optionalAttrs (sage != null) { inherit sage; };
 
   pythonImportsCheck = [ "jinja2" ];
 
