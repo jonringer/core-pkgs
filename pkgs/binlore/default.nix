@@ -2,8 +2,8 @@
   lib,
   fetchFromGitHub,
   runCommand,
-  yallback,
-  yara,
+  yallback ? null,
+  yara ? null,
 }:
 
 /*
