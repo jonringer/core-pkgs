@@ -11,18 +11,18 @@
   texinfo,
   gettext,
   gawk,
-  rapidjson,
+  rapidjson ? null,
   gd,
   libharu,
-  lmdb,
+  lmdb ? null,
   gmp,
   glibcLocales,
   mpfr,
   more,
-  libpq,
+  libpq ? null,
   hiredis,
   expat,
-  tre,
+  tre ? null,
 }:
 
 let
