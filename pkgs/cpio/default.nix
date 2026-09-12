@@ -6,7 +6,7 @@
 
   # for passthru.tests
   git,
-  libguestfs,
+  libguestfs ? null,
   rpm,
 }:
 
@@ -34,9 +34,10 @@ stdenv.mkDerivation rec {
   '';
 
   passthru.tests = {
-    inherit libguestfs rpm;
+    inherit rpm;
     git = git.tests.withInstallCheck;
-  };
+  }
+  // lib.optionalAttrs (libguestfs != null) { inherit libguestfs; };
 
   meta = {
     homepage = "https://www.gnu.org/software/cpio/";
