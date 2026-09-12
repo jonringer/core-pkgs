@@ -10,7 +10,7 @@
   flit-core,
 
   # dependencies
-  babel,
+  babel ? null,
   alabaster,
   docutils,
   imagesize,
@@ -38,7 +38,7 @@
   typing-extensions,
 
   # reverse dependencies to test
-  breathe,
+  breathe ? null,
 }:
 
 buildPythonPackage rec {
@@ -68,7 +68,9 @@ buildPythonPackage rec {
 
   dependencies = [
     alabaster
-    babel
+  ]
+  ++ lib.optional (babel != null) babel
+  ++ [
     docutils
     imagesize
     jinja2
@@ -156,9 +158,7 @@ buildPythonPackage rec {
     "test_partialfunction"
   ];
 
-  passthru.tests = {
-    inherit breathe;
-  };
+  passthru.tests = { } // lib.optionalAttrs (breathe != null) { inherit breathe; };
 
   pythonImportsCheck = [ "sphinx" ];
 
