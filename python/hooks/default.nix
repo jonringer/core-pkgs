@@ -22,14 +22,14 @@ in
     {
       makePythonHook,
       tar,
-      lbzip2,
+      lbzip2 ? null,
     }:
     makePythonHook {
       name = "conda-install-hook";
       propagatedBuildInputs = [
         tar
-        lbzip2
-      ];
+      ]
+      ++ lib.optional (lbzip2 != null) lbzip2;
       substitutions = {
         inherit pythonSitePackages;
       };
@@ -151,7 +151,7 @@ in
       pytest,
       # For package tests
       testers,
-      objprint,
+      objprint ? null,
     }:
     makePythonHook {
       name = "pytest-check-hook";
@@ -159,7 +159,7 @@ in
       substitutions = {
         inherit pythonCheckInterpreter;
       };
-      passthru = {
+      passthru = lib.optionalAttrs (objprint != null) {
         tests = {
           basic = objprint.overridePythonAttrs (previousPythonAttrs: {
             pname = "test-pytestCheckHook-basic-${previousPythonAttrs.pname}";
