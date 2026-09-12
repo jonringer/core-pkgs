@@ -27,9 +27,9 @@
   openresolv,
   libndp,
   newt,
+  slang,
   ethtool,
   sed,
-  iputils,
   kmod,
   jansson,
   elfutils,
@@ -57,11 +57,11 @@ let
 in
 stdenv.mkDerivation (finalAttrs: {
   pname = "networkmanager";
-  version = "1.56.0";
+  version = "1.58.1";
 
   src = fetchurl {
     url = "https://gitlab.freedesktop.org/NetworkManager/NetworkManager/-/releases/${finalAttrs.version}/downloads/NetworkManager-${finalAttrs.version}.tar.xz";
-    hash = "sha256-WaMtOFzB564m5DeYxvEtB/9hmKvQQewGILOgjPwCHMw=";
+    hash = "sha256-Jihkz9GYEj0+Xb6Rk3RBuX7pBZ1tcS4aW/uxxUZo0U0=";
   };
 
   outputs = [
@@ -103,6 +103,7 @@ stdenv.mkDerivation (finalAttrs: {
     "-Ddnsmasq=${dnsmasq}/bin/dnsmasq"
     "-Dqt=false"
     "-Dnbft=false"
+    "-Dclat=false"
 
     # Handlers
     "-Dresolvconf=${openresolv}/bin/resolvconf"
@@ -121,7 +122,6 @@ stdenv.mkDerivation (finalAttrs: {
   patches = [
     (replaceVars ./fix-paths.patch {
       inherit
-        iputils
         ethtool
         sed
         ;
@@ -147,6 +147,7 @@ stdenv.mkDerivation (finalAttrs: {
     modemmanager
     readline
     newt
+    slang
     jansson
     dbus
   ];
@@ -183,7 +184,6 @@ stdenv.mkDerivation (finalAttrs: {
 
   postPatch = ''
     patchShebangs ./tools
-    patchShebangs libnm/generate-setting-docs.py
 
     substituteInPlace meson.build \
       --replace "'vala', req" "'vala', native: false, req"
