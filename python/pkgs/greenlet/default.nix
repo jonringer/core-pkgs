@@ -8,7 +8,7 @@
   setuptools,
 
   # tests
-  objgraph,
+  objgraph ? null,
   psutil,
   python,
   unittestCheckHook,
@@ -31,10 +31,10 @@ let
     doCheck = false;
 
     nativeCheckInputs = [
-      objgraph
       psutil
       unittestCheckHook
-    ];
+    ]
+    ++ lib.optional (objgraph != null) objgraph;
 
     # https://github.com/python-greenlet/greenlet/issues/395
     env.NIX_CFLAGS_COMPILE = lib.optionalString (
