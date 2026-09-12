@@ -6,7 +6,7 @@
   ptyprocess,
 
   # Reverse dependency
-  sage,
+  sage ? null,
 }:
 
 buildPythonPackage rec {
@@ -26,9 +26,7 @@ buildPythonPackage rec {
 
   propagatedBuildInputs = [ ptyprocess ];
 
-  passthru.tests = {
-    inherit sage;
-  };
+  passthru.tests = { } // lib.optionalAttrs (sage != null) { inherit sage; };
 
   pythonImportsCheck = [ "pexpect" ];
 
