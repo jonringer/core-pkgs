@@ -8,7 +8,7 @@
   pkg-config,
   docutils,
   gettext,
-  graphene,
+  graphene ? null,
   gi-docgen,
   meson,
   mesonEmulatorHook,
@@ -16,7 +16,7 @@
   python3,
   makeWrapper,
   shared-mime-info,
-  isocodes,
+  isocodes ? null,
   glib,
   cairo,
   pango,
@@ -30,20 +30,20 @@
   libxkbcommon,
   libpng,
   libtiff,
-  librsvg,
+  librsvg ? null,
   libjpeg,
   libxml2,
   gnome,
   gsettings-desktop-schemas,
   gst_all_1,
-  sassc,
+  sassc ? null,
   trackerSupport ? stdenv.hostPlatform.isLinux,
-  tinysparql,
+  tinysparql ? null,
   x11Support ? stdenv.hostPlatform.isLinux,
   waylandSupport ? stdenv.hostPlatform.isLinux,
   libGL,
   vulkanSupport ? stdenv.hostPlatform.isLinux,
-  shaderc,
+  shaderc ? null,
   vulkan-loader,
   vulkan-headers,
   libdrm,
@@ -109,30 +109,30 @@ stdenv.mkDerivation (finalAttrs: {
     ninja
     pkg-config
     python3
-    sassc
     gi-docgen
     libxml2 # for xmllint
   ]
+  ++ lib.optional (sassc != null) sassc
   ++ lib.optionals (compileSchemas && !stdenv.buildPlatform.canExecute stdenv.hostPlatform) [
     mesonEmulatorHook
   ]
   ++ lib.optionals waylandSupport [
     wayland-scanner
   ]
-  ++ lib.optionals vulkanSupport [
-    shaderc # for glslc
-  ]
+  ++ lib.optionals vulkanSupport (
+    lib.optional (shaderc != null) shaderc # for glslc
+  )
   ++ finalAttrs.setupHooks;
 
   buildInputs = [
     libxkbcommon
     libpng
     libtiff
-    librsvg
     libjpeg
     (libepoxy.override { inherit x11Support; })
-    isocodes
   ]
+  ++ lib.optional (librsvg != null) librsvg
+  ++ lib.optional (isocodes != null) isocodes
   ++ lib.optionals vulkanSupport [
     vulkan-headers
     libdrm
@@ -152,9 +152,7 @@ stdenv.mkDerivation (finalAttrs: {
     libXrandr
     libXrender
   ])
-  ++ lib.optionals trackerSupport [
-    tinysparql
-  ]
+  ++ lib.optionals trackerSupport (lib.optional (tinysparql != null) tinysparql)
   ++ lib.optionals waylandSupport [
     libGL
     wayland
@@ -176,9 +174,9 @@ stdenv.mkDerivation (finalAttrs: {
     cairo
     gdk-pixbuf
     glib
-    graphene
     pango
   ]
+  ++ lib.optional (graphene != null) graphene
   ++ lib.optionals waylandSupport [
     wayland
   ]
