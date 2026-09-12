@@ -25,7 +25,7 @@
   withPcsc ? !enableMinimal,
   pcsclite,
   guiSupport ? stdenv.hostPlatform.isDarwin,
-  pinentry,
+  pinentry ? null,
   withTpm2Tss ? !stdenv.hostPlatform.isDarwin && !enableMinimal,
   tpm2-tss,
 }:
