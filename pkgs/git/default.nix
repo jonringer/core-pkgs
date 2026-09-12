@@ -29,7 +29,7 @@
   makeWrapper,
   libiconv,
   svnSupport ? false,
-  subversionClient,
+  subversionClient ? null,
   perlLibs,
   smtpPerlLibs,
   perlSupport ? stdenv.buildPlatform == stdenv.hostPlatform,
