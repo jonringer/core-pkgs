@@ -12,17 +12,17 @@
   enableShared ? !stdenv.hostPlatform.isStatic,
 
   # for passthru.tests
-  dvgrab,
-  epeg,
+  dvgrab ? null,
+  epeg ? null,
   gd,
-  graphicsmagick,
+  graphicsmagick ? null,
   imagemagick,
-  jhead,
+  jhead ? null,
   libjxl,
-  mjpegtools,
-  opencv,
+  mjpegtools ? null,
+  opencv ? null,
   python3,
-  vips,
+  vips ? null,
   testers,
   nix-update-script,
 }:
@@ -91,21 +91,21 @@ stdenv.mkDerivation (finalAttrs: {
     dev_private = throw "not supported anymore";
     tests = {
       inherit
-        dvgrab
-        epeg
         gd
-        graphicsmagick
         imagemagick
-        jhead
         libjxl
-        mjpegtools
-        opencv
-        vips
         ;
       inherit (python3.pkgs) pillow imread pyturbojpeg;
       pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
       pkg-config-install = testers.pkg-config.testInstall finalAttrs.finalPackage { };
-    };
+    }
+    // lib.optionalAttrs (dvgrab != null) { inherit dvgrab; }
+    // lib.optionalAttrs (epeg != null) { inherit epeg; }
+    // lib.optionalAttrs (graphicsmagick != null) { inherit graphicsmagick; }
+    // lib.optionalAttrs (jhead != null) { inherit jhead; }
+    // lib.optionalAttrs (mjpegtools != null) { inherit mjpegtools; }
+    // lib.optionalAttrs (opencv != null) { inherit opencv; }
+    // lib.optionalAttrs (vips != null) { inherit vips; };
   };
 
   meta = {
