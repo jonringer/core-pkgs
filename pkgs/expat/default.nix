@@ -9,7 +9,7 @@
   perlPackages,
   haskellPackages,
   luaPackages,
-  ocamlPackages,
+  ocamlPackages ? null,
   testers,
 }:
 
@@ -62,11 +62,11 @@ stdenv.mkDerivation (finalAttrs: {
     inherit (haskellPackages) hexpat;
     inherit (perlPackages) XMLSAXExpat XMLParser;
     inherit (luaPackages) luaexpat;
-    inherit (ocamlPackages) ocaml_expat;
     pkg-config = testers.hasPkgConfigModules {
       package = finalAttrs.finalPackage;
     };
-  };
+  }
+  // lib.optionalAttrs (ocamlPackages != null) { inherit (ocamlPackages) ocaml_expat; };
 
   meta = {
     changelog = "https://github.com/libexpat/libexpat/blob/${tag}/expat/Changes";
