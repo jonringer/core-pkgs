@@ -18,8 +18,8 @@
 
   # for passthru.tests
   dulwich,
-  gunicorn,
-  pika,
+  gunicorn ? null,
+  pika ? null,
 }:
 
 buildPythonPackage rec {
@@ -64,12 +64,10 @@ buildPythonPackage rec {
   ];
 
   passthru.tests = {
-    inherit
-      dulwich
-      gunicorn
-      pika
-      ;
+    inherit dulwich;
   }
+  // lib.optionalAttrs (gunicorn != null) { inherit gunicorn; }
+  // lib.optionalAttrs (pika != null) { inherit pika; }
   // lib.filterAttrs (k: v: lib.hasInfix "gevent" k) python.pkgs;
 
   GEVENTSETUP_EMBED = "0";
