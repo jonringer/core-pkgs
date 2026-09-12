@@ -6,7 +6,7 @@
   gobject-introspection,
   isGraphical ? false,
   gtk3,
-  librsvg,
+  librsvg ? null,
   dconf,
   withDconf ? !stdenv.targetPlatform.isDarwin && lib.meta.availableOn stdenv.targetPlatform dconf,
   callPackage,
@@ -20,27 +20,29 @@ makeSetupHook {
     # We use the wrapProgram function.
     makeWrapper
   ]
-  ++ lib.optionals isGraphical [
-    # TODO: remove this, packages should depend on GTK explicitly.
-    gtk3
-
-    librsvg
-  ];
+  ++ lib.optionals isGraphical (
+    [
+      # TODO: remove this, packages should depend on GTK explicitly.
+      gtk3
+    ]
+    ++ lib.optional (librsvg != null) librsvg
+  );
 
   # depsTargetTargetPropagated will essentially be buildInputs when wrapGAppsHook3 is placed into nativeBuildInputs
   # the librsvg and gtk3 above should be removed but kept to not break anything that implicitly depended on its binaries
   depsTargetTargetPropagated =
     assert (lib.assertMsg (!targetPackages ? raw) "wrapGAppsHook3 must be in nativeBuildInputs");
-    lib.optionals isGraphical [
+    lib.optionals isGraphical (
       # librsvg provides a module for gdk-pixbuf to allow rendering
       # SVG icons. Most icon themes are SVG-based and so are some
       # graphics in GTK (e.g. cross for closing window in window title bar)
       # so it is pretty much required for applications using GTK.
-      librsvg
-
-      # TODO: remove this, packages should depend on GTK explicitly.
-      gtk3
-    ]
+      lib.optional (librsvg != null) librsvg
+      ++ [
+        # TODO: remove this, packages should depend on GTK explicitly.
+        gtk3
+      ]
+    )
     ++ lib.optionals withDconf [
       # It is highly probable that a program will use GSettings,
       # at minimum through GTK file chooser dialogue.
@@ -94,6 +96,7 @@ makeSetupHook {
           let
             tested = basic;
           in
+          assert librsvg != null;
           testLib.runTest "basic-contains-gdk-pixbuf" (
             testLib.skip stdenv.hostPlatform.isDarwin ''
               ${expectSomeLineContainingYInFileXToMentionZ "${tested}/bin/foo" "GDK_PIXBUF_MODULE_FILE"
