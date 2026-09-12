@@ -8,7 +8,7 @@
   gawk,
   sed,
   writeScript,
-  nix-update,
+  nix-update ? null,
 }:
 
 stdenv.mkDerivation rec {
@@ -33,24 +33,26 @@ stdenv.mkDerivation rec {
     runHook postInstall
   '';
 
-  passthru.updateScript = writeScript "update-mailcap" ''
-    export PATH=${
-      lib.makeBinPath [
-        git
-        coreutils
-        gawk
-        sed
-        nix-update
-      ]
-    }:$PATH
-    VERSION="$(git ls-remote --tags --sort="v:refname" https://pagure.io/mailcap.git | \
-      awk '{ print $2 }' | \
-      grep "refs/tags/r" | \
-      sed -E -e "s,refs/tags/r(.*)$,\1," -e "s/-/./g" | \
-      sort --version-sort --reverse | \
-      head -n1)"
-    exec nix-update --version "$VERSION" "$@"
-  '';
+  passthru = lib.optionalAttrs (nix-update != null) {
+    updateScript = writeScript "update-mailcap" ''
+      export PATH=${
+        lib.makeBinPath [
+          git
+          coreutils
+          gawk
+          sed
+          nix-update
+        ]
+      }:$PATH
+      VERSION="$(git ls-remote --tags --sort="v:refname" https://pagure.io/mailcap.git | \
+        awk '{ print $2 }' | \
+        grep "refs/tags/r" | \
+        sed -E -e "s,refs/tags/r(.*)$,\1," -e "s/-/./g" | \
+        sort --version-sort --reverse | \
+        head -n1)"
+      exec nix-update --version "$VERSION" "$@"
+    '';
+  };
 
   meta = {
     description = "Helper application and MIME type associations for file types";
