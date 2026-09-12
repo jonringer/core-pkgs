@@ -20,6 +20,7 @@ buildPythonPackage rec {
 
   passthru = {
     inherit python;
+    ekapkgs-update.semver-strategy = "minor";
   };
 
   # Non-standard test suite. Needs custom checkPhase.

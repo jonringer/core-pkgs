@@ -13,14 +13,16 @@ let
   patchelf =
     libPath:
     lib.optionalString (!stdenv.hostPlatform.isDarwin) ''
-      chmod u+w $PURS
-      patchelf --interpreter ${dynamic-linker} --set-rpath ${libPath} $PURS
-      chmod u-w $PURS
+      if patchelf --print-interpreter $PURS &>/dev/null; then
+        chmod u+w $PURS
+        patchelf --interpreter ${dynamic-linker} --set-rpath ${libPath} $PURS
+        chmod u-w $PURS
+      fi
     '';
 in
 stdenv.mkDerivation rec {
   pname = "purescript";
-  version = "0.15.15";
+  version = "0.15.16";
 
   src =
     let
@@ -28,7 +30,7 @@ stdenv.mkDerivation rec {
       sources = {
         "x86_64-linux" = fetchurl {
           url = url + "linux64.tar.gz";
-          sha256 = "1w4jgjpfhaw3gkx9sna64lq9m030x49w4lwk01ik5ci0933imzj3";
+          sha256 = "sha256-RNqe+4pOFFGej9U1Csw3ekuYHkI1GnjFPp+EBFvzjiI=";
         };
         "aarch64-linux" = fetchurl {
           url = url + "linux-arm64.tar.gz";

@@ -3,10 +3,7 @@
   stdenv,
   fetchFromGitHub,
   cmake,
-  doxygen,
   gettext,
-  graphviz,
-  libxslt,
   removeReferencesTo,
   libiconv,
   brotli,
@@ -17,13 +14,12 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "exiv2";
-  version = "0.28.8";
+  version = "0.28.9";
 
   outputs = [
     "out"
     "lib"
     "dev"
-    "doc"
     "man"
   ];
 
@@ -31,16 +27,13 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "exiv2";
     repo = "exiv2";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-9Qe+lNBO24qQyKDXe7RMCqoDa61iha2QFhRpLJlCSMo=";
+    hash = "sha256-ESRiiBBckGIhnhSOMmcF/m1PYi2sLGv1xxE0b22nl5M=";
   };
 
   nativeBuildInputs = [
     cmake
     cmake.configurePhaseHook
-    doxygen
     gettext
-    graphviz
-    libxslt
     removeReferencesTo
   ];
 
@@ -57,13 +50,8 @@ stdenv.mkDerivation (finalAttrs: {
 
   cmakeFlags = [
     "-DEXIV2_ENABLE_NLS=ON"
-    "-DEXIV2_BUILD_DOC=ON"
+    "-DEXIV2_BUILD_DOC=OFF"
     "-DEXIV2_ENABLE_BMFF=ON"
-  ];
-
-  buildFlags = [
-    "all"
-    "doc"
   ];
 
   preFixup = ''

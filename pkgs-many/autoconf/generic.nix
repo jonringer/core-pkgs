@@ -101,6 +101,7 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   passthru = mkVariantPassthru variantArgs // {
+    ekapkgs-update.semver-strategy = "patch";
     autoreconfHook = callPackage ../../pkgs/autoreconfHook {
       autoconf = finalAttrs.finalPackage;
     };

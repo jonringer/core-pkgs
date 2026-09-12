@@ -8,18 +8,14 @@
 
 stdenv.mkDerivation rec {
   pname = "giflib";
-  version = "5.2.2";
+  version = "6.1.3";
 
   src = fetchurl {
     url = "mirror://sourceforge/giflib/giflib-${version}.tar.gz";
-    hash = "sha256-vn/70FfK3r4qoURUL9kMaDjGoIO16KkEi47jtmsp1fs=";
+    hash = "sha256-tltmuZ8EJLk1JfmHOG8i/F77naK/ySrUpTIkmq/7qw4=";
   };
 
-  patches = [
-    ./CVE-2021-40633.patch
-    ./CVE-2025-31344.patch
-  ]
-  ++ lib.optionals stdenv.hostPlatform.isMinGW [
+  patches = lib.optionals stdenv.hostPlatform.isMinGW [
     # Build dll libraries.
     (fetchurl {
       url = "https://aur.archlinux.org/cgit/aur.git/plain/001-mingw-build.patch?h=mingw-w64-giflib&id=b7311edf54824ac797c7916cd3ddc3a4b2368a19";
@@ -61,7 +57,7 @@ stdenv.mkDerivation rec {
     homepage = "https://giflib.sourceforge.net/";
     platforms = lib.platforms.unix ++ lib.platforms.windows;
     license = lib.licenses.mit;
-    branch = "5.2";
+    branch = "6";
     identifiers.cpeParts = lib.meta.cpeFullVersionWithVendor "giflib_project" version;
   };
 }

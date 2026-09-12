@@ -391,6 +391,7 @@ lib.makeOverridable
             ;
         }
         // {
+          ekapkgs-update.semver-strategy = "patch";
           rubyEngine = "ruby";
           libPath = "lib/ruby/${ver.libDir}";
           gemPath = "lib/ruby/gems/${ver.libDir}";

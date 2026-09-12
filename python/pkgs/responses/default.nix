@@ -18,7 +18,7 @@
 
 buildPythonPackage (finalAttrs: {
   pname = "responses";
-  version = "0.26.2";
+  version = "0.26.3";
   pyproject = true;
 
   disabled = pythonOlder "3.8";
@@ -29,7 +29,7 @@ buildPythonPackage (finalAttrs: {
     owner = "getsentry";
     repo = "responses";
     tag = finalAttrs.version;
-    hash = "sha256-8+zc7UebB9pBLC5nc7QtuXQIoQ+k+NH1XvajQMGIXNg=";
+    hash = "sha256-80NVKgzRikxXsHQiDdiXoJ2QdB+668NK0L66JarCa3M=";
   };
 
   nativeBuildInputs = [ setuptools ];

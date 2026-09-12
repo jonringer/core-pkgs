@@ -109,6 +109,7 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   passthru = mkVariantPassthru variantArgs // {
+    ekapkgs-update.semver-strategy = "patch";
     tests = {
       unittests = runUnitTests finalAttrs.finalPackage;
     };

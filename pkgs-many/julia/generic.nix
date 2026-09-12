@@ -105,6 +105,7 @@ stdenv.mkDerivation {
   '';
 
   passthru = {
+    ekapkgs-update.semver-strategy = "patch";
     majorVersion = lib.versions.major version;
     minorVersion = lib.versions.majorMinor version;
   };

@@ -203,6 +203,7 @@ rustPlatform.buildRustPackage {
   '';
 
   passthru = {
+    ekapkgs-update.semver-strategy = "patch";
     updateScript = ./update/update.ts;
     tests = callPackage ./tests { };
     inherit librusty_v8;

@@ -22,7 +22,7 @@
 
 stdenv.mkDerivation {
   pname = "glfw";
-  version = "3.4";
+  version = "3.5.1";
 
   outputs = [
     "out"
@@ -32,8 +32,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "glfw";
     repo = "GLFW";
-    rev = "3.4";
-    hash = "sha256-FcnQPDeNHgov1Z07gjFze0VMz2diOrpbKZCsI96ngz0=";
+    rev = "3.5.1";
+    hash = "sha256-Vwi7MbzrQmcsENez987/Ju7H0pz0tSV6YC0DqwGeQ+w=";
   };
 
   patches = [ ./x11.patch ];

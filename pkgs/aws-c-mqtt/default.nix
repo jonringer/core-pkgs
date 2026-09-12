@@ -15,7 +15,7 @@
 stdenv.mkDerivation rec {
   pname = "aws-c-mqtt";
   # nixpkgs-update: no auto update
-  version = "0.16.1";
+  version = "1.0.0";
 
   outputs = [
     "out"
@@ -27,7 +27,7 @@ stdenv.mkDerivation rec {
     owner = "awslabs";
     repo = "aws-c-mqtt";
     rev = "v${version}";
-    hash = "sha256-R/V6u33tv7aKQdvEWVvanBnQ1w32pIWIYwlWvGqcnEw=";
+    hash = "sha256-6k3Ca25fRPqV+QW0+VEUdbB0JUFjqvZo8R7eaiEby0c=";
   };
 
   nativeBuildInputs = [

@@ -1,7 +1,7 @@
 {
   v0_21 = {
-    version = "0.23.1";
-    hash = "sha256-k1iDgEd/77b78TE5op2oVAyMTA9PMoNey+xemaZ7dLE=";
+    version = "0.21.5";
+    hash = "sha256-mp9qjG7bplDPnqVUdc0XLdKEhzFoBOnHMgLZdXLNOi0=";
   };
   minimal.isMinimalBuild = true;
 }

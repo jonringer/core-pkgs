@@ -108,6 +108,7 @@ stdenv.mkDerivation (
     '';
 
     passthru.tests.unittests = runUnitTests finalAttrs.finalPackage;
+    passthru.ekapkgs-update.semver-strategy = "patch";
 
     meta = {
       homepage = "https://www.oracle.com/database/technologies/related/berkeleydb.html";

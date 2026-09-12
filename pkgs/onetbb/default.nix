@@ -12,7 +12,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "onetbb";
-  version = "2023.0.0";
+  version = "2023.1.0";
 
   outputs = [
     "out"
@@ -23,7 +23,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "oneapi-src";
     repo = "oneTBB";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-algLvvVHHCQTiwxNX7gM6vfpSadR7fu49CBtfx2LSPk=";
+    hash = "sha256-7C6h2wcQW/t3J6/PX+aoRFHeHpy0s0km9ZLvxvOBdpY=";
   };
 
   patches = [

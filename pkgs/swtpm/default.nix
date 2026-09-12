@@ -26,22 +26,14 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "swtpm";
-  version = "0.10.1";
+  version = "0.10.2";
 
   src = fetchFromGitHub {
     owner = "stefanberger";
     repo = "swtpm";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-N79vuI0FhawLyQtwVF6ABIvCmEaYefq/YkyrafUfUHE=";
+    hash = "sha256-iG4yiND/w0YZYm+wj89QPIahIFh1Y6gA4u+eADGkwn8=";
   };
-
-  patches = [
-    (fetchpatch {
-      name = "retry-nwwrite.patch";
-      url = "https://github.com/stefanberger/swtpm/commit/4da66c66f92438443e66b67555673c9cb898b0ae.patch";
-      hash = "sha256-TTS+ViN4g6EfNLrhvGPobcSQEbr/mEl9ZLZTWdxbifs=";
-    })
-  ];
 
   nativeBuildInputs = [
     pkg-config

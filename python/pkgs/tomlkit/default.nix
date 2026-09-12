@@ -13,12 +13,12 @@
 
 buildPythonPackage (finalAttrs: {
   pname = "tomlkit";
-  version = "0.15.0";
+  version = "0.15.1";
   pyproject = true;
 
   src = fetchPypi {
     inherit (finalAttrs) pname version;
-    hash = "sha256-fRqey6MIZjghGxOBTqeckN1U3RGZNWQ3bzqpInH1x6M=";
+    hash = "sha256-4lu/OIQwBSRiEKEpgndvJ/mcub5nFg4UQ00MDSHuHpc=";
   };
 
   build-system = [ poetry-core ];

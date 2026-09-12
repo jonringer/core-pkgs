@@ -77,6 +77,17 @@ stdenvNoCC.mkDerivation {
       --fish <(SHELL="fish" $out/bin/bun completions)
   '';
 
+  passthru = {
+    ekapkgs-update.semver-strategy = "patch";
+    ekapkgs-update.platform-hashes = [
+      "x86_64-linux"
+      "aarch64-linux"
+      # TODO(corepkgs) support darwin
+      # "x86_64-darwin"
+      # "aarch64-darwin"
+    ];
+  };
+
   meta = {
     homepage = "https://bun.sh";
     changelog = "https://bun.sh/blog/bun-v${version}";

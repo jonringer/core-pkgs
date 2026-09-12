@@ -277,6 +277,7 @@ stdenv.mkDerivation (finalAttrs: {
     in
     mkVariantPassthru variantArgs
     // {
+      ekapkgs-update.semver-strategy = "patch";
       inherit openssl;
       opensslSupport = computedOpensslSupport;
       tests = {

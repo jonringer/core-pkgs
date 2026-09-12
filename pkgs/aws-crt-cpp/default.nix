@@ -20,7 +20,7 @@
 stdenv.mkDerivation rec {
   pname = "aws-crt-cpp";
   # nixpkgs-update: no auto update
-  version = "0.34.3";
+  version = "0.43.4";
 
   outputs = [
     "out"
@@ -31,7 +31,7 @@ stdenv.mkDerivation rec {
     owner = "awslabs";
     repo = "aws-crt-cpp";
     rev = "v${version}";
-    sha256 = "sha256-jKmIsWAzxnfsNgHavR6crhIQXVJq/PbQgaj4KVGrMP0=";
+    sha256 = "sha256-thaIBvJkl94ajRxzXEyklthrqGuDoe+zCQNwCBbE5b8=";
   };
 
   postPatch = ''

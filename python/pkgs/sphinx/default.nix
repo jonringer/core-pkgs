@@ -64,6 +64,8 @@ buildPythonPackage rec {
 
   build-system = [ flit-core ];
 
+  pythonRelaxDeps = [ "docutils" ];
+
   dependencies = [
     alabaster
     babel

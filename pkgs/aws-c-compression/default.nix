@@ -9,7 +9,7 @@
 
 stdenv.mkDerivation rec {
   pname = "aws-c-compression";
-  version = "0.3.2";
+  version = "1.0.0";
 
   outputs = [
     "out"
@@ -21,7 +21,7 @@ stdenv.mkDerivation rec {
     owner = "awslabs";
     repo = "aws-c-compression";
     rev = "v${version}";
-    sha256 = "sha256-YckyQZNk+48g5jrT4q8Clmy4LRwswKONvFbVtJxgpYQ=";
+    sha256 = "sha256-JEByt04Rg3Yl/IgqTNSIzF+zb2TQpqkqKZgiKpnsoi0=";
   };
 
   nativeBuildInputs = [

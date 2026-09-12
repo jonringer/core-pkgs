@@ -10,6 +10,7 @@
   pathspec,
   pluggy,
   tomli,
+  tomlkit,
   trove-classifiers,
 
   # tests
@@ -21,12 +22,12 @@
 
 buildPythonPackage rec {
   pname = "hatchling";
-  version = "1.31.0";
+  version = "1.32.0";
   pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-a0itQGikgu1yObOoIVvFW0eq0zRdWN/JTlU8XS1GIRs=";
+    hash = "sha256-C9veSlKwbDfj7KOV+Fp2K/DvBv43T9iuQp3GvhAjD18=";
   };
 
   # listed in backend/pyproject.toml
@@ -35,6 +36,7 @@ buildPythonPackage rec {
     packaging
     pathspec
     pluggy
+    tomlkit
     trove-classifiers
   ]
   ++ lib.optionals (pythonOlder "3.11") [ tomli ];

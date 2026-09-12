@@ -267,6 +267,7 @@ stdenv.mkDerivation {
     ];
 
   passthru = mkVariantPassthru variantArgs // {
+    ekapkgs-update.semver-strategy = "patch";
     inherit boostBuildPatches;
   };
 

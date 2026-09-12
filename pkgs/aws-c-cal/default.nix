@@ -11,7 +11,7 @@
 stdenv.mkDerivation (finalAttrs: {
   pname = "aws-c-cal";
   # nixpkgs-update: no auto update
-  version = "0.9.15";
+  version = "1.0.0";
 
   outputs = [
     "out"
@@ -23,7 +23,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "awslabs";
     repo = "aws-c-cal";
     rev = "v${finalAttrs.version}";
-    hash = "sha256-n4FWrj3ssl64zrYHA1JJhFGmXH3uUziOfdEwjvruGeE=";
+    hash = "sha256-7oKJcvoMpHVsajVkBYkAypBn1IXsddylN9Sq9KDYLwM=";
   };
 
   nativeBuildInputs = [

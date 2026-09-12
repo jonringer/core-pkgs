@@ -14,12 +14,12 @@
 
 buildPythonPackage rec {
   pname = "findpython";
-  version = "0.7.1";
+  version = "0.8.0";
   pyproject = true;
 
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-nynmo9q9t18rOclJdywO0m6rFTCABmafNHjNqw2GfHg=";
+    hash = "sha256-U7MiZIdN+lmQvQnXF4GThtjbMUnYn+IPiP4QeN4oa64=";
   };
 
   build-system = [ pdm-backend ];

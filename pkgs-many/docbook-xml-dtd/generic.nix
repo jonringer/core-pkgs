@@ -55,6 +55,10 @@ stdenv.mkDerivation {
     sed 's|V4.2|V4.1.2|g' < ${docbook42catalog} > catalog.xml
   '';
 
+  passthru = {
+    ekapkgs-update.semver-strategy = "patch";
+  };
+
   meta = {
     description = "DocBook XML document type definitions";
     license = lib.licenses.mit;

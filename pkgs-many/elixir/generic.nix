@@ -80,6 +80,7 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   passthru = {
+    ekapkgs-update.semver-strategy = "patch";
     erlang = compatibleErlang;
     majorVersion = lib.versions.major version;
     minorVersion = lib.versions.majorMinor version;

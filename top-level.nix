@@ -1268,7 +1268,7 @@ with final;
       # doesn't hold. This ensures that splicing still can work correctly.
       (
         if (!stdenv.hostPlatform.canExecute stdenv.targetPlatform) then
-          ./pkgs/meson/emulator-hook.sh
+          ./pkgs-many/meson/emulator-hook.sh
         else
           throw "mesonEmulatorHook may only be added to nativeBuildInputs when the target binaries can't be executed; however you are attempting to use it in a situation where ${stdenv.hostPlatform.config} can execute ${stdenv.targetPlatform.config}. Consider only adding mesonEmulatorHook according to a conditional based canExecute in your package expression."
       );

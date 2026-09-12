@@ -15,7 +15,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "grpc";
-  version = "1.83.0";
+  version = "1.83.1";
 
   outputs = [
     "out"
@@ -27,7 +27,7 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "grpc";
     repo = "grpc";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-A2QtLdsunMOulbpyaSOoAID9caK0tpuiyZJ5C5zrr+k=";
+    hash = "sha256-h2F+lKF9GH5CGjzS5326ovLUHbYwsPjoqmb8Ljgj2ao=";
     fetchSubmodules = true;
   };
 
