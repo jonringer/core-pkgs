@@ -13,9 +13,9 @@
   staticBuild ? stdenv.hostPlatform.isStatic,
   runUnitTests,
   # for passthru.tests
-  libgit2-glib,
+  libgit2-glib ? null,
   python3Packages,
-  gitstatus,
+  gitstatus ? null,
   llhttp,
   withGssapi ? false,
   krb5,
@@ -93,11 +93,13 @@ stdenv.mkDerivation (finalAttrs: {
   passthru.tests = {
     unittests = runUnitTests finalAttrs.finalPackage;
   }
-  // lib.mapAttrs (_: v: v.override { libgit2 = finalAttrs.finalPackage; }) {
-    inherit libgit2-glib;
-    inherit (python3Packages) pygit2;
-    inherit (gitstatus) romkatv_libgit2;
-  };
+  // lib.mapAttrs (_: v: v.override { libgit2 = finalAttrs.finalPackage; }) (
+    lib.optionalAttrs (libgit2-glib != null) { inherit libgit2-glib; }
+    // {
+      inherit (python3Packages) pygit2;
+    }
+    // lib.optionalAttrs (gitstatus != null) { inherit (gitstatus) romkatv_libgit2; }
+  );
 
   meta = {
     description = "Linkable library implementation of Git that you can use in your application";
