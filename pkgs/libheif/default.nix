@@ -5,7 +5,7 @@
   cmake,
   pkg-config,
   dav1d,
-  rav1e,
+  rav1e ? null,
   libde265,
   x265,
   libpng,
@@ -15,9 +15,9 @@
 
   # for passthru.tests
   imagemagick,
-  imv,
+  imv ? null,
   python3Packages,
-  vips,
+  vips ? null,
 }:
 
 stdenv.mkDerivation rec {
@@ -47,14 +47,14 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     dav1d
-    rav1e
     libde265
     x265
     libpng
     libjpeg
     libaom
     gdk-pixbuf
-  ];
+  ]
+  ++ lib.optional (rav1e != null) rav1e;
 
   # Fix installation path for gdk-pixbuf module
   PKG_CONFIG_GDK_PIXBUF_2_0_GDK_PIXBUF_MODULEDIR = "${placeholder "lib"}/${gdk-pixbuf.moduleDir}";
@@ -74,11 +74,11 @@ stdenv.mkDerivation rec {
   passthru.tests = {
     inherit
       imagemagick
-      imv
-      vips
       ;
     inherit (python3Packages) pillow-heif;
-  };
+  }
+  // lib.optionalAttrs (imv != null) { inherit imv; }
+  // lib.optionalAttrs (vips != null) { inherit vips; };
 
   meta = {
     homepage = "http://www.libheif.org/";
