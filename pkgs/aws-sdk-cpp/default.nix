@@ -8,7 +8,7 @@
   zlib,
   aws-crt-cpp,
   nix,
-  arrow-cpp,
+  arrow-cpp ? null,
   aws-sdk-cpp,
   # Allow building a limited set of APIs, e.g. ["s3" "ec2"].
   apis ? [ "*" ],
@@ -123,7 +123,7 @@ stdenv.mkDerivation rec {
 
   passthru = {
     tests = {
-      inherit nix arrow-cpp;
+      inherit nix;
       cmake-find-package = stdenv.mkDerivation {
         pname = "aws-sdk-cpp-cmake-find-package-test";
         version = "0";
@@ -154,7 +154,8 @@ stdenv.mkDerivation rec {
           fi
         '';
       };
-    };
+    }
+    // lib.optionalAttrs (arrow-cpp != null) { inherit arrow-cpp; };
   };
 
   meta = {
