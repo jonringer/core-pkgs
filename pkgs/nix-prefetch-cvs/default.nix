@@ -5,7 +5,7 @@
   bash,
   coreutils,
   sed,
-  cvs,
+  cvs ? null,
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "nix-prefetch-cvs";
@@ -34,5 +34,6 @@ stdenv.mkDerivation (finalAttrs: {
     license = lib.licenses.lgpl21Plus;
     platforms = lib.platforms.unix;
     mainProgram = "nix-prefetch-cvs";
+    broken = cvs == null;
   };
 })
