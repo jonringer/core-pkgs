@@ -25,19 +25,19 @@
   lcms2Support ? true,
   lcms2,
   openexrSupport ? !stdenv.hostPlatform.isMinGW,
-  openexr,
+  openexr ? null,
   libjxlSupport ? true,
   libjxl,
   libpngSupport ? true,
   libpng,
   liblqr1Support ? true,
-  liblqr1,
+  liblqr1 ? null,
   libraqmSupport ? true,
-  libraqm,
+  libraqm ? null,
   librawSupport ? true,
-  libraw,
+  libraw ? null,
   librsvgSupport ? !stdenv.hostPlatform.isMinGW,
-  librsvg,
+  librsvg ? null,
   pango,
   libtiffSupport ? true,
   libtiff,
@@ -55,7 +55,7 @@
   coreutils,
   curl,
   testers,
-  nixos-icons,
+  nixos-icons ? null,
   perlPackages,
   python3,
 }:
@@ -181,14 +181,14 @@ stdenv.mkDerivation (finalAttrs: {
 
   passthru.tests = {
     version = testers.testVersion { package = finalAttrs.finalPackage; };
-    inherit nixos-icons;
     inherit (perlPackages) ImageMagick;
     inherit (python3.pkgs) img2pdf willow;
     pkg-config = testers.hasPkgConfigModules {
       package = finalAttrs.finalPackage;
       version = lib.head (lib.splitString "-" finalAttrs.version);
     };
-  };
+  }
+  // lib.optionalAttrs (nixos-icons != null) { inherit nixos-icons; };
 
   meta = {
     homepage = "http://www.imagemagick.org/";
