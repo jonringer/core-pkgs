@@ -30,15 +30,15 @@
 
   # for passthru.tests
   curl,
-  emacs,
+  emacs ? null,
   ffmpeg,
-  knot-resolver_5,
+  knot-resolver_5 ? null,
   ngtcp2-gnutls,
   pkgsStatic,
   python3Packages,
   qemu,
   openconnect,
-  samba,
+  samba ? null,
 
   gitUpdater,
 }:
@@ -204,15 +204,15 @@ stdenv.mkDerivation rec {
     inherit
       ngtcp2-gnutls
       ffmpeg
-      emacs
       qemu
-      knot-resolver_5
-      samba
       openconnect
       ;
     python3-gnutls = python3Packages.python3-gnutls;
     static = pkgsStatic.gnutls;
-  };
+  }
+  // lib.optionalAttrs (emacs != null) { inherit emacs; }
+  // lib.optionalAttrs (knot-resolver_5 != null) { inherit knot-resolver_5; }
+  // lib.optionalAttrs (samba != null) { inherit samba; };
 
   meta = {
     description = "GNU Transport Layer Security Library";
