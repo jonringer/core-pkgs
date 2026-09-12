@@ -16,9 +16,9 @@
   runUnitTests,
 
   # tests
-  mpd,
-  openimageio,
-  fcitx5,
+  mpd ? null,
+  openimageio ? null,
+  fcitx5 ? null,
   spdlog,
 }:
 
@@ -50,13 +50,11 @@ stdenv.mkDerivation (finalAttrs: {
   passthru = mkVariantPassthru variantArgs // {
     tests = {
       unittests = runUnitTests finalAttrs.finalPackage;
-      inherit
-        mpd
-        openimageio
-        fcitx5
-        spdlog
-        ;
-    };
+      inherit spdlog;
+    }
+    // lib.optionalAttrs (mpd != null) { inherit mpd; }
+    // lib.optionalAttrs (openimageio != null) { inherit openimageio; }
+    // lib.optionalAttrs (fcitx5 != null) { inherit fcitx5; };
   };
 
   meta = {
