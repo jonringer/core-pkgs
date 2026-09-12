@@ -14,7 +14,7 @@
   python3,
   makeWrapper,
   shared-mime-info,
-  isocodes,
+  isocodes ? null,
   expat,
   glib,
   cairo,
@@ -36,9 +36,9 @@
   libxml2,
   gnome,
   gsettings-desktop-schemas,
-  sassc,
+  sassc ? null,
   trackerSupport ? stdenv.hostPlatform.isLinux && (stdenv.buildPlatform == stdenv.hostPlatform),
-  tinysparql,
+  tinysparql ? null,
   x11Support ? stdenv.hostPlatform.isLinux,
   waylandSupport ? stdenv.hostPlatform.isLinux,
   libGL,
@@ -115,9 +115,9 @@ stdenv.mkDerivation (finalAttrs: {
     ninja
     pkg-config
     python3
-    sassc
     gdk-pixbuf
   ]
+  ++ lib.optional (sassc != null) sassc
   ++ finalAttrs.setupHooks
   ++ lib.optionals withIntrospection [
     gobject-introspection
@@ -145,12 +145,8 @@ stdenv.mkDerivation (finalAttrs: {
     ++ [
       (libepoxy.override { inherit x11Support; })
     ]
-    ++ lib.optionals (x11Support || waylandSupport) [
-      isocodes
-    ]
-    ++ lib.optionals trackerSupport [
-      tinysparql
-    ];
+    ++ lib.optionals (x11Support || waylandSupport) (lib.optional (isocodes != null) isocodes)
+    ++ lib.optionals trackerSupport (lib.optional (tinysparql != null) tinysparql);
   #TODO: colord?
 
   propagatedBuildInputs = [
