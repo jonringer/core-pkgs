@@ -9,14 +9,14 @@
   libavc1394,
   libconfig,
   libiec61883,
-  libraw1394,
+  libraw1394 ? null,
   libxmlxx3,
   pkg-config,
   python3,
   scons,
   which,
   withMixer ? false,
-  qt5,
+  qt5 ? null,
   udevCheckHook,
 }:
 
@@ -102,9 +102,11 @@ stdenv.mkDerivation rec {
     libavc1394
     libconfig
     libiec61883
-    libraw1394
     libxmlxx3
     python
+  ]
+  ++ lib.optionals (libraw1394 != null) [
+    libraw1394
   ]
   ++ lib.optionals (!stdenv.hostPlatform.isGnu) [
     argp-standalone
