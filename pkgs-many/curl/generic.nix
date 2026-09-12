@@ -35,7 +35,7 @@
   brotli,
   c-aresMinimal,
   gnutls,
-  gsasl,
+  gsasl ? null,
   libkrb5,
   nghttp2,
   nghttp3,
@@ -53,10 +53,10 @@
   zstd,
 
   # for passthru.tests
-  coeurl,
-  curlpp,
+  coeurl ? null,
+  curlpp ? null,
   haskellPackages,
-  ocamlPackages,
+  ocamlPackages ? null,
   php,
   pkgsStatic,
   python3,
@@ -289,16 +289,16 @@ stdenv.mkDerivation (finalAttrs: {
             version = 1;
           };
         };
-        curlpp = useThisCurl curlpp;
-        coeurl = useThisCurl coeurl;
         haskell-curl = useThisCurl haskellPackages.curl;
-        ocaml-curly = useThisCurl ocamlPackages.curly;
         pycurl = useThisCurl python3.pkgs.pycurl;
         php-curl = useThisCurl php.buildPecl.curl;
         pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
         pkg-config-install = testers.pkg-config.testInstall finalAttrs.finalPackage { };
         static = pkgsStatic.curl;
-      };
+      }
+      // lib.optionalAttrs (curlpp != null) { curlpp = useThisCurl curlpp; }
+      // lib.optionalAttrs (coeurl != null) { coeurl = useThisCurl coeurl; }
+      // lib.optionalAttrs (ocamlPackages != null) { ocaml-curly = useThisCurl ocamlPackages.curly; };
     };
 
   meta = {
