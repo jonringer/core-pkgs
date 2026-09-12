@@ -10,7 +10,7 @@
   # for passthru.tests
   ninja,
   php,
-  spamassassin,
+  spamassassin ? null,
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -42,9 +42,10 @@ stdenv.mkDerivation (finalAttrs: {
       ];
     };
     tests = {
-      inherit ninja php spamassassin;
+      inherit ninja php;
       unittests = runUnitTests finalAttrs.finalPackage;
-    };
+    }
+    // lib.optionalAttrs (spamassassin != null) { inherit spamassassin; };
   };
 
   meta = {
