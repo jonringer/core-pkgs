@@ -10,9 +10,9 @@
   enableDrafts ? false,
   fetchpatch,
   # for passthru.tests
-  cppzmq,
-  czmq,
-  zmqpp,
+  cppzmq ? null,
+  czmq ? null,
+  zmqpp ? null,
   ffmpeg,
   python3,
   testers,
@@ -104,16 +104,14 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   passthru.tests = {
-    inherit
-      cppzmq
-      czmq
-      zmqpp
-      ;
     pyzmq = python3.pkgs.pyzmq;
     ffmpeg = ffmpeg.override { withZmq = true; };
     pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
     pkg-config-install = testers.pkg-config.testInstall finalAttrs.finalPackage { };
-  };
+  }
+  // lib.optionalAttrs (cppzmq != null) { inherit cppzmq; }
+  // lib.optionalAttrs (czmq != null) { inherit czmq; }
+  // lib.optionalAttrs (zmqpp != null) { inherit zmqpp; };
 
   meta = {
     branch = "4";
