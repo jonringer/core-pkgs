@@ -15,11 +15,11 @@
   # for passthru.tests
   bind,
   libgcrypt,
-  libvirt,
+  libvirt ? null,
   ntp,
   qemu,
-  squid,
-  uwsgi,
+  squid ? null,
+  uwsgi ? null,
 }:
 
 assert usePam -> pam != null;
@@ -113,13 +113,13 @@ stdenv.mkDerivation rec {
     inherit
       bind
       libgcrypt
-      libvirt
       ntp
       qemu
-      squid
-      uwsgi
       ;
-  };
+  }
+  // lib.optionalAttrs (libvirt != null) { inherit libvirt; }
+  // lib.optionalAttrs (squid != null) { inherit squid; }
+  // lib.optionalAttrs (uwsgi != null) { inherit uwsgi; };
 
   meta = {
     description = "Library for working with POSIX capabilities";
