@@ -28,8 +28,8 @@
   python3,
 
   # for passthru.tests
-  exiv2,
-  graphicsmagick,
+  exiv2 ? null,
+  graphicsmagick ? null,
 }:
 
 let
@@ -99,11 +99,9 @@ stdenv.mkDerivation rec {
       pygraphviz
       xdot
       ;
-    inherit
-      exiv2
-      graphicsmagick
-      ;
-  };
+  }
+  // lib.optionalAttrs (exiv2 != null) { inherit exiv2; }
+  // lib.optionalAttrs (graphicsmagick != null) { inherit graphicsmagick; };
 
   meta = {
     homepage = "https://graphviz.org";
