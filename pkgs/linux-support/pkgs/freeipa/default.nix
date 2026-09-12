@@ -22,7 +22,7 @@
   libuuid,
   talloc,
   tevent,
-  samba,
+  samba ? null,
   libunistring,
   libverto,
   libpwquality,
@@ -30,7 +30,7 @@
   python3,
   bind,
   sssd,
-  jre,
+  jre ? null,
   rhino,
   lesscpy,
   jansson,
@@ -89,13 +89,15 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [
     python3.pkgs.wrapPython
-    jre
     rhino
     lesscpy
     automake
     autoconf
     gettext
     pkg-config
+  ]
+  ++ lib.optionals (jre != null) [
+    jre
   ];
 
   buildInputs = [
@@ -115,13 +117,15 @@ stdenv.mkDerivation rec {
     libuuid
     talloc
     tevent
-    samba
     libunistring
     libverto
     systemd
     bind
     libpwquality
     jansson
+  ]
+  ++ lib.optionals (samba != null) [
+    samba
   ]
   ++ pythonInputs;
 
