@@ -6,7 +6,7 @@
   python,
 
   # tests
-  distutils,
+  distutils ? null,
 }:
 
 buildPythonPackage rec {
@@ -37,9 +37,7 @@ buildPythonPackage rec {
   # Requires pytest, causing infinite recursion.
   doCheck = false;
 
-  passthru.tests = {
-    inherit distutils;
-  };
+  passthru.tests = { } // lib.optionalAttrs (distutils != null) { inherit distutils; };
 
   pythonImportsCheck = [
     "setuptools"
