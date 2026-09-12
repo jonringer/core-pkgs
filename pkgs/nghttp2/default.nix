@@ -26,7 +26,7 @@
 
   # Unit tests ; we have to set TZDIR, which is a GNUism.
   enableTests ? stdenv.hostPlatform.isGnu,
-  cunit,
+  cunit ? null,
   tzdata,
 
   # downstream dependencies, for testing
@@ -86,10 +86,12 @@ stdenv.mkDerivation rec {
 
   # Unit tests require CUnit and setting TZDIR environment variable
   doCheck = enableTests;
-  nativeCheckInputs = lib.optionals enableTests [
-    cunit
-    tzdata
-  ];
+  nativeCheckInputs = lib.optionals enableTests (
+    lib.optional (cunit != null) cunit
+    ++ [
+      tzdata
+    ]
+  );
   preCheck = lib.optionalString enableTests ''
     export TZDIR=${tzdata}/share/zoneinfo
   '';
