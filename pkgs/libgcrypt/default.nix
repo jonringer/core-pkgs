@@ -11,7 +11,7 @@
 
   # for passthru.tests. Don't force these to be available in corepkgs
   gnupg,
-  libotr,
+  libotr ? null,
 }:
 
 assert enableCapabilities -> stdenv.hostPlatform.isLinux;
@@ -109,9 +109,10 @@ stdenv.mkDerivation (finalAttrs: {
   '';
 
   passthru.tests = {
-    inherit gnupg libotr;
+    inherit gnupg;
     unittests = runUnitTests finalAttrs.finalPackage;
-  };
+  }
+  // lib.optionalAttrs (libotr != null) { inherit libotr; };
 
   meta = {
     homepage = "https://www.gnu.org/software/libgcrypt/";
