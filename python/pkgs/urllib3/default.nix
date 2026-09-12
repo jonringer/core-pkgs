@@ -17,8 +17,8 @@
   # tests
   pytestCheckHook,
   pytest-timeout,
-  tornado,
-  trustme,
+  tornado ? null,
+  trustme ? null,
 }:
 
 let
@@ -51,9 +51,9 @@ let
     nativeCheckInputs = [
       pytest-timeout
       pytestCheckHook
-      tornado
-      trustme
     ]
+    ++ lib.optional (tornado != null) tornado
+    ++ lib.optional (trustme != null) trustme
     ++ lib.concatAttrValues optional-dependencies;
 
     # Tests in urllib3 are mostly timeout-based instead of event-based and
