@@ -4,70 +4,73 @@
   lib,
   testers,
   boost,
-  mpi,
+  mpi ? null,
   eigen,
   runCommand,
 }:
 
-lib.recurseIntoAttrs {
+lib.recurseIntoAttrs (
+  {
 
-  boost-versions-match = testers.hasCmakeConfigModules {
-    package = boost;
-    moduleNames = [
-      "Boost"
-      "boost_math"
-    ];
-    versionCheck = true;
-  };
+    boost-versions-match = testers.hasCmakeConfigModules {
+      package = boost;
+      moduleNames = [
+        "Boost"
+        "boost_math"
+      ];
+      versionCheck = true;
+    };
 
-  boost-versions-mismatch = testers.testBuildFailure (
-    testers.hasCmakeConfigModules {
+    boost-versions-mismatch = testers.testBuildFailure (
+      testers.hasCmakeConfigModules {
+        package = boost;
+        moduleNames = [
+          "Boost"
+          "boost_math"
+        ];
+        version = "1.2.3"; # Deliberately-incorrect version number
+        versionCheck = true;
+      }
+    );
+
+    boost-no-versionCheck = testers.hasCmakeConfigModules {
       package = boost;
       moduleNames = [
         "Boost"
         "boost_math"
       ];
       version = "1.2.3"; # Deliberately-incorrect version number
-      versionCheck = true;
-    }
-  );
+      versionCheck = false;
+    };
 
-  boost-no-versionCheck = testers.hasCmakeConfigModules {
-    package = boost;
-    moduleNames = [
-      "Boost"
-      "boost_math"
-    ];
-    version = "1.2.3"; # Deliberately-incorrect version number
-    versionCheck = false;
-  };
+    eigen-has-Eigen = testers.hasCmakeConfigModules {
+      package = eigen;
+      moduleNames = [ "Eigen3" ];
+    };
 
-  boost-has-boost_mpi = testers.hasCmakeConfigModules {
-    package = boost.override { useMpi = true; };
-    moduleNames = [
-      "boost_mpi"
-    ];
-    buildInputs = [ mpi ];
-  };
-
-  boost_mpi-does-not-have-mpi = testers.testBuildFailure (
-    testers.hasCmakeConfigModules {
+    eigen-does-not-have-eigen = testers.testBuildFailure (
+      testers.hasCmakeConfigModules {
+        package = eigen;
+        moduleNames = [ "eigen3" ];
+      }
+    );
+  }
+  // lib.optionalAttrs (mpi != null) {
+    boost-has-boost_mpi = testers.hasCmakeConfigModules {
       package = boost.override { useMpi = true; };
       moduleNames = [
         "boost_mpi"
       ];
-    }
-  );
+      buildInputs = [ mpi ];
+    };
 
-  eigen-has-Eigen = testers.hasCmakeConfigModules {
-    package = eigen;
-    moduleNames = [ "Eigen3" ];
-  };
-
-  eigen-does-not-have-eigen = testers.testBuildFailure (
-    testers.hasCmakeConfigModules {
-      package = eigen;
-      moduleNames = [ "eigen3" ];
-    }
-  );
-}
+    boost_mpi-does-not-have-mpi = testers.testBuildFailure (
+      testers.hasCmakeConfigModules {
+        package = boost.override { useMpi = true; };
+        moduleNames = [
+          "boost_mpi"
+        ];
+      }
+    );
+  }
+)

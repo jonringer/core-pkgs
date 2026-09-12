@@ -5,7 +5,7 @@
   pkgs,
   pkgsLinux,
 
-  diffoscopeMinimal,
+  diffoscopeMinimal ? null,
   runCommand,
   runCommandWith,
   stdenv,
@@ -68,7 +68,7 @@
           postFailureMessage
           ;
         excludeMetadata = if checkMetadata then "no" else "yes";
-        nativeBuildInputs = [ diffoscopeMinimal ];
+        nativeBuildInputs = lib.optional (diffoscopeMinimal != null) diffoscopeMinimal;
       }
       ''
         echo "Checking:"
