@@ -11,7 +11,7 @@
   libxt,
   libxmu, # for postscript and html output
   enableHtml ? false,
-  psutils,
+  psutils ? null,
   netpbm, # for html output
   enableIconv ? false,
   iconv,
