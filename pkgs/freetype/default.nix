@@ -24,16 +24,16 @@
   cairo,
   fontforge,
   ghostscript,
-  graphicsmagick,
+  graphicsmagick ? null,
   gtk3,
   harfbuzz,
   imagemagick,
   pango,
   poppler,
   python3,
-  qt5,
-  texmacs,
-  ttfautohint,
+  qt5 ? null,
+  texmacs ? null,
+  ttfautohint ? null,
   testers,
   __flattenIncludeHackHook,
 }:
@@ -109,19 +109,19 @@ stdenv.mkDerivation (finalAttrs: {
       cairo
       fontforge
       ghostscript
-      graphicsmagick
       gtk3
       harfbuzz
       imagemagick
       pango
       poppler
-      texmacs
-      ttfautohint
       ;
     inherit (python3.pkgs) freetype-py;
-    inherit (qt5) qtbase;
     pkg-config = testers.testMetaPkgConfig finalAttrs.finalPackage;
-  };
+  }
+  // lib.optionalAttrs (graphicsmagick != null) { inherit graphicsmagick; }
+  // lib.optionalAttrs (qt5 != null) { qtbase = qt5.qtbase; }
+  // lib.optionalAttrs (texmacs != null) { inherit texmacs; }
+  // lib.optionalAttrs (ttfautohint != null) { inherit ttfautohint; };
 
   meta = {
     description = "Font rendering engine";
