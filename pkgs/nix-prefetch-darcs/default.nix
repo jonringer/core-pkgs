@@ -5,7 +5,7 @@
   bash,
   coreutils,
   sed,
-  darcs,
+  darcs ? null,
   cacert,
   gawk,
   jq,
@@ -40,5 +40,6 @@ stdenv.mkDerivation (finalAttrs: {
     license = lib.licenses.lgpl21Plus;
     platforms = lib.platforms.unix;
     mainProgram = "nix-prefetch-darcs";
+    broken = darcs == null;
   };
 })
