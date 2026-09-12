@@ -33,17 +33,18 @@
   texinfo,
   xz,
   zlib,
-  libsForQt5,
+  libsForQt5 ? null,
   gitUpdater,
 
   # for passthru.tests
-  mesa,
-  gtest,
-  spdlog,
+  mesa ? null,
+  gtest ? null,
+  spdlog ? null,
 }:
 
 let
-  inherit (libsForQt5) qtbase wrapQtAppsHook;
+  qtbase = if libsForQt5 != null then libsForQt5.qtbase else null;
+  wrapQtAppsHook = if libsForQt5 != null then libsForQt5.wrapQtAppsHook else null;
   useSharedLibraries = (!isMinimalBuild && !stdenv.hostPlatform.isCygwin);
 in
 # Minimal, bootstrap cmake does not have toolkits
@@ -201,9 +202,11 @@ stdenv.mkDerivation (finalAttrs: {
       rev-prefix = "v";
       ignoredVersions = "-"; # -rc1 and friends
     };
-    tests = {
-      inherit mesa gtest spdlog;
-    };
+    tests =
+      { }
+      // lib.optionalAttrs (mesa != null) { inherit mesa; }
+      // lib.optionalAttrs (gtest != null) { inherit gtest; }
+      // lib.optionalAttrs (spdlog != null) { inherit spdlog; };
   };
 
   meta = {

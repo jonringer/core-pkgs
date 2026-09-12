@@ -29,7 +29,7 @@
   texinfo,
   xz,
   zlib,
-  libsForQt5,
+  libsForQt5 ? null,
   gitUpdater,
   ps,
 
@@ -40,7 +40,8 @@
 }:
 
 let
-  inherit (libsForQt5) qtbase wrapQtAppsHook;
+  qtbase = if libsForQt5 != null then libsForQt5.qtbase else null;
+  wrapQtAppsHook = if libsForQt5 != null then libsForQt5.wrapQtAppsHook else null;
   inherit (stdenv.hostPlatform) isCygwin isDarwin isFreeBSD;
   useSharedLibraries = (!isMinimalBuild && !isCygwin);
 in
