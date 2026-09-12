@@ -5,9 +5,9 @@
   autoreconfHook,
   pkg-config,
   gnutls,
-  cunit,
+  cunit ? null,
   ncurses,
-  knot-dns,
+  knot-dns ? null,
   curl,
   runUnitTests,
 }:
@@ -36,9 +36,10 @@ stdenv.mkDerivation (finalAttrs: {
 
   configureFlags = [ "--with-gnutls=yes" ];
 
-  nativeCheckInputs = [ cunit ] ++ lib.optional stdenv.hostPlatform.isDarwin ncurses;
+  nativeCheckInputs =
+    lib.optional (cunit != null) cunit ++ lib.optional stdenv.hostPlatform.isDarwin ncurses;
 
-  passthru.tests = (knot-dns.passthru.tests or { }) // {
+  passthru.tests = lib.optionalAttrs (knot-dns != null) (knot-dns.passthru.tests or { }) // {
     unittests = runUnitTests finalAttrs.finalPackage;
     curlWithGnuTls = curl.gnutls;
   };
