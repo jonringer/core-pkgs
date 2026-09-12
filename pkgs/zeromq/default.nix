@@ -5,8 +5,6 @@
   cmake,
   pkg-config,
   libsodium,
-  asciidoc,
-  xmlto,
   enableDrafts ? false,
   fetchpatch,
   # for passthru.tests
@@ -61,8 +59,6 @@ stdenv.mkDerivation (finalAttrs: {
     cmake
     cmake.configurePhaseHook
     pkg-config
-    asciidoc
-    xmlto
   ];
 
   buildInputs = [ libsodium ];
@@ -72,6 +68,7 @@ stdenv.mkDerivation (finalAttrs: {
     (lib.cmakeBool "ENABLE_CURVE" true)
     (lib.cmakeBool "ENABLE_DRAFTS" enableDrafts)
     (lib.cmakeBool "WITH_LIBSODIUM" true)
+    "-DWITH_DOC=OFF"
   ];
 
   postPatch = ''
@@ -80,28 +77,10 @@ stdenv.mkDerivation (finalAttrs: {
       --replace '$'{prefix}/'$'{CMAKE_INSTALL_INCLUDEDIR} '$'{CMAKE_INSTALL_FULL_INCLUDEDIR}
   '';
 
-  postBuild = ''
-    # From https://gitlab.archlinux.org/archlinux/packaging/packages/zeromq/-/blob/main/PKGBUILD
-    # man pages aren't created when using cmake
-    # https://github.com/zeromq/libzmq/issues/4160
-    pushd ../doc
-    for FILE in *.txt; do
-        asciidoc \
-            -d manpage \
-            -b docbook \
-            -f asciidoc.conf \
-            -a zmq_version="${finalAttrs.version}" \
-            "''${FILE}"
-        xmlto --skip-validation man "''${FILE%.txt}.xml"
-    done
-    popd
-  '';
-
-  postInstall = ''
-    # Install manually created man pages
-    install -vDm644 -t "$out/share/man/man3" ../doc/*.3
-    install -vDm644 -t "$out/share/man/man7" ../doc/*.7
-  '';
+  # TODO(corepkgs): restore man page generation
+  # Requires asciidoc + xmlto in nativeBuildInputs, removing -DWITH_DOC=OFF,
+  # and re-adding postBuild/postInstall for manual asciidoc→docbook→man conversion.
+  # Blocked on: asciidoc package providing an `asciidoc` binary (currently only `hasciidoc`).
 
   passthru.tests = {
     pyzmq = python3.pkgs.pyzmq;
