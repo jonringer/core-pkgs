@@ -15,8 +15,8 @@ nvidia_x11: sha256:
   libXrandr,
   libXext,
   libXxf86vm,
-  libvdpau,
-  librsvg,
+  libvdpau ? null,
+  librsvg ? null,
   libglvnd,
   wrapGAppsHook3,
   addDriverRunpath,
@@ -144,15 +144,19 @@ stdenv.mkDerivation {
     libXrandr
     libXext
     libXxf86vm
-    libvdpau
     nvidia_x11
     dbus
     vulkan-headers
   ]
-  ++ lib.optionals withGtk3 [
-    gtk3
-    librsvg
-  ];
+  ++ lib.optionals (libvdpau != null) [
+    libvdpau
+  ]
+  ++ lib.optionals withGtk3 (
+    [
+      gtk3
+    ]
+    ++ lib.optional (librsvg != null) librsvg
+  );
 
   installFlags = [ "PREFIX=$(out)" ];
 
