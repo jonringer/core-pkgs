@@ -7,7 +7,7 @@
 
   # for passthru.tests
   gnutls,
-  samba,
+  samba ? null,
   qemu,
   runUnitTests,
 }:
@@ -37,9 +37,10 @@ stdenv.mkDerivation (finalAttrs: {
     if stdenv.hostPlatform.isDarwin then "export DYLD_LIBRARY_PATH=`pwd`/lib/.libs" else null;
 
   passthru.tests = {
-    inherit gnutls samba qemu;
+    inherit gnutls qemu;
     unittests = runUnitTests finalAttrs.finalPackage;
-  };
+  }
+  // lib.optionalAttrs (samba != null) { inherit samba; };
 
   meta = {
     homepage = "https://www.gnu.org/software/libtasn1/";
