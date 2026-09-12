@@ -23,7 +23,7 @@
   # for passthru.tests
   cmake,
   nix,
-  samba,
+  samba ? null,
 
   # for passthru.lore
   binlore,
@@ -147,8 +147,9 @@ stdenv.mkDerivation (finalAttrs: {
   };
 
   passthru.tests = {
-    inherit cmake nix samba;
-  };
+    inherit cmake nix;
+  }
+  // lib.optionalAttrs (samba != null) { inherit samba; };
 
   # bsdtar is detected as "cannot" because its exec is internal to
   # calls it makes into libarchive itself. If binlore gains support
