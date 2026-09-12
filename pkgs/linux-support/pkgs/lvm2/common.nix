@@ -25,7 +25,7 @@
   enableMdadm ? false,
   mdadm,
   enableMultipath ? false,
-  multipath-tools,
+  multipath-tools ? null,
   buildFHSEnv,
 }:
 
