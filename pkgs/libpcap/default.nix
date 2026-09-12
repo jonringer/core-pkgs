@@ -15,12 +15,12 @@
   withRemote ? false,
 
   # for passthru.tests
-  ettercap,
+  ettercap ? null,
   nmap,
-  ostinato,
-  tcpreplay,
+  ostinato ? null,
+  tcpreplay ? null,
   vde2,
-  wireshark,
+  wireshark ? null,
   python3,
   haskellPackages,
 }:
@@ -80,16 +80,16 @@ stdenv.mkDerivation rec {
 
   passthru.tests = {
     inherit
-      ettercap
       nmap
-      ostinato
-      tcpreplay
       vde2
-      wireshark
       ;
     inherit (python3.pkgs) pcapy-ng scapy;
     haskell-pcap = haskellPackages.pcap;
-  };
+  }
+  // lib.optionalAttrs (ettercap != null) { inherit ettercap; }
+  // lib.optionalAttrs (ostinato != null) { inherit ostinato; }
+  // lib.optionalAttrs (tcpreplay != null) { inherit tcpreplay; }
+  // lib.optionalAttrs (wireshark != null) { inherit wireshark; };
 
   meta = {
     homepage = "https://www.tcpdump.org";
