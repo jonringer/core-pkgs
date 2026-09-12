@@ -6,7 +6,7 @@
   unittestCheckHook,
 
   # for passthru.tests
-  awsebcli,
+  awsebcli ? null,
   black,
   hatchling,
 }:
@@ -29,11 +29,11 @@ buildPythonPackage rec {
 
   passthru.tests = {
     inherit
-      awsebcli
       black
       hatchling
       ;
-  };
+  }
+  // lib.optionalAttrs (awsebcli != null) { inherit awsebcli; };
 
   meta = {
     description = "Utility library for gitignore-style pattern matching of file paths";
