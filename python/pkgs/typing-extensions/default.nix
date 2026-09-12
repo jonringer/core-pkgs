@@ -5,8 +5,8 @@
   flit-core,
 
   # reverse dependencies
-  mashumaro,
-  pydantic,
+  mashumaro ? null,
+  pydantic ? null,
 }:
 
 buildPythonPackage rec {
@@ -25,9 +25,9 @@ buildPythonPackage rec {
 
   pythonImportsCheck = [ "typing_extensions" ];
 
-  passthru.tests = {
-    inherit mashumaro pydantic;
-  };
+  passthru.tests =
+    lib.optionalAttrs (mashumaro != null) { inherit mashumaro; }
+    // lib.optionalAttrs (pydantic != null) { inherit pydantic; };
 
   meta = {
     description = "Backported and Experimental Type Hints for Python";
