@@ -11,7 +11,7 @@
 
   # optional-dependencies
   psutil,
-  setproctitle,
+  setproctitle ? null,
 }:
 
 buildPythonPackage rec {
@@ -42,7 +42,7 @@ buildPythonPackage rec {
 
   optional-dependencies = {
     psutil = [ psutil ];
-    setproctitle = [ setproctitle ];
+    setproctitle = lib.optional (setproctitle != null) setproctitle;
   };
 
   # asserts worker order non deterministically
