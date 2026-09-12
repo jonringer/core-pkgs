@@ -10,7 +10,7 @@
   zipp,
 
   # Reverse dependency
-  sage,
+  sage ? null,
 }:
 
 buildPythonPackage rec {
@@ -47,9 +47,7 @@ buildPythonPackage rec {
 
   pythonImportsCheck = [ "importlib_metadata" ];
 
-  passthru.tests = {
-    inherit sage;
-  };
+  passthru.tests = { } // lib.optionalAttrs (sage != null) { inherit sage; };
 
   meta = {
     description = "Read metadata from Python packages";
