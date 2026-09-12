@@ -41,7 +41,7 @@
   libsystemtap,
   withSysprof ?
     libsysprof-capture != null && lib.meta.availableOn stdenv.hostPlatform libsysprof-capture,
-  libsysprof-capture,
+  libsysprof-capture ? null,
   mesonEmulatorHook,
   withIntrospection ?
     stdenv.hostPlatform.emulatorAvailable buildPackages
