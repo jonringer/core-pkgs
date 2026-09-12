@@ -6,7 +6,7 @@
   pyopenssl,
   pytestCheckHook,
   requests,
-  trustme,
+  trustme ? null,
 }:
 
 buildPythonPackage (finalAttrs: {
@@ -27,8 +27,8 @@ buildPythonPackage (finalAttrs: {
     betamax
     pyopenssl
     pytestCheckHook
-    trustme
-  ];
+  ]
+  ++ lib.optional (trustme != null) trustme;
 
   disabledTests = [
     # incompatible with urllib3 2.0
