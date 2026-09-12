@@ -22,13 +22,13 @@
 
   # for passthru.tests
   gd,
-  graphicsmagick,
+  graphicsmagick ? null,
   haskellPackages,
   imagemagick,
   libjxl,
-  opencv,
+  opencv ? null,
   python3,
-  vips,
+  vips ? null,
   testers,
   libwebp,
 }:
@@ -91,16 +91,16 @@ stdenv.mkDerivation rec {
   passthru.tests = {
     inherit
       gd
-      graphicsmagick
       imagemagick
       libjxl
-      opencv
-      vips
       ;
     inherit (python3.pkgs) pillow imread;
     haskell-webp = haskellPackages.webp;
     pkg-config = testers.hasPkgConfigModules { package = libwebp; };
-  };
+  }
+  // lib.optionalAttrs (graphicsmagick != null) { inherit graphicsmagick; }
+  // lib.optionalAttrs (opencv != null) { inherit opencv; }
+  // lib.optionalAttrs (vips != null) { inherit vips; };
 
   meta = {
     description = "Tools and library for the WebP image format";
