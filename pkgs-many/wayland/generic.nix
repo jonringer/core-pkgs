@@ -18,7 +18,7 @@
   ninja,
   withTests ? stdenv.hostPlatform.isLinux,
   libffi,
-  epoll-shim,
+  epoll-shim ? null,
   graphviz-nox ? null,
   expat,
   libxml2,
@@ -104,9 +104,7 @@ stdenv.mkDerivation (finalAttrs: {
     expat
     libxml2
   ]
-  ++ lib.optionals (!stdenv.hostPlatform.isLinux) [
-    epoll-shim
-  ]
+  ++ lib.optionals (!stdenv.hostPlatform.isLinux) (lib.optional (epoll-shim != null) epoll-shim)
   ++ lib.optionals withDocumentation [
     docbook-xsl-nons
     docbook-xml-dtd.v4_5
