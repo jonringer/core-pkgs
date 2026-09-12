@@ -9,7 +9,7 @@
   pkg-config,
   doxygen,
   graphviz,
-  mscgen,
+  mscgen ? null,
   asciidoc,
   sourceHighlight,
   libpcap,
@@ -45,7 +45,9 @@ stdenv.mkDerivation rec {
     file
     doxygen
     graphviz
-    mscgen
+  ]
+  ++ lib.optional (mscgen != null) mscgen
+  ++ [
     asciidoc
     sourceHighlight
   ]
