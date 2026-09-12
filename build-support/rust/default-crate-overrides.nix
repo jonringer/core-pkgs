@@ -6,7 +6,7 @@
   autoconf,
   automake,
   cairo,
-  capnproto,
+  capnproto ? null,
   clang,
   cmake,
   curl,
@@ -20,7 +20,7 @@
   glib,
   gmp,
   gobject-introspection,
-  graphene,
+  graphene ? null,
   gtk3,
   gtk4,
   libevdev,
@@ -35,10 +35,10 @@
   openssl,
   pango,
   pkg-config,
-  libpq,
+  libpq ? null,
   protobuf,
   python3,
-  rdkafka,
+  rdkafka ? null,
   seatd, # =libseat
   sqlite,
   udev,
@@ -72,7 +72,7 @@
   };
 
   capnp-rpc = attrs: {
-    nativeBuildInputs = [ capnproto ];
+    nativeBuildInputs = lib.optional (capnproto != null) capnproto;
   };
 
   cargo = attrs: {
@@ -255,7 +255,7 @@
       pkg-config
       gobject-introspection
     ];
-    buildInputs = [ graphene ];
+    buildInputs = lib.optional (graphene != null) graphene;
   };
 
   javascriptcore-rs-sys = attrs: {
@@ -296,7 +296,7 @@
 
   pq-sys = attr: {
     nativeBuildInputs = [ pkg-config ];
-    buildInputs = [ libpq ];
+    buildInputs = lib.optional (libpq != null) libpq;
   };
 
   prost-build = attr: {
@@ -309,7 +309,7 @@
 
   rdkafka-sys = attr: {
     nativeBuildInputs = [ pkg-config ];
-    buildInputs = [ rdkafka ];
+    buildInputs = lib.optional (rdkafka != null) rdkafka;
   };
 
   rink = attrs: {
@@ -344,7 +344,7 @@
   };
 
   sequoia-store = attrs: {
-    nativeBuildInputs = [ capnproto ];
+    nativeBuildInputs = lib.optional (capnproto != null) capnproto;
     buildInputs = [
       sqlite
       gmp
@@ -359,7 +359,7 @@
   };
 
   sequoia-tool = attrs: {
-    nativeBuildInputs = [ capnproto ];
+    nativeBuildInputs = lib.optional (capnproto != null) capnproto;
     buildInputs = [
       sqlite
       gmp
