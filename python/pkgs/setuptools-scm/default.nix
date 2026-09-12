@@ -14,7 +14,7 @@
   tomli,
 
   # optional-dependencies
-  rich,
+  rich ? null,
 }:
 
 buildPythonPackage rec {
@@ -47,7 +47,7 @@ buildPythonPackage rec {
   ++ lib.optionals (pythonOlder "3.11") [ tomli ];
 
   optional-dependencies = {
-    rich = [ rich ];
+    rich = lib.optional (rich != null) rich;
   };
 
   pythonImportsCheck = [ "setuptools_scm" ];
