@@ -22,7 +22,7 @@
   lapack,
 
   # Reverse dependency
-  sage,
+  sage ? null,
 
   # tests
   hypothesis,
@@ -172,9 +172,9 @@ buildPythonPackage (finalAttrs: {
     inherit cfg;
     coreIncludeDir = "${numpy_1}/${python.sitePackages}/numpy/core/include";
     tests = {
-      inherit sage;
       unittests = finalAttrs.finalPackage.overridePythonAttrs { doCheck = true; };
-    };
+    }
+    // lib.optionalAttrs (sage != null) { inherit sage; };
   };
 
   # Disable test
