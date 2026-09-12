@@ -7,9 +7,9 @@
   ncurses,
   numpy,
   pkg-config,
-  pygame-ce,
+  pygame-ce ? null,
   python,
-  sage, # Reverse dependency
+  sage ? null, # Reverse dependency
   setuptools,
   stdenv,
 }:
@@ -81,9 +81,9 @@ buildPythonPackage rec {
       runHook postCheck
     '';
 
-  passthru.tests = {
-    inherit pygame-ce sage;
-  };
+  passthru.tests =
+    lib.optionalAttrs (pygame-ce != null) { inherit pygame-ce; }
+    // lib.optionalAttrs (sage != null) { inherit sage; };
 
   # Force code regeneration in source distributions
   # https://github.com/cython/cython/issues/5089
