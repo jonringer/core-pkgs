@@ -7,9 +7,9 @@
   lib,
 
   # for passthru.tests
-  knot-dns,
+  knot-dns ? null,
   systemd,
-  tracee,
+  tracee ? null,
 }:
 
 stdenv.mkDerivation rec {
@@ -36,9 +36,10 @@ stdenv.mkDerivation rec {
   ];
 
   passthru.tests = {
-    inherit knot-dns tracee;
     systemd = systemd.override { withLibBPF = true; };
-  };
+  }
+  // lib.optionalAttrs (knot-dns != null) { inherit knot-dns; }
+  // lib.optionalAttrs (tracee != null) { inherit tracee; };
 
   postInstall = ''
     # install linux's libbpf-compatible linux/btf.h
