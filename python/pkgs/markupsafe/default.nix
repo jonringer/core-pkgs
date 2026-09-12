@@ -12,9 +12,9 @@
 
   # reverse dependencies
   jinja2,
-  mkdocs,
-  quart,
-  werkzeug,
+  mkdocs ? null,
+  quart ? null,
+  werkzeug ? null,
 }:
 
 buildPythonPackage rec {
@@ -38,13 +38,11 @@ buildPythonPackage rec {
   pythonImportsCheck = [ "markupsafe" ];
 
   passthru.tests = {
-    inherit
-      jinja2
-      mkdocs
-      quart
-      werkzeug
-      ;
-  };
+    inherit jinja2;
+  }
+  // lib.optionalAttrs (mkdocs != null) { inherit mkdocs; }
+  // lib.optionalAttrs (quart != null) { inherit quart; }
+  // lib.optionalAttrs (werkzeug != null) { inherit werkzeug; };
 
   meta = {
     changelog = "https://markupsafe.palletsprojects.com/page/changes/#version-${
