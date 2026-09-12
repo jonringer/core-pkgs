@@ -30,16 +30,13 @@
   wayland,
   wayland-scanner,
 
-  # `null` in top-level.nix until ported. Each is reachable only through the
-  # matching `*Support` flag below, all of which default to false, so none of
-  # these is ever forced.
-  ibusMinimal,
-  libayatana-appindicator,
+  ibusMinimal ? null,
+  libayatana-appindicator ? null,
   libdecor,
-  libjack2,
-  libpulseaudio,
-  pipewire,
-  sndio,
+  libjack2 ? null,
+  libpulseaudio ? null,
+  pipewire ? null,
+  sndio ? null,
 
   alsaSupport ? stdenv.hostPlatform.isLinux && !stdenv.hostPlatform.isAndroid,
   dbusSupport ? stdenv.hostPlatform.isLinux && !stdenv.hostPlatform.isAndroid,
@@ -160,7 +157,7 @@ stdenv.mkDerivation (finalAttrs: {
       vulkan-headers
       vulkan-loader
     ]
-    ++ lib.optionals ibusSupport [
+    ++ lib.optionals (ibusSupport && ibusMinimal != null) [
       # sdl3 only uses some constants of the ibus headers
       # it never actually loads the library
       ibusMinimal
