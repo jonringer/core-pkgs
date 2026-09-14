@@ -23,6 +23,7 @@
     ./keyboard.nix
     ./laptop.nix
     ./networking.nix
+    ./power.nix
     ./printing.nix
     ./scanner.nix
     ./system.nix

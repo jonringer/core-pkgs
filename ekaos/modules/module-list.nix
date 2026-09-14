@@ -162,6 +162,7 @@
   ./services/databases/redis.nix
 
   ./services/hardware/bolt.nix
+  ./services/hardware/power-profiles-daemon.nix
   ./services/hardware/thermald.nix
   ./services/hardware/fwupd.nix
   ./services/hardware/fprintd.nix
