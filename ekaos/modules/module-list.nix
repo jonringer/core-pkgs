@@ -22,6 +22,7 @@
   ./hardware/firmware.nix
   ./hardware/facter
   ./hardware/cpu.nix
+  ./hardware/ipu6.nix
   ./hardware/trackpoint.nix
   ./hardware/sensor/iio.nix
 

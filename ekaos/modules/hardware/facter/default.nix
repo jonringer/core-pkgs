@@ -12,6 +12,7 @@
     ./boot.nix
     ./bluetooth.nix
     ./bluetooth-stack.nix
+    ./camera.nix
     ./cpu.nix
     ./disk.nix
     ./fingerprint.nix
