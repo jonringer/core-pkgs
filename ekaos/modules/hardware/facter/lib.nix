@@ -88,6 +88,93 @@ let
       "0${hex}"
     else
       hex;
+  # SMBIOS vendor/product matching for device quirks
+  hasManufacturer =
+    name:
+    {
+      smbios ? { },
+      ...
+    }:
+    lib.hasInfix name ((smbios.system or { }).manufacturer or "");
+
+  hasProduct =
+    pattern:
+    {
+      smbios ? { },
+      ...
+    }:
+    lib.hasInfix pattern ((smbios.system or { }).product_name or "");
+
+  isDevice =
+    {
+      manufacturer,
+      product ? null,
+    }:
+    report: hasManufacturer manufacturer report && (product == null || hasProduct product report);
+
+  # Query if a facter report contains a PCI device with the given vendor and device IDs
+  hasPciDevice =
+    vendorId: deviceId:
+    {
+      hardware ? { },
+      ...
+    }:
+    let
+      allPci =
+        (hardware.graphics_card or [ ])
+        ++ (hardware.network_controller or [ ])
+        ++ (hardware.storage_controller or [ ])
+        ++ (hardware.multimedia_controller or [ ]);
+    in
+    builtins.any (
+      {
+        vendor ? { },
+        device ? { },
+        ...
+      }:
+      (vendor.value or 0) == vendorId && (device.value or 0) == deviceId
+    ) allPci;
+
+  # Query if a facter report contains a USB device with the given vendor ID
+  hasUsbVendor =
+    vendorId:
+    {
+      hardware ? { },
+      ...
+    }:
+    let
+      allUsb =
+        (hardware.fingerprint_reader or [ ])
+        ++ (hardware.joystick or [ ])
+        ++ (hardware.scanner or [ ])
+        ++ (hardware.printer or [ ]);
+    in
+    builtins.any (
+      {
+        vendor ? { },
+        ...
+      }:
+      (vendor.value or 0) == vendorId
+    ) allUsb;
+
+  # Check if the facter report indicates a convertible/tablet chassis
+  # SMBIOS: 30=Tablet, 31=Convertible, 32=Detachable
+  isConvertibleChassis =
+    {
+      smbios ? { },
+      ...
+    }:
+    builtins.any (
+      {
+        chassis_type ? { },
+        ...
+      }:
+      builtins.elem (chassis_type.value or 0) [
+        30
+        31
+        32
+      ]
+    ) (smbios.chassis or [ ]);
 in
 {
   inherit
@@ -97,6 +184,12 @@ in
     collectDrivers
     stringSet
     toZeroPaddedHex
+    hasManufacturer
+    hasProduct
+    isDevice
+    hasPciDevice
+    hasUsbVendor
+    isConvertibleChassis
     ;
 
   hasAmdCpu = hasCpu "AuthenticAMD";
@@ -106,4 +199,20 @@ in
   hasAmdGpu = hasGpuVendor 4098;
   hasIntelGpu = hasGpuVendor 32902;
   hasNvidiaGpu = hasGpuVendor 4318;
+
+  # Common device checks
+  isFramework = hasManufacturer "Framework";
+  isSurface = isDevice {
+    manufacturer = "Microsoft Corporation";
+    product = "Surface";
+  };
+  isThinkPad = hasProduct "ThinkPad";
+  isAsusRog = isDevice {
+    manufacturer = "ASUSTeK";
+    product = "ROG";
+  };
+  isDellXps = isDevice {
+    manufacturer = "Dell";
+    product = "XPS";
+  };
 }
