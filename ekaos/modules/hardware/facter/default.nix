@@ -24,6 +24,7 @@
     ./keyboard.nix
     ./laptop.nix
     ./networking.nix
+    ./nvidia.nix
     ./power.nix
     ./printing.nix
     ./scanner.nix

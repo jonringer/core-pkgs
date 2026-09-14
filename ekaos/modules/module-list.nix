@@ -23,6 +23,7 @@
   ./hardware/facter
   ./hardware/cpu.nix
   ./hardware/ipu6.nix
+  ./hardware/nvidia.nix
   ./hardware/trackpoint.nix
   ./hardware/sensor/iio.nix
 
