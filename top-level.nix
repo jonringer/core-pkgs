@@ -1022,6 +1022,14 @@ with final;
     else
       lib.getBin prev.libiconv;
 
+  ipu6ep-camera-hal = ipu6-camera-hal.override {
+    ipuVersion = "ipu6ep";
+  };
+
+  ipu6epmtl-camera-hal = ipu6-camera-hal.override {
+    ipuVersion = "ipu6epmtl";
+  };
+
   openssl_legacy = openssl.override {
     conf = ./pkgs-many/openssl/3.0/legacy.cnf;
   };
