@@ -27,6 +27,7 @@
     ./scanner.nix
     ./system.nix
     ./thermal.nix
+    ./thunderbolt.nix
     ./touchscreen.nix
     ./trackpoint.nix
     ./virtualisation.nix

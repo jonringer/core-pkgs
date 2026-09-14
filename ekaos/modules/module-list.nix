@@ -161,6 +161,7 @@
   ./services/databases/postgresql.nix
   ./services/databases/redis.nix
 
+  ./services/hardware/bolt.nix
   ./services/hardware/thermald.nix
   ./services/hardware/fwupd.nix
   ./services/hardware/fprintd.nix
