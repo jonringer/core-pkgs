@@ -8,20 +8,26 @@
 }:
 {
   imports = [
+    ./audio.nix
     ./boot.nix
     ./bluetooth.nix
     ./bluetooth-stack.nix
     ./cpu.nix
     ./disk.nix
+    ./fingerprint.nix
     ./firmware.nix
     ./fwupd.nix
+    ./gaming.nix
     ./gpu.nix
     ./graphics.nix
     ./keyboard.nix
     ./laptop.nix
     ./networking.nix
+    ./printing.nix
+    ./scanner.nix
     ./system.nix
     ./thermal.nix
+    ./touchscreen.nix
     ./trackpoint.nix
     ./virtualisation.nix
   ];
