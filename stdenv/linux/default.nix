@@ -185,7 +185,7 @@ let
           if prevStage.gcc-unwrapped == null then
             null
           else
-            (lib.makeOverridable (import ../../build-support/cc-wrapper) {
+            (lib.makeOverridable (import ../cc-wrapper) {
               name = "${name}-gcc-wrapper";
               nativeTools = false;
               nativeLibc = false;
@@ -610,7 +610,7 @@ in
           inherit (prevStage) expand-response-params;
         };
 
-        gcc = lib.makeOverridable (import ../../build-support/cc-wrapper) {
+        gcc = lib.makeOverridable (import ../cc-wrapper) {
           nativeTools = false;
           nativeLibc = false;
           isGNU = true;

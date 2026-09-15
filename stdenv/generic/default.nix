@@ -16,20 +16,20 @@ let
     makeDerivationFile args.defaultConfig;
 
   defaultNativeBuildInputs0 = [
-    ../../build-support/setup-hooks/no-broken-symlinks.sh
-    ../../build-support/setup-hooks/audit-tmpdir.sh
-    ../../build-support/setup-hooks/compress-man-pages.sh
-    ../../build-support/setup-hooks/make-symlinks-relative.sh
-    ../../build-support/setup-hooks/move-docs.sh
-    ../../build-support/setup-hooks/move-lib64.sh
-    ../../build-support/setup-hooks/move-sbin.sh
-    ../../build-support/setup-hooks/move-systemd-user-units.sh
-    ../../build-support/setup-hooks/multiple-outputs.sh
-    ../../build-support/setup-hooks/patch-shebangs.sh
-    ../../build-support/setup-hooks/prune-libtool-files.sh
-    ../../build-support/setup-hooks/reproducible-builds.sh
-    ../../build-support/setup-hooks/set-source-date-epoch-to-latest.sh
-    ../../build-support/setup-hooks/strip.sh
+    ../setup-hooks/no-broken-symlinks.sh
+    ../setup-hooks/audit-tmpdir.sh
+    ../setup-hooks/compress-man-pages.sh
+    ../setup-hooks/make-symlinks-relative.sh
+    ../setup-hooks/move-docs.sh
+    ../setup-hooks/move-lib64.sh
+    ../setup-hooks/move-sbin.sh
+    ../setup-hooks/move-systemd-user-units.sh
+    ../setup-hooks/multiple-outputs.sh
+    ../setup-hooks/patch-shebangs.sh
+    ../setup-hooks/prune-libtool-files.sh
+    ../setup-hooks/reproducible-builds.sh
+    ../setup-hooks/set-source-date-epoch-to-latest.sh
+    ../setup-hooks/strip.sh
   ];
 
   stdenv-overridable = lib.makeOverridable (

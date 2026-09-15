@@ -130,13 +130,13 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
     # add a wrapper script for ld.lld
     mkdir -p $out/nix-support
-    substituteAll ${../../build-support/wrapper-common/utils.bash} $out/nix-support/utils.bash
-    substituteAll ${../../build-support/wrapper-common/darwin-sdk-setup.bash} $out/nix-support/darwin-sdk-setup.bash
-    substituteAll ${../../build-support/bintools-wrapper/add-flags.sh} $out/nix-support/add-flags.sh
-    substituteAll ${../../build-support/bintools-wrapper/add-hardening.sh} $out/nix-support/add-hardening.sh
+    substituteAll ${../../stdenv/wrapper-common/utils.bash} $out/nix-support/utils.bash
+    substituteAll ${../../stdenv/wrapper-common/darwin-sdk-setup.bash} $out/nix-support/darwin-sdk-setup.bash
+    substituteAll ${../../stdenv/bintools-wrapper/add-flags.sh} $out/nix-support/add-flags.sh
+    substituteAll ${../../stdenv/bintools-wrapper/add-hardening.sh} $out/nix-support/add-hardening.sh
     export prog='$PROG'
     export use_response_file_by_default=0
-    substituteAll ${../../build-support/bintools-wrapper/ld-wrapper.sh} $out/nix-support/ld-wrapper.sh
+    substituteAll ${../../stdenv/bintools-wrapper/ld-wrapper.sh} $out/nix-support/ld-wrapper.sh
     chmod +x $out/nix-support/ld-wrapper.sh
   '';
 

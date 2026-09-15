@@ -97,7 +97,7 @@ stdenv.mkDerivation rec {
     ];
 
   setupHooks = [
-    ../../build-support/setup-hooks/role.bash
+    ../../stdenv/setup-hooks/role.bash
     ./gettext-setup-hook.sh
   ];
   env = {

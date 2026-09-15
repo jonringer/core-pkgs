@@ -194,8 +194,8 @@ in
 stdenv:
 
 let
-  inherit (import ../../build-support/lib/cmake.nix { inherit lib stdenv; }) makeCMakeFlags;
-  inherit (import ../../build-support/lib/meson.nix { inherit lib stdenv; }) makeMesonFlags;
+  inherit (import ../lib/cmake.nix { inherit lib stdenv; }) makeCMakeFlags;
+  inherit (import ../lib/meson.nix { inherit lib stdenv; }) makeMesonFlags;
 
   # Nix itself uses the `system` field of a derivation to decide where
   # to build it. This is a bit confusing for cross compilation.
@@ -529,8 +529,8 @@ let
           buildInputs ++ optionals doCheck checkInputs ++ optionals doInstallCheck installCheckInputs;
         nativeBuildInputs' =
           nativeBuildInputs
-          ++ optional separateDebugInfo' ../../build-support/setup-hooks/separate-debug-info.sh
-          ++ optional isWindows ../../build-support/setup-hooks/win-dll-link.sh
+          ++ optional separateDebugInfo' ../setup-hooks/separate-debug-info.sh
+          ++ optional isWindows ../setup-hooks/win-dll-link.sh
           ++ optionals doCheck nativeCheckInputs
           ++ optionals doInstallCheck nativeInstallCheckInputs;
 

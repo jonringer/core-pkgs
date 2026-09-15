@@ -85,7 +85,7 @@ let
 
   trivialBuilders =
     self: _:
-    import ../build-support/trivial-builders {
+    import ./trivial-builders {
       inherit lib;
       inherit (self) config;
       inherit (self) runtimeShell stdenv stdenvNoCC;
