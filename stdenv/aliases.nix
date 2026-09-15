@@ -176,6 +176,8 @@ mapAliases {
   luajit_2_0 = lua.luajit_2_0;
   luajit_2_1 = lua.luajit_2_1;
   luajit_openresty = lua.luajit_openresty;
+  makeInitrd = linux.makeInitrd;
+  makeModulesClosure = linux.makeModulesClosure;
   man = man-db;
   mdbook-linkcheck = throw "'mdbook-linkcheck' has been removed and replaced by 'mdbook-linkcheck2' due to incompatibility with mdbook version 0.5.0+";
   mtdutils = mtd-utils;
@@ -278,6 +280,8 @@ mapAliases {
   wlroots_0_17 = wlroots.v0_17;
   wlroots_0_18 = wlroots.v0_18;
   wlroots_0_19 = wlroots.v0_19;
+  wrapRustc = rustPackages.wrapRustc;
+  wrapRustcWith = rustPackages.wrapRustcWith;
   xxHash = xxhash;
   # keep-sorted end
 }
