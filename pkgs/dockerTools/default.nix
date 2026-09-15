@@ -34,7 +34,7 @@
   writeShellScriptBin,
   writeText,
   writeTextDir,
-  writePython3,
+  writePython3 ? buildPackages.writers.writePython3,
   zstd,
   # proot is only needed when enableFakechroot is set.
   proot ? null,
