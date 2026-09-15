@@ -7,6 +7,7 @@
 
 {
   lib,
+  callPackage,
   linux-support,
   # Accept kernel-level overrides that may be passed via .override
   preferBuiltin ? false,
@@ -82,6 +83,8 @@ kernel.overrideAttrs (oldAttrs: {
     // {
       pkgs = kernelPackages;
       inherit variantArgs;
+      makeInitrd = callPackage ./makeInitrd;
+      makeModulesClosure = callPackage ./makeModulesClosure;
       ekapkgs-update.semver-strategy = "patch";
     };
 })

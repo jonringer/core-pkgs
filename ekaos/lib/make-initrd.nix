@@ -199,7 +199,7 @@ let
 
 in
 
-pkgs.makeInitrd {
+kernelPackages.kernel.makeInitrd {
   contents = [
     {
       object = bootStage1;
