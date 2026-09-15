@@ -1030,6 +1030,10 @@ with final;
     ipuVersion = "ipu6epmtl";
   };
 
+  ipu75xa-camera-hal = ipu7-camera-hal.override {
+    ipuVersion = "ipu75xa";
+  };
+
   openssl_legacy = openssl.override {
     conf = ./pkgs-many/openssl/3.0/legacy.cnf;
   };

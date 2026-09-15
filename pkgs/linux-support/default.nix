@@ -238,6 +238,8 @@ lib.makeScope pkgs.newScope (
 
           ipu6-drivers = callPackage ./pkgs/ipu6-drivers { };
 
+          ipu7-drivers = callPackage ./pkgs/ipu7-drivers { };
+
           ivsc-driver = callPackage ./pkgs/ivsc-driver { };
 
           ixgbevf = callPackage ./pkgs/ixgbevf { };
