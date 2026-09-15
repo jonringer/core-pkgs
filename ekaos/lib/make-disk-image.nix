@@ -190,6 +190,7 @@
 
   # GPT Partition Unique Identifier for root partition.
   rootGPUID ? "F222513B-DED1-49FA-B591-20CE86A2FE7F",
+
   # When fsType = ext4, this is the root Filesystem Unique Identifier.
   # TODO: support other filesystems someday.
   rootFSUID ? (if fsType == "ext4" then rootGPUID else null),

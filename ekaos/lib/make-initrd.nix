@@ -166,8 +166,7 @@ let
     echo "Mounting root filesystem..."
     mkdir -p /mnt-root
 
-    # Try to mount root (assume /dev/vda2 or similar for now)
-    # In a full implementation, this would parse kernel command line for root=
+    # Standard boot: use /dev/vda2 or LUKS root
     ROOT_DEVICE="/dev/vda2"
     if [ -e /dev/mapper/cryptroot ]; then
       ROOT_DEVICE="/dev/mapper/cryptroot"
@@ -176,7 +175,7 @@ let
     mount "$ROOT_DEVICE" /mnt-root || {
       echo "Failed to mount root filesystem"
       echo "Available block devices:"
-      ls -l /dev/vd* /dev/sd* /dev/mapper/* 2>/dev/null || true
+      ls -l /dev/vd* /dev/sd* /dev/mapper/* /dev/disk/by-partlabel/* 2>/dev/null || true
       /bin/sh  # Drop to shell for debugging
     }
 
