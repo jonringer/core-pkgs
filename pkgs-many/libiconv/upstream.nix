@@ -17,7 +17,7 @@
 
 let
   setupHooks = [
-    ../../build-support/setup-hooks/role.bash
+    ../../stdenv/setup-hooks/role.bash
     ./setup-hook.sh
   ];
 in

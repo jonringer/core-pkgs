@@ -77,7 +77,7 @@ if minbootSupported then
           passthru.isFromBootstrapFiles = true;
         };
         gcc-unwrapped = compilerPackage;
-        binutils = import ../../build-support/bintools-wrapper {
+        binutils = import ../bintools-wrapper {
           name = "bootstrap-stage0-binutils-wrapper";
           nativeTools = false;
           nativeLibc = false;
@@ -163,7 +163,7 @@ else
           passthru.isFromBootstrapFiles = true;
         };
         gcc-unwrapped = bootstrapTools;
-        binutils = import ../../build-support/bintools-wrapper {
+        binutils = import ../bintools-wrapper {
           name = "bootstrap-stage0-binutils-wrapper";
           nativeTools = false;
           nativeLibc = false;
