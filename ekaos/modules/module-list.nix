@@ -22,6 +22,9 @@
   ./hardware/firmware.nix
   ./hardware/facter
   ./hardware/cpu.nix
+  ./hardware/ipu6.nix
+  ./hardware/ipu7.nix
+  ./hardware/nvidia.nix
   ./hardware/trackpoint.nix
   ./hardware/sensor/iio.nix
 
@@ -161,6 +164,8 @@
   ./services/databases/postgresql.nix
   ./services/databases/redis.nix
 
+  ./services/hardware/bolt.nix
+  ./services/hardware/power-profiles-daemon.nix
   ./services/hardware/thermald.nix
   ./services/hardware/fwupd.nix
   ./services/hardware/fprintd.nix

@@ -42,11 +42,10 @@ in
         boot.initrd.kernelModules = [ "i915" ];
       })
 
-      # NVIDIA GPU: enable mesa side, kernel modesetting for Wayland/display
-      # Proprietary drivers still require user opt-in
+      # NVIDIA GPU: enable graphics stack
+      # Driver configuration is handled by hardware.nvidia (via facter/nvidia.nix)
       (lib.mkIf cfg.nvidia.enable {
         hardware.graphics.enable = lib.mkDefault true;
-        boot.kernelParams = [ "nvidia-drm.modeset=1" ];
       })
     ]
   );
