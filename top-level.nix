@@ -465,7 +465,6 @@ with final;
 
   json-schema-for-humans = with python3Packages; toPythonApplication json-schema-for-humans;
 
-
   # Default libGL implementation.
   #
   # Android NDK provides an OpenGL implementation, we can just use that.
@@ -613,7 +612,6 @@ with final;
   buildGoModule = go.buildModule;
 
   R = callPackage ./pkgs/R { };
-
 
   rPackages = callPackage ./r { inherit config; };
 
@@ -1063,7 +1061,6 @@ with final;
 
   perlPackages = perl.pkgs;
 
-
   texinfo6 = texinfo.v6;
   texinfo7 = texinfo.v7;
   texinfoInteractive = texinfo.interactive;
@@ -1276,7 +1273,6 @@ with final;
   };
 
   glfw = glfw3;
-
 
   gtk3 = callPackage ./pkgs/gtk/3.x.nix {
     trackerSupport = false;
@@ -1771,7 +1767,6 @@ with final;
       // lib.optionalAttrs targetAlreadyIncluded { inherit (pkgsBuildBuild) rustc cargo; } # Optimization.
     );
 
-
   inherit (callPackages ./pkgs/cargo-pgrx { })
     cargo-pgrx_0_12_0_alpha_1
     cargo-pgrx_0_12_6
@@ -1790,7 +1785,6 @@ with final;
 
   mkNugetDeps = null; # TODO(corepkgs): implement NuGet dependency fetcher
   mkNugetSource = null; # TODO(corepkgs): implement NuGet source builder
-
 
   buildFHSEnv = buildFHSEnvBubblewrap;
 
