@@ -77,7 +77,7 @@ let
       serviceNames = lib.attrNames serviceDerivations;
 
       # Build the runitTestHook
-      runitTestHook = pkgs.callPackage ../../build-support/test-hooks/runit-test-hook { };
+      runitTestHook = pkgs.callPackage ./runit-test-hook { };
 
       # Default dependencies for test scripts
       defaultDeps = with pkgs; [
