@@ -69,7 +69,7 @@ stdenv.mkDerivation (finalAttrs: {
     "-Dtests=false"
     "-Dmanpage=disabled"
     "-Dbashcomp=disabled"
-    "-Dzshcomp=${placeholder "out"}/share/zsh/site-functions"
+    "-Dzshcomp="
   ];
 
   env.PKG_CONFIG_POLKIT_GOBJECT_1_POLICYDIR = "${placeholder "out"}/share/polkit-1/actions";
