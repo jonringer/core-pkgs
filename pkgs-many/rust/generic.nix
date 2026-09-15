@@ -36,7 +36,6 @@
   pkgsHostTarget,
   pkgsTargetTarget,
   makeRustPlatform,
-  wrapRustcWith,
   llvmPackages,
   llvm,
   wrapCCWith,
@@ -65,7 +64,7 @@ let
   llvmSharedForTarget = llvmSharedFor pkgsBuildTarget;
 
   # Use `import` to make sure no packages sneak in here.
-  lib' = import ../../build-support/rust/lib {
+  lib' = import ../../pkgs/rust/lib {
     inherit
       lib
       stdenv
@@ -124,7 +123,9 @@ let
           # Use boot package set to break cycle
           inherit (bootstrapRustPackages) cargo rustc rustfmt;
         };
-        rustc = wrapRustcWith {
+        wrapRustcWith = args: self.callPackage ./rustc-wrapper args;
+        wrapRustc = rustc-unwrapped: self.wrapRustcWith { inherit rustc-unwrapped; };
+        rustc = self.wrapRustcWith {
           inherit (self) rustc-unwrapped;
           sysroot = if fastCross then self.rustc-unwrapped else null;
         };

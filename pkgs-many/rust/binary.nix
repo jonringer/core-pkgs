@@ -2,7 +2,7 @@
   lib,
   stdenv,
   makeWrapper,
-  wrapRustc,
+  callPackage,
   bash,
   curl,
   zlib,
@@ -141,7 +141,7 @@ rec {
     };
   };
 
-  rustc = wrapRustc rustc-unwrapped;
+  rustc = callPackage ./rustc-wrapper { inherit rustc-unwrapped; };
 
   cargo = stdenv.mkDerivation {
     pname = "cargo-${versionType}";

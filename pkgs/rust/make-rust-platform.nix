@@ -26,11 +26,11 @@
       inherit (self) callPackage;
     in
     {
-      fetchCargoVendor = buildPackages.callPackage ../../build-support/rust/fetch-cargo-vendor.nix {
+      fetchCargoVendor = buildPackages.callPackage ./fetch-cargo-vendor.nix {
         inherit cargo;
       };
 
-      buildRustPackage = callPackage ../../build-support/rust/build-rust-package {
+      buildRustPackage = callPackage ./build-rust-package {
         inherit
           stdenv
           rustc
@@ -39,7 +39,7 @@
           ;
       };
 
-      importCargoLock = buildPackages.callPackage ../../build-support/rust/import-cargo-lock.nix {
+      importCargoLock = buildPackages.callPackage ./import-cargo-lock.nix {
         inherit cargo;
       };
 
@@ -59,7 +59,7 @@
 
       # Hooks
       inherit
-        (callPackages ../../build-support/rust/hooks {
+        (callPackages ./hooks {
           inherit
             stdenv
             ;
