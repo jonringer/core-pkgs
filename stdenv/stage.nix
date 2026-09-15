@@ -129,7 +129,7 @@ let
 
   splice = self: _: import ./splice.nix lib self (adjacentPackages != null);
 
-  aliases = self: super: import ./aliases.nix lib self super;
+  aliases = self: super: import ../aliases/nixpkgs.nix lib self super;
 
   variants =
     self: super:
@@ -178,7 +178,7 @@ let
       let
         isSupported = stdenv.hostPlatform.isLinux && stdenv.hostPlatform.isx86;
       in
-      if !config.allowAliases || isSupported then
+      if !config.aliases.nixpkgs || isSupported then
         nixpkgsFun {
           overlays = [
             (_: super': {
@@ -284,7 +284,7 @@ let
   # Layers the user can opt out of, only applied to the stage that accepts
   # user-facing overrides.
   customOverrides =
-    lib.optional config.allowAliases aliases
+    lib.optional config.aliases.nixpkgs aliases
     ++ lib.optional config.allowVariants variants
     ++ lib.optional (config ? packageOverrides) configOverrides;
 

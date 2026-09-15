@@ -197,7 +197,7 @@ let
         ;
 
     }
-    // lib.optionalAttrs config.allowAliases (
+    // lib.optionalAttrs config.aliases.nixpkgs (
       lib.mapAttrs
         (
           name: value: lib.warn "stdenv.${name} is deprecated, use stdenv.hostPlatform.${name} instead" value

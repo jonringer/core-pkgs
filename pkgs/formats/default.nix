@@ -63,7 +63,7 @@ let
 
   # Attributes added accidentally in https://github.com/NixOS/nixpkgs/pull/335232 (2024-08-18)
   # Deprecated in https://github.com/NixOS/nixpkgs/pull/415666 (2025-06)
-  allowAliases = pkgs.config.allowAliases or false;
+  allowAliases = pkgs.config.aliases.nixpkgs or false;
   aliasWarning = name: warn "`formats.${name}` is deprecated; use `lib.types.${name}` instead.";
   aliases = mapAttrs aliasWarning {
     inherit

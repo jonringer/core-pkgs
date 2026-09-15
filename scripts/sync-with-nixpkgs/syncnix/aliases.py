@@ -1,6 +1,6 @@
 """The rewrite vocabulary, read from the package set's own alias files.
 
-corepkgs already records how it spells upstream names, in `stdenv/aliases.nix`
+corepkgs already records how it spells upstream names, in `aliases/nixpkgs.nix`
 and `python/aliases.nix`. Reading those at run time means the sync tool cannot
 drift from the aliases the package set actually defines -- a hand-copied list
 would.

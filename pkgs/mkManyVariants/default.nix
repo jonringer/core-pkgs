@@ -28,7 +28,7 @@
 
   # Variants that have been fully removed. Accessing them throws an error.
   # Maps variant name to removal date string, e.g. { v6_13 = "2026-02-01"; }
-  # Only honoured when `config.allowAliases` is true.
+  # Only honoured when `config.aliases.nixpkgs` is true.
   # Requires `name` to be set.
   # Type: AttrSet String
   removed ? { },
@@ -68,7 +68,7 @@ let
     else
       aliasesExpr;
 
-  removedOverlay = lib.optionalAttrs config.allowAliases (
+  removedOverlay = lib.optionalAttrs config.aliases.nixpkgs (
     builtins.mapAttrs (
       n: date: throw "${name}.${n} is no longer available and was removed on ${date}."
     ) removed

@@ -60,7 +60,7 @@ mapAliases {
   cmakeMinimal = cmake.minimal;
   curlMinimal = curl.minimal;
   curlWithGnuTls = curl.gnutls;
-  darwin = import ./darwin-aliases.nix pkgs;
+  darwin = import ./darwin.nix pkgs;
   db4 = db.v4_8;
   db48 = db.v4_8;
   db5 = db.v5_3;

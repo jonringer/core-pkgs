@@ -265,7 +265,7 @@ evaluation warning: nodejs.v18 is EOL as of 2025-04-30. It is recommended to use
 
 ### `removed` — Throw on access
 
-For variants that have been deleted from `variants.nix`. Accessing them throws an error. Only honoured when `config.allowAliases` is `true` (the default), so CI evaluation with `allowAliases = false` is unaffected.
+For variants that have been deleted from `variants.nix`. Accessing them throws an error. Only honoured when `config.aliases.nixpkgs` is `true` (the default), so CI evaluation with `aliases.nixpkgs = false` is unaffected.
 
 ```nix
 mkManyVariants {
@@ -283,7 +283,7 @@ Evaluating `linux.v6_17` throws:
 error: linux.v6_17 is no longer available and was removed on 2026-08-30.
 ```
 
-Aliases in `stdenv/aliases.nix` should continue pointing to the variant (e.g. `linuxPackages_6_17 = linux.v6_17.pkgs;`) so the specific error is emitted instead of a generic "attribute missing".
+Aliases in `aliases/nixpkgs.nix` should continue pointing to the variant (e.g. `linuxPackages_6_17 = linux.v6_17.pkgs;`) so the specific error is emitted instead of a generic "attribute missing".
 
 ## When to Use mkManyVariants
 

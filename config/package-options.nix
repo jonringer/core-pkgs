@@ -9,21 +9,32 @@ let
 in
 {
   options = {
+    aliases = {
+      nixpkgs = mkOption {
+        type = types.bool;
+        default = config.allowAliases;
+        description = ''
+          Whether to expose old attribute names for compatibility.
+
+          The recommended setting is to enable this, as it
+          improves backward compatibility, easing updates.
+
+          The only reason to disable aliases is for continuous
+          integration purposes. For instance, Nixpkgs should
+          not depend on aliases in its internal code. Projects
+          that aren't Nixpkgs should be cautious of instantly
+          removing all usages of aliases, as migrating too soon
+          can break compatibility with the stable Nixpkgs releases.
+        '';
+      };
+    };
+
+    # Backward-compatible alias for config.aliases.nixpkgs.
     allowAliases = mkOption {
       type = types.bool;
       default = true;
       description = ''
-        Whether to expose old attribute names for compatibility.
-
-        The recommended setting is to enable this, as it
-        improves backward compatibility, easing updates.
-
-        The only reason to disable aliases is for continuous
-        integration purposes. For instance, Nixpkgs should
-        not depend on aliases in its internal code. Projects
-        that aren't Nixpkgs should be cautious of instantly
-        removing all usages of aliases, as migrating too soon
-        can break compatibility with the stable Nixpkgs releases.
+        Deprecated alias for `aliases.nixpkgs`.
       '';
     };
 
@@ -146,6 +157,9 @@ in
   };
 
   config = {
+    # Propagate the legacy `allowAliases` option into `aliases.nixpkgs`.
+    aliases.nixpkgs = lib.mkDefault config.allowAliases;
+
     # Collect the assertions from the problems.matchers.* submodules and
     # propagate them into the top-level `assertions` list.
     assertions = lib.concatMap (matcher: matcher.assertions) config.problems.matchers;
