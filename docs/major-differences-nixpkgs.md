@@ -51,3 +51,9 @@ changes differ significantly from whath one would expct with Nixpkgs.
     run its tests.
   - This decouples test execution from the main build, allowing test failures
     or test-only dependency churn to avoid invalidating downstream consumers.
+
+## Repo structure
+
+- Files attempt to layout package with respect to their attribution path.
+  - E.g. `pkgs.vim` -> `pkgs/vim`. `python3.pkgs.requests` -> `python/pkgs/requests/`
+- `build-support/` logic has been dispersed to their respective homes
