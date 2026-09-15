@@ -74,13 +74,6 @@ with final;
   # Creates development environments with running services using ekaos modules
   mkDevShell = (callPackage ./dev-shell { }).mkDevShell;
 
-  # vmTools - VM building utilities for ekaosTest and disk image creation
-  vmTools = callPackage ./build-support/vm { };
-  makeInitrd = callPackage ./build-support/kernel/make-initrd.nix;
-  makeModulesClosure = callPackage ./build-support/kernel/modules-closure.nix;
-  closureInfo = callPackage ./build-support/closure-info.nix { };
-  nix-gitignore = callPackage ./build-support/nix-gitignore { };
-
   # Default to gitMinimal to keep the fetcher's closure small; the `git`
   # argument stays overridable for callers that need a different build.
   nix-prefetch-git = callPackage ./pkgs/nix-prefetch-git { git = gitMinimal; };
@@ -463,43 +456,15 @@ with final;
 
   fts = if stdenv.hostPlatform.isMusl then musl-fts else null;
 
-  inherit (callPackages ./build-support/setup-hooks/patch-rc-path-hooks { })
+  inherit (callPackages ./pkgs/patchRcPathHooks { })
     patchRcPathBash
     patchRcPathCsh
     patchRcPathFish
     patchRcPathPosix
     ;
 
-  shortenPerlShebang = makeSetupHook {
-    name = "shorten-perl-shebang-hook";
-    propagatedBuildInputs = [ dieHook ];
-  } ./build-support/setup-hooks/shorten-perl-shebang.sh;
-
-  copyPkgconfigItems = makeSetupHook {
-    name = "copy-pkg-config-items-hook";
-  } ./build-support/setup-hooks/copy-pkgconfig-items.sh;
-  fixDarwinDylibNames = callPackage (
-    {
-      lib,
-      targetPackages,
-      makeSetupHook,
-    }:
-    makeSetupHook {
-      name = "fix-darwin-dylib-names-hook";
-      substitutions = { inherit (targetPackages.stdenv.cc) targetPrefix; };
-      meta.platforms = lib.platforms.darwin;
-    } ./build-support/setup-hooks/fix-darwin-dylib-names.sh
-  ) { };
-
   json-schema-for-humans = with python3Packages; toPythonApplication json-schema-for-humans;
 
-  makeAutostartItem = callPackage ./build-support/make-startupitem { };
-  makeDesktopItem = callPackage ./build-support/make-desktopitem { };
-  copyDesktopItems = makeSetupHook {
-    name = "copy-desktop-items-hook";
-  } ./build-support/setup-hooks/copy-desktop-items.sh;
-
-  makePkgconfigItem = callPackage ./build-support/make-pkgconfigitem { };
 
   # Default libGL implementation.
   #
@@ -561,19 +526,6 @@ with final;
     enableDarwinSandbox = false;
   };
 
-  generateLdCacheHook =
-    makeSetupHook
-      {
-        name = "generate-ld-cache-hook";
-        # TODO: Remove once makeSetupHook defaults __structuredAttrs to true.
-        __structuredAttrs = true;
-      }
-      (
-        replaceVars ./build-support/setup-hooks/generate-ld-cache.sh {
-          patchelf = "${patchelf}/bin/patchelf";
-        }
-      );
-
   # These are used when building compiler-rt / libgcc, prior to building libc.
   preLibcHeaders =
     let
@@ -603,10 +555,6 @@ with final;
     ;
 
   procps = if stdenv.hostPlatform.isLinux then procps-ng else unixtools.procps;
-
-  pruneLibtoolFiles = makeSetupHook {
-    name = "prune-libtool-files";
-  } ./build-support/setup-hooks/prune-libtool-files.sh;
 
   default-gcc-version = 14;
   gcc = pkgs.${"gcc${toString default-gcc-version}"};
@@ -666,7 +614,6 @@ with final;
 
   R = callPackage ./pkgs/R { };
 
-  buildRPackage = callPackage ./build-support/r { };
 
   rPackages = callPackage ./r { inherit config; };
 
@@ -862,7 +809,7 @@ with final;
       nixSupport ? { },
       ...
     }@extraArgs:
-    callPackage ./build-support/cc-wrapper (
+    callPackage ./stdenv/cc-wrapper (
       let
         self = {
           nativeTools = stdenv.targetPlatform == stdenv.hostPlatform && stdenv.cc.nativeTools or false;
@@ -900,7 +847,7 @@ with final;
       libc ? targetPackages.libc or pkgs.libc,
       ...
     }@extraArgs:
-    callPackage ./build-support/bintools-wrapper (
+    callPackage ./stdenv/bintools-wrapper (
       let
         self = {
           nativeTools = stdenv.targetPlatform == stdenv.hostPlatform && stdenv.cc.nativeTools or false;
@@ -915,27 +862,8 @@ with final;
       in
       self
     );
-  removeReferencesTo = callPackage ./build-support/remove-references-to { };
-  replaceVarsWith = callPackage ./build-support/replace-vars/replace-vars-with.nix { };
-  replaceVars = callPackage ./build-support/replace-vars/replace-vars.nix { };
-  substituteAll = callPackage ./build-support/substitute-all/substitute-all.nix { };
-  replaceDirectDependencies = callPackage ./build-support/replace-direct-dependencies.nix { };
-
-  devShellTools = callPackage ./build-support/dev-shell-tools { };
-
-  # Docker and OCI container tools
-  dockerTools = callPackage ./build-support/docker {
-    writePython3 = buildPackages.writers.writePython3;
-    inherit devShellTools;
-  };
-  ociTools = callPackage ./build-support/oci-tools { };
 
   # Helper tools for dockerTools
-  tarsum = callPackage ./build-support/docker/tarsum.nix { };
-  nix-prefetch-docker = callPackage ./build-support/docker/nix-prefetch-docker.nix { };
-  dockerAutoLayer = callPackage ./build-support/docker/auto-layer.nix { };
-  dockerMakeLayers = callPackage ./build-support/docker/make-layers.nix { };
-  fakeNss = callPackage ./build-support/fake-nss { };
 
   runUnitTests = pkg: pkg.overrideAttrs { doCheck = true; };
   runtimeShell = "${runtimeShellPackage}${runtimeShellPackage.shellPath}";
@@ -1101,25 +1029,6 @@ with final;
   };
 
   makeWrapper = makeShellWrapper;
-  makeShellWrapper = makeSetupHook {
-    name = "make-shell-wrapper-hook";
-    propagatedBuildInputs = [ dieHook ];
-    substitutions = {
-      # targetPackages.runtimeShell only exists when pkgs == targetPackages (when targetPackages is not  __raw)
-      shell =
-        if targetPackages ? runtimeShell then
-          targetPackages.runtimeShell
-        else
-          throw "makeWrapper/makeShellWrapper must be in nativeBuildInputs";
-    };
-  } ./build-support/setup-hooks/make-wrapper.sh;
-  __flattenIncludeHackHook = callPackage ./build-support/setup-hooks/flatten-include-hack { };
-  dieHook = makeSetupHook {
-    name = "die-hook";
-  } ./build-support/setup-hooks/die.sh;
-  findXMLCatalogs = makeSetupHook {
-    name = "find-xml-catalogs-hook";
-  } ./build-support/setup-hooks/find-xml-catalogs.sh;
   arrayUtilities =
     let
       arrayUtilitiesPackages = makeScopeWithSplicing' {
@@ -1131,48 +1040,12 @@ with final;
           }
           // lib.packagesFromDirectoryRecursive {
             inherit (finalArrayUtilities) callPackage;
-            directory = ./build-support/setup-hooks/arrayUtilities;
+            directory = ./pkgs/arrayUtilities;
           };
       };
     in
     lib.recurseIntoAttrs arrayUtilitiesPackages;
-  addBinToPathHook = callPackage (
-    { makeSetupHook }:
-    makeSetupHook {
-      name = "add-bin-to-path-hook";
-    } ./build-support/setup-hooks/add-bin-to-path.sh
-  ) { };
-  autoPatchelfHook = makeSetupHook {
-    name = "auto-patchelf-hook";
-    propagatedBuildInputs = [
-      auto-patchelf
-      bintools
-    ];
-    substitutions = {
-      hostPlatform = stdenv.hostPlatform.config;
-    };
-  } ./build-support/setup-hooks/auto-patchelf.sh;
-
-  separateDebugInfo = makeSetupHook {
-    name = "separate-debug-info-hook";
-  } ./build-support/setup-hooks/separate-debug-info.sh;
-
-  setupDebugInfoDirs = makeSetupHook {
-    name = "setup-debug-info-dirs-hook";
-  } ./build-support/setup-hooks/setup-debug-info-dirs.sh;
-
   strip-nondeterminism = perlPackages.strip-nondeterminism;
-  stripJavaArchivesHook = makeSetupHook {
-    name = "strip-java-archives-hook";
-    propagatedBuildInputs = [ strip-nondeterminism ];
-  } ./build-support/setup-hooks/strip-java-archives.sh;
-
-  updateAutotoolsGnuConfigScriptsHook = makeSetupHook {
-    name = "update-autotools-gnu-config-scripts-hook";
-    substitutions = {
-      gnu_config = gnu-config;
-    };
-  } ./build-support/setup-hooks/update-autotools-gnu-config-scripts.sh;
 
   readline70 = callPackage ./pkgs/readline/7.0.nix { };
   readline = callPackage ./pkgs/readline/8.3.nix { };
@@ -1190,7 +1063,6 @@ with final;
 
   perlPackages = perl.pkgs;
 
-  testers = callPackage ./build-support/testers { };
 
   texinfo6 = texinfo.v6;
   texinfo7 = texinfo.v7;
@@ -1227,11 +1099,11 @@ with final;
     else
       prev.ncurses;
 
-  pkgconf = callPackage ./build-support/pkg-config-wrapper {
+  pkgconf = callPackage ./stdenv/pkg-config-wrapper {
     pkg-config = pkgconf-unwrapped;
   };
   pkgconf-unwrapped = callPackage ./pkgs/pkgconf { };
-  pkg-config = callPackage ./build-support/pkg-config-wrapper {
+  pkg-config = callPackage ./stdenv/pkg-config-wrapper {
     pkg-config = pkg-config-unwrapped;
   };
   pkg-configUpstream = lib.lowPrio (
@@ -1403,10 +1275,8 @@ with final;
     forPlatform = stdenv.targetPlatform; # offset by 1 so it works in nativeBuildInputs
   };
 
-  makeFontsConf = callPackage ./build-support/make-fonts-conf { };
   glfw = glfw3;
 
-  makeFontsCache = callPackage ./build-support/make-fonts-cache { };
 
   gtk3 = callPackage ./pkgs/gtk/3.x.nix {
     trackerSupport = false;
@@ -1862,17 +1732,6 @@ with final;
     ;
   texlivePackages = lib.recurseIntoAttrs (lib.mapAttrs (_: v: v.build) texlive.pkgs);
 
-  validatePkgConfig = makeSetupHook {
-    name = "validate-pkg-config";
-    propagatedBuildInputs = [
-      findutils
-      pkg-config
-    ];
-  } ./build-support/setup-hooks/validate-pkg-config.sh;
-
-  wrapRustcWith = { rustc-unwrapped, ... }@args: callPackage ./build-support/rust/rustc-wrapper args;
-  wrapRustc = rustc-unwrapped: wrapRustcWith { inherit rustc-unwrapped; };
-
   # Rust is auto-imported from pkgs-many/rust via mkManyVariants
   # Individual versions: rust.v1_91, rust.v1_98, etc.
   # Package scopes: rust.pkgs, rust.v1_91.pkgs, etc.
@@ -1904,16 +1763,14 @@ with final;
         )
       );
     in
-    callPackage ./build-support/rust/build-rust-crate (
+    callPackage ./pkgs/buildRustCrate (
       { }
       // lib.optionalAttrs (stdenv.hostPlatform.libc == null) {
         stdenv = stdenvNoCC; # Some build targets without libc will fail to evaluate with a normal stdenv.
       }
       // lib.optionalAttrs targetAlreadyIncluded { inherit (pkgsBuildBuild) rustc cargo; } # Optimization.
     );
-  buildRustCrateHelpers = callPackage ./build-support/rust/build-rust-crate/helpers.nix { };
 
-  defaultCrateOverrides = callPackage ./build-support/rust/default-crate-overrides.nix { };
 
   inherit (callPackages ./pkgs/cargo-pgrx { })
     cargo-pgrx_0_12_0_alpha_1
@@ -1928,26 +1785,14 @@ with final;
   rust-bindgen-unwrapped = callPackage ./pkgs/rust-bindgen/unwrapped.nix { };
   rustup-toolchain-install-master = callPackage ./pkgs/rustup-toolchain-install-master { };
 
-  writableTmpDirAsHomeHook = callPackage (
-    { makeSetupHook }:
-    makeSetupHook {
-      name = "writable-tmpdir-as-home-hook";
-    } ./build-support/setup-hooks/writable-tmpdir-as-home.sh
-  ) { };
-
-  writers = callPackage ./build-support/writers { };
   # TODO(corepkgs): gixy requires packages not yet in core-pkgs (writeNginxConfig validation)
   gixy = null;
 
-  buildDotnetModule = callPackage ./build-support/dotnet/build-dotnet-module { };
   mkNugetDeps = null; # TODO(corepkgs): implement NuGet dependency fetcher
   mkNugetSource = null; # TODO(corepkgs): implement NuGet source builder
 
-  appimageTools = callPackage ./build-support/appimage { };
 
   buildFHSEnv = buildFHSEnvBubblewrap;
-  buildFHSEnvChroot = callPackage ./build-support/build-fhsenv-chroot { }; # Deprecated; use buildFHSEnv/buildFHSEnvBubblewrap
-  buildFHSEnvBubblewrap = callPackage ./build-support/build-fhsenv-bubblewrap { };
 
   uboot = callFromScope ./pkgs/uboot { };
   inherit (uboot) buildUBoot;
