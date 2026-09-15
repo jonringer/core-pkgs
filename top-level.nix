@@ -1550,7 +1550,7 @@ with final;
   # llvm.pkgs provides the full package scope (clang, lld, lldb, etc.)
   # Individual versions accessible as: llvm.v18, llvm.v19, etc.
   # Package scopes accessible as: llvm.v18.pkgs, llvm.v19.pkgs, etc.
-  # Old names like llvmPackages_18, clang_18, etc. are available via stdenv/aliases.nix
+  # Old names like llvmPackages_18, clang_18, etc. are available via aliases/nixpkgs.nix
 
   llvmPackages = if stdenv.hostPlatform.isDarwin then llvmPackages_21 else llvm.pkgs;
   llvm =

@@ -7,7 +7,7 @@ SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 REPO_DIR=$(readlink -f "$SCRIPT_DIR/../..")
 cd "$REPO_DIR"
 
-nix_versions=$(nix eval --impure --json --expr "with import ./. { config.allowAliases = false; }; builtins.filter (name: builtins.match \"v2_.*\" name != null) (builtins.attrNames nix.variants)" | jq -r '.[]')
+nix_versions=$(nix eval --impure --json --expr "with import ./. { config.aliases.nixpkgs = false; }; builtins.filter (name: builtins.match \"v2_.*\" name != null) (builtins.attrNames nix.variants)" | jq -r '.[]')
 
 for name in $nix_versions; do
     minor_version=${name#v*_}
@@ -15,7 +15,7 @@ for name in $nix_versions; do
     nix-update --override-filename "$SCRIPT_DIR/variants.nix" --version-regex "(2\\.${minor_version}\..+)" --build --commit "nix.$name"
 done
 
-stable_version_full=$(nix eval --impure --json --expr "with import ./. { config.allowAliases = false; }; nix.stable.version" | jq -r)
+stable_version_full=$(nix eval --impure --json --expr "with import ./. { config.aliases.nixpkgs = false; }; nix.stable.version" | jq -r)
 
 # strip patch version
 stable_version_trimmed=${stable_version_full%.*}

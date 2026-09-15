@@ -30,7 +30,7 @@
 let
   pkgs = import ../. {
     config = {
-      allowAliases = false;
+      aliases.nixpkgs = false;
       inherit checkMeta;
 
       handleEvalIssue =

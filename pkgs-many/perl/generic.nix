@@ -84,7 +84,7 @@ let
 
   # Compute the variant attribute from version (e.g. "5.38.2" -> "v5_38").
   # Selecting the variant directly keeps this independent of the `perl538`
-  # style aliases, which are gone when `config.allowAliases` is false.
+  # style aliases, which are gone when `config.aliases.nixpkgs` is false.
   perlVariant = "v${lib.versions.major version}_${lib.versions.minor version}";
 
   # Common passthru function for perl interpreters

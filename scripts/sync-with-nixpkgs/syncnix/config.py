@@ -185,7 +185,7 @@ PATH_REWRITES = [
 
 # Read at run time, so the vocabulary cannot drift from the real aliases.
 ALIAS_FILES = (
-    "stdenv/aliases.nix",
+    "aliases/nixpkgs.nix",
     "python/aliases.nix",
 )
 
@@ -255,7 +255,7 @@ IGNORE_FILES = [
     "lib.nix",
     "pins.nix",
     "release.nix",
-    "stdenv/aliases.nix",  # we have our own aliases
+    "aliases/nixpkgs.nix",  # we have our own aliases
     "top-level.nix",
 ]
 

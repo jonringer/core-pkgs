@@ -81,7 +81,7 @@
       };
     };
 })
-// lib.optionalAttrs config.allowAliases {
+// lib.optionalAttrs config.aliases.nixpkgs {
   # Added in 25.05.
   fetchCargoTarball = throw "`rustPlatform.fetchCargoTarball` has been removed in 25.05, use `rustPlatform.fetchCargoVendor` instead";
 }
