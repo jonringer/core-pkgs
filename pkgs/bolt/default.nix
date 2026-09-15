@@ -9,7 +9,7 @@
   asciidoc,
   libxml2,
   libxslt,
-  docbook_xml_dtd_45,
+  docbook-xml-dtd,
   docbook-xsl-nons,
   glib,
   systemd,
@@ -44,7 +44,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     asciidoc
-    docbook_xml_dtd_45
+    docbook-xml-dtd.v4_5
     docbook-xsl-nons
     libxml2
     libxslt

@@ -12,7 +12,7 @@
   gettext,
   gtk-doc,
   docbook-xsl-nons,
-  docbook_xml_dtd_412,
+  docbook-xml-dtd,
   libxml2,
   libxslt,
   upower,
@@ -45,7 +45,7 @@ stdenv.mkDerivation (finalAttrs: {
     gettext
     gtk-doc
     docbook-xsl-nons
-    docbook_xml_dtd_412
+    docbook-xml-dtd.v4_1_2
     libxml2
     libxslt
     gobject-introspection
