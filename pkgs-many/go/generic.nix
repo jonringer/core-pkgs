@@ -193,7 +193,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   passthru = {
     inherit goBootstrap;
-    buildModule = callPackage ../../build-support/go/module.nix {
+    buildModule = callPackage ./module.nix {
       go = finalAttrs.finalPackage;
     };
     tests = callPackage ./tests.nix {
